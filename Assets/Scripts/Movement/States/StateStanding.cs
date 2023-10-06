@@ -2,17 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StateStanding : MonoBehaviour
+public class StateStanding : AbstractState
 {
-    // Start is called before the first frame update
-    void Start()
+    public StateStanding(Scratchpad _ownerData, StateMachine _ownerStateMachine)
+        : base(_ownerData, _ownerStateMachine) { }
+
+    public override void Enter()
     {
-        
+        base.Enter();
+        //OwnerData.Write("ScoreCounter", new ScoreCounter());
+        //weaponHandler = new WeaponHandler(OwnerData.Read<WeaponData[]>("weaponDataAssets"));
+        Debug.Log(" Standing");
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void Update(float _delta)
     {
-        
+        //weaponHandler.Update(_delta);
     }
 }

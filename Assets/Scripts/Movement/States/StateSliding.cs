@@ -2,17 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StateSliding : MonoBehaviour
+public class StateSliding : AbstractState
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public StateSliding(Scratchpad _ownerData, StateMachine _ownerStateMachine)
+        : base(_ownerData, _ownerStateMachine) { }
 }

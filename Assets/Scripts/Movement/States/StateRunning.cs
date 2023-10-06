@@ -2,17 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Running : MonoBehaviour
+public class StateRunning : AbstractState
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public StateRunning(Scratchpad _ownerData, StateMachine _ownerStateMachine)
+        : base(_ownerData, _ownerStateMachine) { }
 }
