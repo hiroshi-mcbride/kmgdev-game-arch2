@@ -5,6 +5,7 @@
 /// </summary>
 public abstract class BaseActor : IActor, IUpdateable
 {
+    public int Id { get; protected set; }
     public GameObject Actor { get; protected set; }
 
     protected bool isActive;
@@ -18,11 +19,22 @@ public abstract class BaseActor : IActor, IUpdateable
         }
     }
 
+
+    protected BaseActor()
+    {
+        if (EventManager.InvokeCallback(new UpdateableCreatedEvent(this), out int id))
+        {
+            Id = id;
+        }
+    }
+
     public virtual void Update(float _delta) { }
+    public virtual void FixedUpdate(float _fixedDelta) { }
 
     public virtual void Destroy()
     {
         GameObject.Destroy(Actor);
         //invoke event OnDestroyed(this)
     }
+
 }

@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour, IStateRunner
     private void Awake()
     {
         ObjectData = new Scratchpad();
+        ObjectData.Write("weaponDataAssets", weaponDataAssets);
         fsm = new StateMachine();
         fsm.AddState(new BeginState(ObjectData, fsm));
         fsm.AddState(new PlayState(ObjectData, fsm));
