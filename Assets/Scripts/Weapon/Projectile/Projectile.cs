@@ -2,7 +2,7 @@
 public class Projectile : BasePhysicsActor, IProjectile
 {
     
-    public Projectile(WeaponData _weaponData)
+    public Projectile(WeaponData _weaponData) : base()
     {
         Transform mainCamera = Camera.main.transform;
         Actor = GameObject.Instantiate(_weaponData.BulletPrefab);

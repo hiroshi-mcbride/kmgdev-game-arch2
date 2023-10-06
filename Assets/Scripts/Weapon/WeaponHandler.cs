@@ -10,13 +10,15 @@ using UnityEngine;
 public class WeaponHandler : IUpdateable
 {
     public bool IsActive { get; set; } = true;
-    
+
+    public int Id { get; private set; }
+
     private IWeapon equippedWeapon;
     public WeaponHandler(WeaponData[] _weaponDataObjects)
     {
-        foreach (WeaponData weaponData in _weaponDataObjects)
+        if (EventManager.InvokeCallback(new UpdateableCreatedEvent(this), out int id))
         {
-            
+            Id = id;
         }
     }
 
@@ -27,7 +29,6 @@ public class WeaponHandler : IUpdateable
         {
             return;
         }
-        equippedWeapon.Update(_delta);
 
         if (equippedWeapon.IsAutomatic ? Input.GetMouseButton(0) : Input.GetMouseButtonDown(0))
         {
@@ -40,4 +41,5 @@ public class WeaponHandler : IUpdateable
         //currentWeapon = new Weapon();
     }
 
+    public void FixedUpdate(float _fixedDelta) { }
 }

@@ -30,14 +30,14 @@ public class EventManager
         eventDictionary[_event.GetType()]?.DynamicInvoke(_event);
     }
 
-    public static bool InvokeCallback(object _event, out object _callback)
+    public static bool InvokeCallback<T>(object _event, out T _callback)
     {
         if (!eventDictionary.ContainsKey(_event.GetType()))
         {
-            _callback = null;
+            _callback = default;
             return false;
         }
-        _callback = eventDictionary[_event.GetType()]?.DynamicInvoke(_event);
+        _callback = (T)eventDictionary[_event.GetType()]?.DynamicInvoke(_event);
         return _callback != null;
     }
 }

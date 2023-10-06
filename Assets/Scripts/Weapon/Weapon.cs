@@ -11,7 +11,7 @@ public class Weapon : BaseActor, IWeapon
     private Timer fireRateTimer;
     private bool canFire = true;
 
-    public Weapon(WeaponData _weaponData)
+    public Weapon(WeaponData _weaponData) : base()
     {
         weaponData = _weaponData;
         Actor = GameObject.Instantiate(weaponData.Prefab, Camera.main.transform);
@@ -42,10 +42,5 @@ public class Weapon : BaseActor, IWeapon
         {
             
         }
-    }
-
-    public override void Update(float _delta)
-    {
-        fireRateTimer.Update(_delta);
     }
 }
