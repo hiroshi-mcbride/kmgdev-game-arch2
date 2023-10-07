@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using UnityEngine;
 
 public class StateStanding : AbstractState
@@ -17,6 +18,27 @@ public class StateStanding : AbstractState
         stateMachine = _ownerStateMachine;
         PlayerData = _ownerData;
     }
+    public override void OnEnter()
+    {
+    }
+
+    public override void OnUpdate()
+    {
+        base.OnUpdate();
+
+        if (Input.GetKeyUp(KeyCode.Space))
+        {
+            SwitchToJumping();
+        }
+
+
+
+    }
+
+    public override void OnExit()
+    {
+    }
+
 
     private void SwitchToWalking()
     {

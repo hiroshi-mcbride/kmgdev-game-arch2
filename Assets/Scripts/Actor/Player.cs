@@ -16,6 +16,7 @@ public class Player : BasePhysicsActor, IStateRunner
         //playerData = _PlayerDataAssets;
 
         PlayerSetup();
+        MakeFSM();
 
         //ObjectData = new Scratchpad();
         //ObjectData.Write("PlayerDataAssets", _PlayerDataAssets);
@@ -28,6 +29,8 @@ public class Player : BasePhysicsActor, IStateRunner
     {
         playerMovementFSM = new StateMachine();
         playerMovementFSM.AddState(new StateStanding(ObjectData, playerMovementFSM));
+        playerMovementFSM.AddState(new StateJumping(ObjectData, playerMovementFSM));
+        playerMovementFSM.SwitchState(typeof(StateStanding));
 
 
         // fsm.EnterSt
