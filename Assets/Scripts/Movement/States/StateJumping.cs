@@ -16,7 +16,12 @@ public class StateJumping : AbstractState
         base.Enter();
         Debug.Log(" Jumping");
         
+    }
 
+    private void Jump()
+    {
+        //rigidbodyAddForce
+        // onEnter();
 
     }
 }
