@@ -4,6 +4,19 @@ using UnityEngine;
 
 public class StateJumping : AbstractState
 {
-    public StateJumping(Scratchpad _ownerData, StateMachine _ownerStateMachine)
-        : base(_ownerData, _ownerStateMachine) { }
+    private bool IsGrounded;
+
+
+    public StateJumping(Scratchpad _ownerData, StateMachine _ownerStateMachine) : base(_ownerData, _ownerStateMachine)
+    {
+
+    }
+    public override void Enter()
+    {
+        base.Enter();
+        Debug.Log(" Jumping");
+        
+
+
+    }
 }

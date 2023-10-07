@@ -340,6 +340,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponDataAssets:
   - {fileID: 11400000, guid: 6e3a42908ecaba046a72aeb8ce791ccf, type: 2}
+  playerDataAssets:
+  - {fileID: 11400000, guid: 250076c550bb4ee4c803c01c00d007ff, type: 2}
 --- !u!4 &1135092466
 Transform:
   m_ObjectHideFlags: 0

@@ -7,10 +7,15 @@ using UnityEngine;
 public class GameManager : MonoBehaviour, IStateRunner
 {
     public Scratchpad ObjectData { get; private set; }
+    public Scratchpad PlayerDataPad { get; private set; }
+
+
 
     [SerializeField] private WeaponData[] weaponDataAssets;
+    [SerializeField] private PlayerData[] playerDataAssets;
     
     private StateMachine fsm;
+    private StateMachine playerMovementFSM;
 
     private void Awake()
     {
@@ -22,6 +27,19 @@ public class GameManager : MonoBehaviour, IStateRunner
         fsm.AddState(new WinState(ObjectData, fsm));
         fsm.AddState(new LoseState(ObjectData, fsm));
         fsm.SwitchState(typeof(PlayState));
+
+        //---Nathan--
+        PlayerDataPad = new Scratchpad();
+        PlayerDataPad.Write("PlayerDataAssets", playerDataAssets);
+        playerMovementFSM = new StateMachine();
+        playerMovementFSM.AddState(new StateStanding(PlayerDataPad, fsm));
+        playerMovementFSM.AddState(new StateWalking(PlayerDataPad, fsm));
+        playerMovementFSM.AddState(new StateRunning(PlayerDataPad, fsm));
+        playerMovementFSM.AddState(new StateJumping(PlayerDataPad, fsm));
+        playerMovementFSM.AddState(new StateWallRunning(PlayerDataPad, fsm));
+        playerMovementFSM.SwitchState(typeof(StateStanding));
+
+
     }
 
     private void Update()
