@@ -14,19 +14,19 @@ public class UpdateManager
         EventManager.Subscribe(typeof(UpdateableCreatedEvent), onUpdateableCreatedEventHandler);
     }
 
-    public void UpdateAll(float _delta)
+    public void UpdateAll()
     {
         foreach (KeyValuePair<int, IUpdateable> updateable in updateables)
         {
-            updateable.Value.Update(_delta);
+            updateable.Value.Update();
         }
     }
 
-    public void FixedUpdateAll(float _fixedDelta)
+    public void FixedUpdateAll()
     {
         foreach (KeyValuePair<int, IUpdateable> updateable in updateables)
         {
-            updateable.Value.FixedUpdate(_fixedDelta);
+            updateable.Value.FixedUpdate();
         }
     }
     

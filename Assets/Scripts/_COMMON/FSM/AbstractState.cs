@@ -13,11 +13,11 @@ public abstract class AbstractState : IState
         OwnerStateMachine = _ownerStateMachine;
     }
 
-    public virtual void Enter()
+    public virtual void OnEnter()
     {
         Debug.Log($"Entered {this}");
     }
-    public virtual void Update(float _delta) {}
-    public virtual void FixedUpdate(float _fixedDelta) {}
-    public virtual void Exit() {}
+    public virtual void OnUpdate() { }
+    public virtual void OnFixedUpdate() { }
+    public virtual void OnExit() {}
 }

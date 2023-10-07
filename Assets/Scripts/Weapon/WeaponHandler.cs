@@ -23,7 +23,7 @@ public class WeaponHandler : IUpdateable
     }
 
 
-    public void Update(float _delta)
+    public void Update()
     {
         if (equippedWeapon == null)
         {
@@ -41,5 +41,5 @@ public class WeaponHandler : IUpdateable
         //currentWeapon = new Weapon();
     }
 
-    public void FixedUpdate(float _fixedDelta) { }
+    public void FixedUpdate() { }
 }

@@ -5,26 +5,25 @@
 /// </summary>
 public class PlayState : AbstractState
 {
-    private UpdateManager updateManager;
+    
     private WeaponHandler weaponHandler;
     public PlayState(Scratchpad _ownerData, StateMachine _ownerStateMachine) 
         : base(_ownerData, _ownerStateMachine) { }
 
-    public override void Enter()
+    public override void OnEnter()
     {
-        base.Enter();
-        updateManager = new UpdateManager();
+        base.OnEnter();
+        
         OwnerData.Write("scoreCounter", new ScoreCounter());
         weaponHandler = new WeaponHandler(OwnerData.Read<WeaponData[]>("weaponDataAssets"));
     }
 
-    public override void Update(float _delta)
+    public override void OnUpdate()
     {
-        updateManager.UpdateAll(_delta);
     }
 
-    public override void FixedUpdate(float _fixedDelta)
+    public override void OnFixedUpdate()
     {
-        updateManager.FixedUpdateAll(_fixedDelta);
+
     }
 }

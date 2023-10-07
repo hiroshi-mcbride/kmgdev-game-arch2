@@ -26,14 +26,14 @@ public class Timer : IUpdateable
     }
 
 
-    public void Update(float _delta)
+    public void Update()
     {
         if (isStarted)
         {
-            RunTimer(_delta);
+            RunTimer();
         }
     }
-    public void FixedUpdate(float _fixedDelta) { }
+    public void FixedUpdate() { }
 
     public void Start() => isStarted = true;
     public void Pause() => isStarted = false;
@@ -43,11 +43,11 @@ public class Timer : IUpdateable
         currentTime = .0f;
     }
     
-    private void RunTimer(float _delta)
+    private void RunTimer()
     {
         if (currentTime < length)
         {
-            currentTime += _delta;
+            currentTime += Time.deltaTime;
         }
         else
         {

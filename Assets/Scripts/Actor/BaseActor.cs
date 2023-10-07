@@ -28,8 +28,8 @@ public abstract class BaseActor : IActor, IUpdateable
         }
     }
 
-    public virtual void Update(float _delta) { }
-    public virtual void FixedUpdate(float _fixedDelta) { }
+    public virtual void Update() { }
+    public virtual void FixedUpdate() { }
 
     public virtual void Destroy()
     {

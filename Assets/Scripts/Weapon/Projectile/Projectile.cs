@@ -13,7 +13,7 @@ public class Projectile : BasePhysicsActor, IProjectile
         
     }
 
-    public override void FixedUpdate(float _fixedDelta)
+    public override void FixedUpdate()
     {
         Collider[] hitColliders = new Collider[8];
         int numColliders = Physics.OverlapSphereNonAlloc(Actor.transform.position, 0.5f, hitColliders);

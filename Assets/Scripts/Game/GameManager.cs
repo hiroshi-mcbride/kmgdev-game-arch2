@@ -11,11 +11,14 @@ public class GameManager : MonoBehaviour, IStateRunner
     [SerializeField] private WeaponData[] weaponDataAssets;
     
     private StateMachine fsm;
+    private UpdateManager updateManager;
 
     private void Awake()
     {
         ObjectData = new Scratchpad();
         ObjectData.Write("weaponDataAssets", weaponDataAssets);
+        updateManager = new UpdateManager();
+
         fsm = new StateMachine();
         fsm.AddState(new BeginState(ObjectData, fsm));
         fsm.AddState(new PlayState(ObjectData, fsm));
@@ -26,11 +29,11 @@ public class GameManager : MonoBehaviour, IStateRunner
 
     private void Update()
     {
-        fsm.Update(Time.deltaTime);
+        updateManager.UpdateAll();
     }
 
     private void FixedUpdate()
     {
-        fsm.FixedUpdate(Time.fixedDeltaTime);
+        updateManager.FixedUpdateAll();
     }
 }
