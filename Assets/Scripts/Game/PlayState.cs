@@ -5,7 +5,6 @@
 /// </summary>
 public class PlayState : AbstractState
 {
-    
     private WeaponHandler weaponHandler;
     public PlayState(Scratchpad _ownerData, StateMachine _ownerStateMachine) 
         : base(_ownerData, _ownerStateMachine) { }

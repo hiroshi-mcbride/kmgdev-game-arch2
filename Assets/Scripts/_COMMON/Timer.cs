@@ -1,11 +1,10 @@
 ﻿using System;
 using UnityEngine;
 
-public class Timer : IUpdateable
+public class Timer : IUpdateable, IDestroyable
 {
     public bool IsActive { get; set; } = true;
 
-    public int Id { get; }
 
     private float length;
     private bool isLooping;
@@ -15,16 +14,13 @@ public class Timer : IUpdateable
 
     public Timer(float _length, Delegate _onExpired, bool _startImmediately = true, bool _isLooping = false)
     {
-        if (EventManager.InvokeCallback(new UpdateableCreatedEvent(this), out int id))
-        {
-            Id = id;
-        }
         length = _length;
         onExpired = _onExpired;
         isStarted = _startImmediately;
         isLooping = _isLooping;
+        
+        EventManager.Invoke(new UpdateableCreatedEvent(this));
     }
-
 
     public void Update()
     {
@@ -33,7 +29,13 @@ public class Timer : IUpdateable
             RunTimer();
         }
     }
+    
     public void FixedUpdate() { }
+    
+    public void Destroy()
+    {
+        EventManager.Invoke(new UpdateableDestroyedEvent(this));
+    }
 
     public void Start() => isStarted = true;
     public void Pause() => isStarted = false;

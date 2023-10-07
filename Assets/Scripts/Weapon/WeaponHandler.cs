@@ -7,25 +7,21 @@ using UnityEngine;
 /// Keeps a reference to the currently equipped weapon and fires it on input
 /// </summary>
 
-public class WeaponHandler : IUpdateable
+public class WeaponHandler : IUpdateable, IDestroyable
 {
     public bool IsActive { get; set; } = true;
-    public int Id { get; }
 
     private List<IWeapon> weapons = new();
     private IWeapon equippedWeapon;
     public WeaponHandler(params WeaponData[] _weaponDataAssets)
     {
-        if (EventManager.InvokeCallback(new UpdateableCreatedEvent(this), out int id))
-        {
-            Id = id;
-        }
-
         foreach (WeaponData asset in _weaponDataAssets)
         {
             weapons.Add(new Weapon(asset));
         }
         EquipWeapon(0);
+        
+        EventManager.Invoke(new UpdateableCreatedEvent(this));
     }
 
 
@@ -48,4 +44,8 @@ public class WeaponHandler : IUpdateable
     }
 
     public void FixedUpdate() { }
+    public void Destroy()
+    {
+        EventManager.Invoke(new UpdateableDestroyedEvent(this));
+    }
 }

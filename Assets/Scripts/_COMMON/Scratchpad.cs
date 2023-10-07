@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 /// <summary>
-/// Usable by any class to store data of any kind
+/// Usable by any class to keep data that can be shared between states
 /// </summary>
 public class Scratchpad
 {

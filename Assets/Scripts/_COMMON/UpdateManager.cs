@@ -1,39 +1,40 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 public class UpdateManager
 {
-    private static int currentId;
-    private Dictionary<int, IUpdateable> updateables = new();
-    private Func<UpdateableCreatedEvent, int> onUpdateableCreatedEventHandler;
-    private Stack<BufferedItem> createdObjectBuffer = new();
-    private Stack<int> destroyedObjectBuffer = new();
+    private List<IUpdateable> updateables = new();
+    private Queue<IUpdateable> createdObjectBuffer = new();
+    private Queue<IUpdateable> destroyedObjectBuffer = new();
+    private Action<UpdateableCreatedEvent> onUpdateableCreatedEventHandler;
+    private Action<UpdateableDestroyedEvent> onUpdateableDestroyedEventHandler;
 
     public UpdateManager()
     {
         onUpdateableCreatedEventHandler = OnUpdateableCreated;
+        onUpdateableDestroyedEventHandler = OnUpdateableDestroyed;
         EventManager.Subscribe(typeof(UpdateableCreatedEvent), onUpdateableCreatedEventHandler);
+        EventManager.Subscribe(typeof(UpdateableDestroyedEvent), onUpdateableDestroyedEventHandler);
     }
 
     public void UpdateAll()
     {
-        foreach (KeyValuePair<int, IUpdateable> updateable in updateables)
+        foreach (IUpdateable updateable in updateables)
         {
-            if (updateable.Value.IsActive) 
+            if (updateable.IsActive) 
             { 
-                updateable.Value.Update(); 
+                updateable.Update(); 
             }
         }
     }
 
     public void FixedUpdateAll()
     {
-        foreach (KeyValuePair<int, IUpdateable> updateable in updateables)
+        foreach (IUpdateable updateable in updateables)
         {
-            if (updateable.Value.IsActive)
+            if (updateable.IsActive)
             {
-                updateable.Value.FixedUpdate();
+                updateable.FixedUpdate();
             }
         }
     }
@@ -42,31 +43,29 @@ public class UpdateManager
     {
         while (createdObjectBuffer.Count > 0)
         {
-            BufferedItem bufferedItem = createdObjectBuffer.Pop();
-            updateables.Add(bufferedItem.Id, bufferedItem.Updateable);
+            IUpdateable bufferedItem = createdObjectBuffer.Dequeue();
+            updateables.Add(bufferedItem);
+        }
+
+        while (destroyedObjectBuffer.Count > 0)
+        {
+            IUpdateable bufferedItem = destroyedObjectBuffer.Dequeue();
+            updateables.Remove(bufferedItem);
         }
     }
     
-    private int OnUpdateableCreated(UpdateableCreatedEvent _event)
+    private void OnUpdateableCreated(UpdateableCreatedEvent _event)
     {
-        currentId++;
-        createdObjectBuffer.Push(new BufferedItem(currentId, _event.CreatedObject));
-        return currentId;
+        createdObjectBuffer.Enqueue(_event.CreatedObject);
+    }
+
+    private void OnUpdateableDestroyed(UpdateableDestroyedEvent _event)
+    {
+        destroyedObjectBuffer.Enqueue(_event.DestroyedObject);
     }
     ~UpdateManager()
     {
         EventManager.Unsubscribe(typeof(UpdateableCreatedEvent), onUpdateableCreatedEventHandler);
-    }
-
-    private struct BufferedItem
-    {
-        public int Id { get; }
-        public IUpdateable Updateable { get; }
-
-        public BufferedItem(int _id, IUpdateable _updateable)
-        {
-            Id = _id;
-            Updateable = _updateable;
-        }
+        EventManager.Unsubscribe(typeof(UpdateableDestroyedEvent), onUpdateableDestroyedEventHandler);
     }
 }

@@ -3,29 +3,27 @@
 /// <summary>
 /// Base type for any object in the scene that can run logic each Update frame
 /// </summary>
-public abstract class BaseActor : IActor, IUpdateable
+public abstract class BaseActor : IActor, IUpdateable, IDestroyable
 {
-    public int Id { get; }
-    public GameObject Actor { get; protected set; }
+    public GameObject SceneObject { get; protected set; }
 
-    protected bool isActive;
+    private bool isActive;
     public bool IsActive
     {
         get => isActive;
         set
         {
-            Actor.SetActive(value);
-            isActive = value;
+            if (isActive != value)
+            {
+                SceneObject.SetActive(value);
+                isActive = value;
+            }
         }
     }
-
-
-    protected BaseActor()
+    protected void InitializeActor()
     {
-        if (EventManager.InvokeCallback(new UpdateableCreatedEvent(this), out int id))
-        {
-            Id = id;
-        }
+        ActorDirectory.Provide(this);
+        EventManager.Invoke(new UpdateableCreatedEvent(this));
     }
 
     public virtual void Update() { }
@@ -33,8 +31,9 @@ public abstract class BaseActor : IActor, IUpdateable
 
     public virtual void Destroy()
     {
-        GameObject.Destroy(Actor);
-        //invoke event OnDestroyed(this)
+        ActorDirectory.Remove(SceneObject);
+        GameObject.Destroy(SceneObject);
+        EventManager.Invoke(new UpdateableDestroyedEvent(this));
     }
 
 }

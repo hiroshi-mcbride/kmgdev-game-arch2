@@ -7,7 +7,7 @@ public class Player : BasePhysicsActor, IStateRunner
     public Scratchpad ObjectData { get; private set; }
     private StateMachine fsm;
 
-    public Player(/*PlayerData _playerData*/) : base()
+    public Player(/*PlayerData _playerData*/)
     {
         // Actor = GameObject.Instantiate(...
         // PhysicsBody = ...
@@ -18,6 +18,6 @@ public class Player : BasePhysicsActor, IStateRunner
         //
         //
         // fsm.EnterSt
-
+        //InitializeActor();
     }
 }
