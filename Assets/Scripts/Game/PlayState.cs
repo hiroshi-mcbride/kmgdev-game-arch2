@@ -6,16 +6,18 @@
 public class PlayState : AbstractState
 {
     private WeaponHandler weaponHandler;
+    private Player player;
     public PlayState(Scratchpad _ownerData, StateMachine _ownerStateMachine) 
         : base(_ownerData, _ownerStateMachine) { }
-
+    
     public override void OnEnter()
     {
         base.OnEnter();
         
         OwnerData.Write("scoreCounter", new ScoreCounter());
         weaponHandler = new WeaponHandler(OwnerData.Read<WeaponData[]>("weaponDataAssets"));
-        // player = new Player(OwnerData.Read<PlayerData>("playerData"));
+        //player = new Player(OwnerData.Read<PlayerData>("PlayerData"));
+        player = new Player();
     }
 
     public override void OnUpdate()

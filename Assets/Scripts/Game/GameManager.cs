@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 /// <summary>
 /// Game root. Any UnityEngine callbacks are run through here and delegated to other classes, mainly a State Machine.
@@ -8,8 +9,12 @@ using UnityEngine;
 public class GameManager : MonoBehaviour, IStateRunner
 {
     public Scratchpad ObjectData { get; private set; }
+    public Scratchpad PlayerDataPad { get; private set; }
 
     [SerializeField] private WeaponData[] weaponDataAssets;
+    [SerializeField] private PlayerData playerData;
+
+    private InputHandler inputHandler;
 
     // PlayerData playerData;
     
@@ -18,9 +23,15 @@ public class GameManager : MonoBehaviour, IStateRunner
 
     private void Awake()
     {
+        updateManager = new UpdateManager();
+
         ObjectData = new Scratchpad();
         ObjectData.Write("weaponDataAssets", weaponDataAssets);
-        updateManager = new UpdateManager();
+
+        //PlayerDataPad = new Scratchpad();
+        //PlayerDataPad.Write("PlayerData", playerData);
+
+        inputHandler = new InputHandler();
 
         fsm = new StateMachine();
         fsm.AddState(new BeginState(ObjectData, fsm));

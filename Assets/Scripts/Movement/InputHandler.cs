@@ -16,36 +16,13 @@ public class InputHandler : IUpdateable
     public event MovementInput OnKeyLeftShift;
     public event MovementInput OnSpace;
 
-    public void Update(float _delta)
+
+    public void Update()
     {
-        if (Input.GetKeyDown(KeyCode.W))
-        {
-            OnKeyW?.Invoke();
-        }
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            OnKeyA?.Invoke();
-        }
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            OnKeyS?.Invoke();
-        }
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            OnKeyD?.Invoke();
-        }
-        if (Input.GetKeyDown(KeyCode.LeftShift))
-        {
-            OnKeyLeftShift?.Invoke();
-        }
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            OnSpace?.Invoke();
-        }
+        Debug.Log("test");
+    } 
 
-    }
-
-    public void FixedUpdate(float _fixedDelta)
+    public void FixedUpdate()
     {
         throw new System.NotImplementedException();
     }

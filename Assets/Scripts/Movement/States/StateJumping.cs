@@ -11,12 +11,12 @@ public class StateJumping : AbstractState
     {
 
     }
-    public override void Enter()
-    {
-        base.Enter();
-        Debug.Log(" Jumping");
+    //public override void Enter()
+    //{
+    //    base.Enter();
+    //    Debug.Log(" Jumping");
         
-    }
+    //}
 
     private void Jump()
     {

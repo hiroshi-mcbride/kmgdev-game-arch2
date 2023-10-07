@@ -18,24 +18,6 @@ public class StateStanding : AbstractState
         PlayerData = _ownerData;
     }
 
-    public override void Enter()
-    {
-        base.Enter();
-        Debug.Log(" Standing");
-
-    }
-
-    public override void Update(float _delta)
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            SwitchToJumping();
-        }
-
-        Debug.Log("de");
-
-    }
-
     private void SwitchToWalking()
     {
         stateMachine.SwitchState(typeof(StateWalking));
