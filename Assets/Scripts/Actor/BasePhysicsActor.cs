@@ -5,9 +5,5 @@
 /// </summary>
 public abstract class BasePhysicsActor : BaseActor
 {
-    protected BasePhysicsActor() : base()
-    {
-    }
-
     public Rigidbody PhysicsBody { get; protected set; }
 }

@@ -14,13 +14,15 @@ public class Weapon : BaseActor, IWeapon
     public Weapon(WeaponData _weaponData) : base()
     {
         weaponData = _weaponData;
-        Actor = GameObject.Instantiate(weaponData.Prefab, Camera.main.transform);
-        Actor.transform.localPosition = new Vector3(.8f, -0.7f, 1.7f);
-        Actor.transform.localRotation = Quaternion.Euler(.0f, -90.0f, .0f);
+        SceneObject = GameObject.Instantiate(weaponData.Prefab, Camera.main.transform);
+        SceneObject.transform.localPosition = weaponData.Position;
+        SceneObject.transform.localRotation = Quaternion.Euler(weaponData.Rotation);
         ammo = weaponData.Ammo;
         IsAutomatic = weaponData.IsAutomatic;
         Action enableFire = () => canFire = true;
         fireRateTimer = new Timer(1 / weaponData.FireRate, enableFire, false);
+
+        InitializeActor();
     }
 
     public void Fire()
@@ -37,10 +39,6 @@ public class Weapon : BaseActor, IWeapon
             fireRateTimer.Start();
             canFire = false;
             ammo -= 1;
-        }
-        else
-        {
-            
         }
     }
 }

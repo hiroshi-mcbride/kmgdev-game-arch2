@@ -8,6 +8,8 @@
 public class WeaponData : ScriptableObject
 {
     public GameObject Prefab;
+    public Vector3 Position;
+    public Vector3 Rotation;
     [Min(1)]public int Ammo;
     public float Damage;
     [Min(0.01f)]public float FireRate;

@@ -3,27 +3,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StateMachine
+public class StateMachine : IUpdateable
 {
     private Dictionary<Type, IState> states = new();
     private IState currentState;
 
+    public bool IsActive { get; set; } = true;
+
+
     public StateMachine(params IState[] _states)
     {
+        EventManager.Invoke(new UpdateableCreatedEvent(this));
+
         foreach (IState s in _states)
         {
             states.TryAdd(s.GetType(), s);
         }
     }
 
-    public void Update(float _delta)
+    public void Update()
     {
-        currentState?.Update(_delta);
+        currentState?.OnUpdate();
     }
 
-    public void FixedUpdate(float _fixedDelta)
+    public void FixedUpdate()
     {
-        currentState?.FixedUpdate(_fixedDelta);
+        currentState?.OnFixedUpdate();
     }
 
     public void AddState(IState _state)
@@ -33,13 +38,13 @@ public class StateMachine
 
     public void SwitchState(Type _newState)
     {
-        currentState?.Exit();
+        currentState?.OnExit();
         currentState = states[_newState];
-        currentState?.Enter();
+        currentState?.OnEnter();
     }
 
     ~StateMachine()
     {
-        currentState?.Exit();
+        currentState?.OnExit();
     }
 }

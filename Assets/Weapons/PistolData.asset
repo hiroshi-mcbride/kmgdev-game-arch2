@@ -13,9 +13,11 @@ MonoBehaviour:
   m_Name: PistolData
   m_EditorClassIdentifier: 
   Prefab: {fileID: 3832703582600972128, guid: bceefb2a39f6db74d9bc9d006687b7f1, type: 3}
+  Position: {x: 0.8, y: -0.7, z: 1.7}
+  Rotation: {x: 0, y: -90, z: 0}
   Ammo: 99
   Damage: 2
   FireRate: 6
   IsAutomatic: 0
   BulletPrefab: {fileID: 959458154241005023, guid: 279b3ef4ca7a94641a3f30cc91df9700, type: 3}
-  BulletSpeed: 1200
+  BulletSpeed: 2048
