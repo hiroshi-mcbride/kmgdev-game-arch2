@@ -15,8 +15,8 @@ public class Weapon : BaseActor, IWeapon
     {
         weaponData = _weaponData;
         Actor = GameObject.Instantiate(weaponData.Prefab, Camera.main.transform);
-        Actor.transform.localPosition = new Vector3(.8f, -0.7f, 1.7f);
-        Actor.transform.localRotation = Quaternion.Euler(.0f, -90.0f, .0f);
+        Actor.transform.localPosition = weaponData.Position;
+        Actor.transform.localRotation = Quaternion.Euler(weaponData.Rotation);
         ammo = weaponData.Ammo;
         IsAutomatic = weaponData.IsAutomatic;
         Action enableFire = () => canFire = true;
