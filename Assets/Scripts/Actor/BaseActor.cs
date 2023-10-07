@@ -5,7 +5,7 @@
 /// </summary>
 public abstract class BaseActor : IActor, IUpdateable
 {
-    public int Id { get; protected set; }
+    public int Id { get; }
     public GameObject Actor { get; protected set; }
 
     protected bool isActive;

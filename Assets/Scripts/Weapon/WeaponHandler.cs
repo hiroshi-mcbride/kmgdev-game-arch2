@@ -11,7 +11,7 @@ public class WeaponHandler : IUpdateable
 {
     public bool IsActive { get; set; } = true;
 
-    public int Id { get; private set; }
+    public int Id { get; }
 
     private IWeapon equippedWeapon;
     public WeaponHandler(WeaponData[] _weaponDataObjects)

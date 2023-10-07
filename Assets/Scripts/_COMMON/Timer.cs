@@ -5,7 +5,7 @@ public class Timer : IUpdateable
 {
     public bool IsActive { get; set; } = true;
 
-    public int Id { get; private set; }
+    public int Id { get; }
 
     private float length;
     private bool isLooping;
