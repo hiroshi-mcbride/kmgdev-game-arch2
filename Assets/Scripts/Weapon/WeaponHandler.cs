@@ -10,16 +10,22 @@ using UnityEngine;
 public class WeaponHandler : IUpdateable
 {
     public bool IsActive { get; set; } = true;
-
     public int Id { get; }
 
+    private List<IWeapon> weapons = new();
     private IWeapon equippedWeapon;
-    public WeaponHandler(WeaponData[] _weaponDataObjects)
+    public WeaponHandler(params WeaponData[] _weaponDataAssets)
     {
         if (EventManager.InvokeCallback(new UpdateableCreatedEvent(this), out int id))
         {
             Id = id;
         }
+
+        foreach (WeaponData asset in _weaponDataAssets)
+        {
+            weapons.Add(new Weapon(asset));
+        }
+        EquipWeapon(0);
     }
 
 
@@ -38,7 +44,7 @@ public class WeaponHandler : IUpdateable
 
     private void EquipWeapon(int _n)
     {
-        //currentWeapon = new Weapon();
+        equippedWeapon = weapons[_n];
     }
 
     public void FixedUpdate() { }

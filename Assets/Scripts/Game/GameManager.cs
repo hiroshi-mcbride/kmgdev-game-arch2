@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -37,5 +38,10 @@ public class GameManager : MonoBehaviour, IStateRunner
     private void FixedUpdate()
     {
         updateManager.FixedUpdateAll();
+    }
+
+    private void LateUpdate()
+    {
+        updateManager.ProcessBuffer();
     }
 }

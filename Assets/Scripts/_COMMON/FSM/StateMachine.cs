@@ -10,7 +10,7 @@ public class StateMachine : IUpdateable
 
     public bool IsActive { get; set; } = true;
 
-    public int Id { get; private set; }
+    public int Id { get; }
 
     public StateMachine(params IState[] _states)
     {

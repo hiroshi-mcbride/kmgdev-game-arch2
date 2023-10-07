@@ -10,7 +10,6 @@ public class Projectile : BasePhysicsActor, IProjectile
         Actor.transform.rotation = Quaternion.Euler(mainCamera.forward);
         PhysicsBody = Actor.GetComponent<Rigidbody>();
         PhysicsBody.AddForce(Actor.transform.forward * _weaponData.BulletSpeed);
-        
     }
 
     public override void FixedUpdate()

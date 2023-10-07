@@ -38,9 +38,5 @@ public class Weapon : BaseActor, IWeapon
             canFire = false;
             ammo -= 1;
         }
-        else
-        {
-            
-        }
     }
 }

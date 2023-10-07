@@ -4,9 +4,11 @@ using System.Linq;
 
 public class UpdateManager
 {
+    private static int currentId;
     private Dictionary<int, IUpdateable> updateables = new();
-    private static int currentId = -1;
     private Func<UpdateableCreatedEvent, int> onUpdateableCreatedEventHandler;
+    private Stack<BufferedItem> createdObjectBuffer = new();
+    private Stack<int> destroyedObjectBuffer = new();
 
     public UpdateManager()
     {
@@ -35,16 +37,36 @@ public class UpdateManager
             }
         }
     }
+
+    public void ProcessBuffer()
+    {
+        while (createdObjectBuffer.Count > 0)
+        {
+            BufferedItem bufferedItem = createdObjectBuffer.Pop();
+            updateables.Add(bufferedItem.Id, bufferedItem.Updateable);
+        }
+    }
     
     private int OnUpdateableCreated(UpdateableCreatedEvent _event)
     {
         currentId++;
-        updateables.Add(currentId, _event.CreatedObject);
+        createdObjectBuffer.Push(new BufferedItem(currentId, _event.CreatedObject));
         return currentId;
     }
-
     ~UpdateManager()
     {
         EventManager.Unsubscribe(typeof(UpdateableCreatedEvent), onUpdateableCreatedEventHandler);
+    }
+
+    private struct BufferedItem
+    {
+        public int Id { get; }
+        public IUpdateable Updateable { get; }
+
+        public BufferedItem(int _id, IUpdateable _updateable)
+        {
+            Id = _id;
+            Updateable = _updateable;
+        }
     }
 }
