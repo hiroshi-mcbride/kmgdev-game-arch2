@@ -16,6 +16,7 @@ public class PlayState : AbstractState
         
         OwnerData.Write("scoreCounter", new ScoreCounter());
         weaponHandler = new WeaponHandler(OwnerData.Read<WeaponData[]>("weaponDataAssets"));
+        // player = new Player(OwnerData.Read<PlayerData>("playerData"));
     }
 
     public override void OnUpdate()

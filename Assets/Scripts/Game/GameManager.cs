@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviour, IStateRunner
     public Scratchpad ObjectData { get; private set; }
 
     [SerializeField] private WeaponData[] weaponDataAssets;
+
+    // PlayerData playerData;
     
     private StateMachine fsm;
     private UpdateManager updateManager;

@@ -18,7 +18,10 @@ public class UpdateManager
     {
         foreach (KeyValuePair<int, IUpdateable> updateable in updateables)
         {
-            updateable.Value.Update();
+            if (updateable.Value.IsActive) 
+            { 
+                updateable.Value.Update(); 
+            }
         }
     }
 
@@ -26,7 +29,10 @@ public class UpdateManager
     {
         foreach (KeyValuePair<int, IUpdateable> updateable in updateables)
         {
-            updateable.Value.FixedUpdate();
+            if (updateable.Value.IsActive)
+            {
+                updateable.Value.FixedUpdate();
+            }
         }
     }
     
