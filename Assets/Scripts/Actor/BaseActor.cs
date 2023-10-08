@@ -47,6 +47,11 @@ public abstract class BaseActor : IActor, IUpdateable, IDestroyable
     
     protected virtual void InitializeActor()
     {
+        Type[] interfaces = GetType().GetInterfaces();
+        foreach (Type i in interfaces)
+        {
+            Components.Add(i, this);
+        }
         ActorDirectory.Provide(this);
         EventManager.Invoke(new UpdateableCreatedEvent(this));
     }
