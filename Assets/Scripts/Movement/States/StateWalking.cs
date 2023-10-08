@@ -77,6 +77,7 @@ public class StateWalking : AbstractState
 
     public override void OnExit()
     {
+        UnSubscribeEvents();
         OwnerData.Delete("previousState");
         previousState = Player.MoveStates.Walking;
         OwnerData.Write("previousState", previousState);
@@ -135,7 +136,7 @@ public class StateWalking : AbstractState
         playerRigidbody.AddRelativeForce(new Vector3(xAxe, 0, zAxe) * walkForce);
     }
 
-    // Events
+    //Events
     private void SubscribeEvents()
     {
         EventManager.Subscribe(typeof(KeyWEvent), onKeyW);
@@ -143,6 +144,18 @@ public class StateWalking : AbstractState
         EventManager.Subscribe(typeof(KeySEvent), onKeyS);
         EventManager.Subscribe(typeof(KeyDEvent), onKeyD);
         EventManager.Subscribe(typeof(KeySpaceEvent), onKeySpace);
+    }
+    private void UnSubscribeEvents()
+    {
+        EventManager.Unsubscribe(typeof(KeyWEvent), onKeyW);
+        EventManager.Unsubscribe(typeof(KeyAEvent), onKeyA);
+        EventManager.Unsubscribe(typeof(KeySEvent), onKeyS);
+        EventManager.Unsubscribe(typeof(KeyDEvent), onKeyD);
+        EventManager.Unsubscribe(typeof(KeySpaceEvent), onKeySpace);
+    }
+    private void LinkEvents()
+    {
+        
     }
 
     // Switching States

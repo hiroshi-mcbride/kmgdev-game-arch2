@@ -38,6 +38,8 @@ public class StateJumping : AbstractState
 
     public override void OnEnter()
     {
+        LinkEvents();
+        SubscribeEvents();
         previousState = OwnerData.Read<Player.MoveStates>("previousState");
         Debug.Log("Current State : Jumping");
         Debug.Log("Previous State was : " + previousState.ToString());
@@ -63,6 +65,7 @@ public class StateJumping : AbstractState
     }
     public override void OnExit()
     {
+        UnSubscribeEvents();
         OwnerData.Delete("previousState");
         previousState = Player.MoveStates.Jumping;
         OwnerData.Write("previousState", previousState);
@@ -162,7 +165,7 @@ public class StateJumping : AbstractState
             Debug.DrawRay(playerBody.transform.position, playerBody.transform.TransformDirection(Vector3.right) * 1000, Color.red);
         }
     }
-    // events
+    //Events
     private void SubscribeEvents()
     {
         EventManager.Subscribe(typeof(KeyWEvent), onKeyW);
@@ -170,6 +173,18 @@ public class StateJumping : AbstractState
         EventManager.Subscribe(typeof(KeySEvent), onKeyS);
         EventManager.Subscribe(typeof(KeyDEvent), onKeyD);
         EventManager.Subscribe(typeof(KeySpaceEvent), onKeySpace);
+    }
+    private void UnSubscribeEvents()
+    {
+        EventManager.Unsubscribe(typeof(KeyWEvent), onKeyW);
+        EventManager.Unsubscribe(typeof(KeyAEvent), onKeyA);
+        EventManager.Unsubscribe(typeof(KeySEvent), onKeyS);
+        EventManager.Unsubscribe(typeof(KeyDEvent), onKeyD);
+        EventManager.Unsubscribe(typeof(KeySpaceEvent), onKeySpace);
+    }
+    private void LinkEvents()
+    {
+
     }
 
 

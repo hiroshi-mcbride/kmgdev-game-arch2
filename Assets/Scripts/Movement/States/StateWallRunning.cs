@@ -38,20 +38,26 @@ public class StateWallRunning : AbstractState
     }
     public override void OnEnter()
     {
+        LinkEvents();
+        SubscribeEvents();
         currentSubState = WallRunStates.WallRunning;
         Debug.Log("Current State : Wallrunning");
         PlayerSetup();
-
     }
     public override void OnUpdate()
     {
         base.OnUpdate();
 
+        //if (currentSubState == WallRunStates.WallRunning)
+        //{
+        //    CheckInput();
+        //}
+        //else
+        //{
+        //    CheckForWalls();
+        //}
+
         if (currentSubState == WallRunStates.WallRunning)
-        {
-            CheckInput();
-        }
-        else
         {
             CheckForWalls();
         }
@@ -60,10 +66,14 @@ public class StateWallRunning : AbstractState
     public override void OnFixedUpdate()
     {
         base.OnFixedUpdate();
-
+        if (currentSubState == WallRunStates.WallRunning)
+        {
+            CheckForWalls();
+        }
     }
     public override void OnExit()
     {
+        UnSubscribeEvents();
         OwnerData.Delete("previousState");
         previousState = Player.MoveStates.WallRunning;
         OwnerData.Write("previousState", previousState);
@@ -95,6 +105,34 @@ public class StateWallRunning : AbstractState
      | RigidbodyConstraints.FreezeRotationY
      | RigidbodyConstraints.FreezePositionY;
     }
+
+    private void AKeyIsPressed(KeyAEvent _event)
+    {
+        if (currentSubState == WallRunStates.WallRunning)
+        {
+            AKey = CalculateInput(KeyCode.A);
+        }
+    }
+    private void DKeyIsPressed(KeyDEvent _event)
+    {
+        if (currentSubState == WallRunStates.WallRunning)
+        {
+            DKey = CalculateInput(KeyCode.D);
+        }
+    }
+    private void SpaceKeyisPressed(KeySpaceEvent _event)
+    {
+        if (currentSubState == WallRunStates.WallRunning)
+        {
+            ResetTimer();
+            JumpFromWall();
+            TurnOnYPos();
+            currentSubState = WallRunStates.InAir;
+        }
+    }
+
+
+
     private void CheckInput()
     {
         //WKey = CalculateInput(KeyCode.W);
@@ -113,17 +151,28 @@ public class StateWallRunning : AbstractState
     }
     private int CalculateInput(KeyCode _keyCode)
     {
+        //int value;
+        //if (Input.GetKey(_keyCode))
+        //{
+        //    if (_keyCode == KeyCode.W || _keyCode == KeyCode.D)
+        //    {
+        //        value = 1;
+        //    }
+        //    else
+        //    {
+        //        value = -1;
+        //    }
+        //}
+        //else
+        //{
+        //    value = 0;
+        //}
+
         int value;
-        if (Input.GetKey(_keyCode))
+
+        if (_keyCode == KeyCode.W || _keyCode == KeyCode.D)
         {
-            if (_keyCode == KeyCode.W || _keyCode == KeyCode.D)
-            {
-                value = 1;
-            }
-            else
-            {
-                value = -1;
-            }
+            value = 1;
         }
         else
         {
@@ -189,6 +238,31 @@ public class StateWallRunning : AbstractState
     {
         playerRigidbody.velocity = new Vector3(1, 1, 10);
 
+    }
+
+
+    //Events
+    private void SubscribeEvents()
+    {
+        EventManager.Subscribe(typeof(KeyWEvent), onKeyW);
+        EventManager.Subscribe(typeof(KeyAEvent), onKeyA);
+        EventManager.Subscribe(typeof(KeySEvent), onKeyS);
+        EventManager.Subscribe(typeof(KeyDEvent), onKeyD);
+        EventManager.Subscribe(typeof(KeySpaceEvent), onKeySpace);
+    }
+    private void UnSubscribeEvents()
+    {
+        EventManager.Unsubscribe(typeof(KeyWEvent), onKeyW);
+        EventManager.Unsubscribe(typeof(KeyAEvent), onKeyA);
+        EventManager.Unsubscribe(typeof(KeySEvent), onKeyS);
+        EventManager.Unsubscribe(typeof(KeyDEvent), onKeyD);
+        EventManager.Unsubscribe(typeof(KeySpaceEvent), onKeySpace);
+    }
+    private void LinkEvents()
+    {
+        onKeyA = AKeyIsPressed;
+        onKeyD = DKeyIsPressed;
+        onKeySpace = SpaceKeyisPressed;
     }
 
     //Timersd
