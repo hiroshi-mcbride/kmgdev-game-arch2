@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 
 public class ObjectPool<T> where T : IPoolable
 {
@@ -32,6 +33,12 @@ public class ObjectPool<T> where T : IPoolable
         activePool.Remove(_item);
         _item.OnDisableObject();
         inactivePool.Add(_item);
+    }
+
+    public void ClearAll()
+    {
+        activePool.Clear();
+        inactivePool.Clear();
     }
     
     private T AddNewItemToPool()

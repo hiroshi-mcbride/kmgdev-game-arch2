@@ -6,4 +6,10 @@
 public abstract class BasePhysicsActor : BaseActor
 {
     public Rigidbody PhysicsBody { get; protected set; }
+
+    protected override void InitializeActor()
+    {
+        AddComponent(PhysicsBody);
+        base.InitializeActor();
+    }
 }

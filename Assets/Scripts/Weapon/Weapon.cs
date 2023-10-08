@@ -10,8 +10,9 @@ public class Weapon : BaseActor, IWeapon
     private int ammo;
     private Timer fireRateTimer;
     private bool canFire = true;
+    private ObjectPool<Projectile> projectilePool;
 
-    public Weapon(WeaponData _weaponData) : base()
+    public Weapon(WeaponData _weaponData)
     {
         weaponData = _weaponData;
         SceneObject = GameObject.Instantiate(weaponData.Prefab, Camera.main.transform);
@@ -22,7 +23,8 @@ public class Weapon : BaseActor, IWeapon
         Action enableFire = () => canFire = true;
         fireRateTimer = new Timer(1 / weaponData.FireRate, enableFire, false);
 
-        InitializeActor();
+        projectilePool = ServiceLocator<ObjectPool<Projectile>>.Locate();
+        base.InitializeActor();
     }
 
     public void Fire()
@@ -34,7 +36,8 @@ public class Weapon : BaseActor, IWeapon
 
         if (ammo > 0)
         {
-            Projectile projectile = new(weaponData);
+            Projectile projectile = projectilePool.RequestObject();
+            projectile.Initialize(weaponData.Bullet);
             Debug.Log("Bang!");
             fireRateTimer.Start();
             canFire = false;
