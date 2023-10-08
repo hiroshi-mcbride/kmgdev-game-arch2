@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class InputHandler : IUpdateable
 {
-    public int Id => throw new System.NotImplementedException();
-
-    public bool IsActive { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+    public bool IsActive { get; set; } = true;
 
     public delegate void MovementInput();
     public event MovementInput OnKeyW;
@@ -16,14 +14,21 @@ public class InputHandler : IUpdateable
     public event MovementInput OnKeyLeftShift;
     public event MovementInput OnSpace;
 
+    public InputHandler()
+    {
+        EventManager.Invoke(new UpdateableCreatedEvent(this));
+    }
 
     public void Update()
     {
-        Debug.Log("test");
+        //if(Input.GetKeyDown(KeyCode.W))
+        //{
+        //    EventManager.Invoke(new KeyAEvent());
+        //}
     } 
 
     public void FixedUpdate()
     {
-        throw new System.NotImplementedException();
+
     }
 }

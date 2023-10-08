@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class Player : BasePhysicsActor, IStateRunner
@@ -8,21 +9,25 @@ public class Player : BasePhysicsActor, IStateRunner
     private StateMachine playerMovementFSM;
 
     private PlayerData playerData;
-    private GameObject playerPrefab;
-    private Rigidbody playerRigidbody;
+    private GameObject playerDataPrefab;
 
-    public Player(/*PlayerData _PlayerDataAssets*/)
+
+    public Player(PlayerData _PlayerDataAssets)
     {
-        //playerData = _PlayerDataAssets;
-
-        //PlayerSetup();
-        MakeFSM();
-
-        //ObjectData = new Scratchpad();
+        ObjectData = new Scratchpad();
         //ObjectData.Write("PlayerDataAssets", _PlayerDataAssets);
 
+        playerData = _PlayerDataAssets;
 
+        SceneObject = GameObject.Instantiate(playerData.PlayerPrefab);
+        playerDataPrefab = SceneObject;
 
+        PhysicsBody = playerDataPrefab.GetComponent<Rigidbody>();
+        ObjectData.Write("playerDataPrefab", playerDataPrefab);
+
+        MakeFSM();
+
+        InitializeActor();
     }
 
     private void MakeFSM()
@@ -36,10 +41,6 @@ public class Player : BasePhysicsActor, IStateRunner
 
 
         playerMovementFSM.SwitchState(typeof(StateStanding));
-
-
-        // fsm.EnterSt
-        //InitializeActor();
 
     }
 

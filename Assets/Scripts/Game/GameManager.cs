@@ -27,9 +27,8 @@ public class GameManager : MonoBehaviour, IStateRunner
 
         ObjectData = new Scratchpad();
         ObjectData.Write("weaponDataAssets", weaponDataAssets);
+        ObjectData.Write("PlayerData", playerData);
 
-        //PlayerDataPad = new Scratchpad();
-        //PlayerDataPad.Write("PlayerData", playerData);
 
         inputHandler = new InputHandler();
 

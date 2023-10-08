@@ -16,6 +16,7 @@ public class StateJumping : AbstractState
     private int counter = 0;
     private int counterMax = 100;
     private Vector3 beginPos;
+    private float JumpForce = 300f;
 
 
 
@@ -25,6 +26,8 @@ public class StateJumping : AbstractState
     {
         statmachine = _ownerStateMachine;
         checkIfGrounded = false;
+        TempPlayer = OwnerData.Read<GameObject>("playerDataPrefab");
+        playerRigidbody = TempPlayer.GetComponent<Rigidbody>();
     }
 
     public override void OnEnter()
@@ -42,16 +45,28 @@ public class StateJumping : AbstractState
     public override void OnFixedUpdate()
     {
         base.OnFixedUpdate();
+        CheckIfGrounded();
 
-        //playerRigidbody.AddForce(Vector3.right * 3);
 
+
+    }
+    public override void OnExit()
+    {
+        //GameObject.Destroy(TempPlayer);
+    }
+    private void Jump()
+    {
+        playerRigidbody.AddForce(Vector3.up * JumpForce);
+    }
+    private void CheckIfGrounded()
+    {
         if (checkIfGrounded == true)
         {
             RaycastHit hit;
             // Does the ray intersect any objects excluding the player layer
             if (Physics.Raycast(TempPlayer.transform.position, TempPlayer.transform.TransformDirection(Vector3.down).normalized, out hit, 2.0f))
             {
-                Debug.Log("Did Hit");
+                //Debug.Log("Did Hit");
                 if (!DecideIfMoving())
                 {
                     checkIfGrounded = false;
@@ -68,25 +83,16 @@ public class StateJumping : AbstractState
             }
             else
             {
-                Debug.DrawRay(TempPlayer.transform.position, TempPlayer.transform.TransformDirection(Vector3.down) * 1, Color.white);
-                Debug.Log("Did not Hit");
+                //Debug.Log("Did not Hit");
             }
         }
     }
-    public override void OnExit()
-    {
-        GameObject.Destroy(TempPlayer);
-    }
-    private void Jump()
-    {
-        playerRigidbody.AddForce(Vector3.up * 500.0f);
-    }
     private void PlayerSetup()
     {
-        TempPlayer = GameObject.CreatePrimitive(PrimitiveType.Capsule);
-        TempPlayer.transform.position = new Vector3(2, 1, 4);
-        TempPlayer.AddComponent<Rigidbody>();
-        playerRigidbody = TempPlayer.GetComponent<Rigidbody>();
+        //TempPlayer = GameObject.CreatePrimitive(PrimitiveType.Capsule);
+        //TempPlayer.transform.position = new Vector3(2, 1, 4);
+        //TempPlayer.AddComponent<Rigidbody>();
+        //playerRigidbody = TempPlayer.GetComponent<Rigidbody>();
         playerRigidbody.constraints = RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationX;
 
         beginPos = TempPlayer.transform.position;
