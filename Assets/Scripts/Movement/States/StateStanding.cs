@@ -20,11 +20,30 @@ public class StateStanding : AbstractState
     }
     public override void OnEnter()
     {
+        Debug.Log("Switched to Standing");
+
     }
 
     public override void OnUpdate()
     {
         base.OnUpdate();
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            SwitchToWalking();
+        }
+        else if (Input.GetKeyUp(KeyCode.A))
+        {
+            SwitchToWalking();
+        }
+        else if (Input.GetKeyDown(KeyCode.S))
+        {
+            SwitchToWalking();
+        }
+        else if (Input.GetKeyUp(KeyCode.D))
+        {
+            SwitchToWalking();
+        }
+
 
         if (Input.GetKeyUp(KeyCode.Space))
         {
@@ -37,6 +56,7 @@ public class StateStanding : AbstractState
 
     public override void OnExit()
     {
+
     }
 
 

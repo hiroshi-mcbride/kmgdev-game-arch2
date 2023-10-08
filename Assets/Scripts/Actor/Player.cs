@@ -15,7 +15,7 @@ public class Player : BasePhysicsActor, IStateRunner
     {
         //playerData = _PlayerDataAssets;
 
-        PlayerSetup();
+        //PlayerSetup();
         MakeFSM();
 
         //ObjectData = new Scratchpad();
@@ -30,6 +30,11 @@ public class Player : BasePhysicsActor, IStateRunner
         playerMovementFSM = new StateMachine();
         playerMovementFSM.AddState(new StateStanding(ObjectData, playerMovementFSM));
         playerMovementFSM.AddState(new StateJumping(ObjectData, playerMovementFSM));
+        playerMovementFSM.AddState(new StateWalking(ObjectData, playerMovementFSM));
+        playerMovementFSM.AddState(new StateRunning(ObjectData, playerMovementFSM));
+        playerMovementFSM.AddState(new StateWallRunning(ObjectData, playerMovementFSM));
+
+
         playerMovementFSM.SwitchState(typeof(StateStanding));
 
 
@@ -38,21 +43,21 @@ public class Player : BasePhysicsActor, IStateRunner
 
     }
 
-    private void PlayerSetup()
-    {
-        GameObject capsule = GameObject.CreatePrimitive(PrimitiveType.Capsule);
-        capsule.transform.position = new Vector3(2, 1, 0);
-        capsule.AddComponent<Rigidbody>();
-        playerRigidbody = capsule.GetComponent<Rigidbody>();
+    //private void PlayerSetup()
+    //{
+    //    GameObject capsule = GameObject.CreatePrimitive(PrimitiveType.Capsule);
+    //    capsule.transform.position = new Vector3(2, 1, 0);
+    //    capsule.AddComponent<Rigidbody>();
+    //    playerRigidbody = capsule.GetComponent<Rigidbody>();
 
-        //playerRigidbody.AddForce(Vector3.up * 1000.0f);
-
-
+    //    //playerRigidbody.AddForce(Vector3.up * 1000.0f);
 
 
-        Debug.Log("PALYERiNSTANTIATE");
-        //playerPrefab = playerData.PlayerPrefab;
-        //GameObject.Instantiate(playerPrefab);
 
-    }
+
+    //    Debug.Log("PALYERiNSTANTIATE");
+    //    //playerPrefab = playerData.PlayerPrefab;
+    //    //GameObject.Instantiate(playerPrefab);
+
+    //}
 }
