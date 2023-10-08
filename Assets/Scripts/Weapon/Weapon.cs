@@ -12,7 +12,7 @@ public class Weapon : BaseActor, IWeapon
     private bool canFire = true;
     private ObjectPool<Projectile> projectilePool;
 
-    public Weapon(WeaponData _weaponData)
+    public Weapon(WeaponData _weaponData, ObjectPool<Projectile> _projectilePool)
     {
         weaponData = _weaponData;
         SceneObject = GameObject.Instantiate(weaponData.Prefab, Camera.main.transform);
@@ -23,7 +23,7 @@ public class Weapon : BaseActor, IWeapon
         Action enableFire = () => canFire = true;
         fireRateTimer = new Timer(1 / weaponData.FireRate, enableFire, false);
 
-        projectilePool = ServiceLocator<ObjectPool<Projectile>>.Locate();
+        projectilePool = _projectilePool;
         base.InitializeActor();
     }
 

@@ -15,7 +15,7 @@ public class PlayState : AbstractState
         base.OnEnter();
         
         OwnerData.Write("scoreCounter", new ScoreCounter());
-        ServiceLocator<ObjectPool<Projectile>>.Provide(new ObjectPool<Projectile>());
+        EnemyAggregator.AggregateAll();
         weaponHandler = new WeaponHandler(OwnerData.Read<WeaponData[]>("weaponDataAssets"));
         //player = new Player(OwnerData.Read<PlayerData>("PlayerData"));
         player = new Player();

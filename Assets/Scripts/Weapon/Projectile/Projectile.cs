@@ -1,6 +1,9 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 public class Projectile : BasePhysicsActor, IPoolable
 {
+    public Delegate ReturnToPool { get; set; }
+    
     private float damage;
     private float radius;
     private Transform mainCamera;
@@ -14,23 +17,23 @@ public class Projectile : BasePhysicsActor, IPoolable
     
     public void Initialize(ProjectileData _projectileData)
     {
+        damage = _projectileData.Damage;
+        radius = _projectileData.Radius;
+        
         Vector3 forward = mainCamera.forward;
-        SceneObject.transform.position = mainCamera.position;
+        SceneObject.transform.position = mainCamera.position + forward * 5.0f;
         SceneObject.transform.rotation = Quaternion.Euler(forward);
-        SceneObject.transform.localScale = Vector3.one * (radius * 0.5f);
+        SceneObject.transform.localScale = Vector3.one * radius;
         
         PhysicsBody.useGravity = _projectileData.HasGravity;
         PhysicsBody.velocity = Vector3.zero;
         PhysicsBody.AddForce(SceneObject.transform.forward * _projectileData.Speed);
-        
-        damage = _projectileData.Damage;
-        radius = _projectileData.Radius;
     }
 
     public override void FixedUpdate()
     {
         Collider[] hitColliders = new Collider[8];
-        int numColliders = Physics.OverlapSphereNonAlloc(SceneObject.transform.position, radius, hitColliders);
+        int numColliders = Physics.OverlapSphereNonAlloc(SceneObject.transform.position, radius, hitColliders, 1<<6);
         if (numColliders > 0)
         {
             for (int i = 0; i < numColliders; i++)
@@ -40,11 +43,8 @@ public class Projectile : BasePhysicsActor, IPoolable
                     actor.GetComponent<IDamageable>()?.TakeDamage(damage);
                 }
             }
+            ReturnToPool.DynamicInvoke(this);
         }
-    }
-
-    public void OnHit()
-    {
     }
 
     public void OnEnableObject()

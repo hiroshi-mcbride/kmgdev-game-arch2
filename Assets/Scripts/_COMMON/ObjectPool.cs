@@ -6,6 +6,12 @@ public class ObjectPool<T> where T : IPoolable
 {
     private List<T> activePool = new();
     private List<T> inactivePool = new();
+    private Action<T> returnToPoolEventHandler;
+    
+    public ObjectPool()
+    {
+        returnToPoolEventHandler = ReturnObjectToPool;
+    }
 
     public T RequestObject()
     {
@@ -44,6 +50,7 @@ public class ObjectPool<T> where T : IPoolable
     private T AddNewItemToPool()
     {
         var instance = (T)Activator.CreateInstance(typeof(T));
+        instance.ReturnToPool = returnToPoolEventHandler;
         inactivePool.Add(instance);
         return instance;
     }
