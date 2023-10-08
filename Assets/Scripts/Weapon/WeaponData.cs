@@ -11,10 +11,8 @@ public class WeaponData : ScriptableObject
     public Vector3 Position;
     public Vector3 Rotation;
     [Min(1)]public int Ammo;
-    public float Damage;
     [Min(0.01f)]public float FireRate;
     public bool IsAutomatic;
-    
-    public GameObject BulletPrefab;
-    public float BulletSpeed;
+
+    public ProjectileData Bullet;
 }

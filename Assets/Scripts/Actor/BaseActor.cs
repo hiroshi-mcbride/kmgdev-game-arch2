@@ -40,14 +40,14 @@ public abstract class BaseActor : IActor, IUpdateable, IDestroyable
 
     public virtual void Destroy()
     {
-        ActorLocator.Remove(SceneObject);
+        ActorDirectory.Remove(SceneObject);
         GameObject.Destroy(SceneObject);
         EventManager.Invoke(new UpdateableDestroyedEvent(this));
     }
     
     protected virtual void InitializeActor()
     {
-        ActorLocator.Provide(this);
+        ActorDirectory.Provide(this);
         EventManager.Invoke(new UpdateableCreatedEvent(this));
     }
 }

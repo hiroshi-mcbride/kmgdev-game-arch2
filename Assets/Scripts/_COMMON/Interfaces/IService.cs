@@ -1,4 +1,4 @@
 ﻿public interface IService
 {
-    public IService NullService();
+    public IService NullService { get; }
 }

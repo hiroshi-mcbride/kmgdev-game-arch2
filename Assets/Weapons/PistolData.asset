@@ -16,8 +16,6 @@ MonoBehaviour:
   Position: {x: 0.8, y: -0.7, z: 1.7}
   Rotation: {x: 0, y: -90, z: 0}
   Ammo: 99
-  Damage: 2
   FireRate: 6
   IsAutomatic: 0
-  BulletPrefab: {fileID: 959458154241005023, guid: 279b3ef4ca7a94641a3f30cc91df9700, type: 3}
-  BulletSpeed: 2048
+  Bullet: {fileID: 11400000, guid: b4028ad93b51d4a43896419c157d9fab, type: 2}

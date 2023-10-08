@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// Helps to locate any Actor by its GameObject
 /// </summary>
-public static class ActorLocator
+public static class ActorDirectory
 {
     private static Dictionary<GameObject, IActor> directory = new();
     

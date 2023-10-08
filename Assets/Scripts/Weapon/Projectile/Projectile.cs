@@ -1,36 +1,47 @@
 ﻿using UnityEngine;
 public class Projectile : BasePhysicsActor, IPoolable
 {
-    
-    public Projectile(WeaponData _weaponData)
+    private float damage;
+    private float radius;
+    private Transform mainCamera;
+    public Projectile()
     {
-        Transform mainCamera = Camera.main.transform;
-        SceneObject = GameObject.Instantiate(_weaponData.BulletPrefab);
+        SceneObject = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        PhysicsBody = SceneObject.AddComponent<Rigidbody>();
+        base.InitializeActor();
+        mainCamera = Camera.main.transform;
+    }
+    
+    public void Initialize(ProjectileData _projectileData)
+    {
         SceneObject.transform.position = mainCamera.position + (mainCamera.forward * 5.0f);
         SceneObject.transform.rotation = Quaternion.Euler(mainCamera.forward);
-        PhysicsBody = SceneObject.GetComponent<Rigidbody>();
-        PhysicsBody.AddForce(SceneObject.transform.forward * _weaponData.BulletSpeed);
-        InitializeActor();
+        PhysicsBody.useGravity = _projectileData.HasGravity;
+        PhysicsBody.velocity = Vector3.zero;
+        PhysicsBody.AddForce(SceneObject.transform.forward * _projectileData.Speed);
+        damage = _projectileData.Damage;
+        radius = _projectileData.Radius;
+        SceneObject.transform.localScale = Vector3.one * (radius * 0.5f);
     }
 
     public override void FixedUpdate()
     {
         Collider[] hitColliders = new Collider[8];
-        int numColliders = Physics.OverlapSphereNonAlloc(SceneObject.transform.position, 0.5f, hitColliders);
-        for (int i = 0; i < numColliders; i++)
+        int numColliders = Physics.OverlapSphereNonAlloc(SceneObject.transform.position, radius, hitColliders);
+        if (numColliders > 0)
         {
-            if (ActorLocator.TryLocate(hitColliders[i].gameObject, out IActor actor))
+            for (int i = 0; i < numColliders; i++)
             {
-                actor.GetComponent<IDamageable>()?.TakeDamage(1.0f);
+                if (ActorDirectory.TryLocate(hitColliders[i].gameObject, out IActor actor))
+                {
+                    actor.GetComponent<IDamageable>()?.TakeDamage(damage);
+                }
             }
-            
         }
-
     }
 
     public void OnHit()
     {
-        
     }
 
     public void OnEnableObject()

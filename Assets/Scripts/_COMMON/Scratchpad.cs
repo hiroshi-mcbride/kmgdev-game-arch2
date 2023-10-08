@@ -33,19 +33,14 @@ public class Scratchpad
         if (!containsValue)
         {
             Debug.LogError($"Can't read: Scratchpad does not contain entry with name {_name}.");
-            return default;
         }
-
-        if (value == null)
+        else if (value == null)
         {
             Debug.LogError($"Can't read: Scratchpad entry with name {_name} is null.");
-            return default;
         }
-
-        if (value.GetType() != typeof(T))
+        else if (value.GetType() != typeof(T))
         {
             Debug.LogError($"Can't read: Type mismatch between {typeof(T)} and entry with name {_name}.");
-            return default;
         }
 
         return (T)value;
