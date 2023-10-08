@@ -21,7 +21,7 @@ public class Projectile : BasePhysicsActor, IPoolable
         {
             if (ActorLocator.TryLocate(hitColliders[i].gameObject, out IActor actor))
             {
-                
+                actor.GetComponent<IDamageable>()?.TakeDamage(1.0f);
             }
             
         }
