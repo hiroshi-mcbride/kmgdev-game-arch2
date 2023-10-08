@@ -14,14 +14,17 @@ public class Projectile : BasePhysicsActor, IPoolable
     
     public void Initialize(ProjectileData _projectileData)
     {
-        SceneObject.transform.position = mainCamera.position + (mainCamera.forward * 5.0f);
-        SceneObject.transform.rotation = Quaternion.Euler(mainCamera.forward);
+        Vector3 forward = mainCamera.forward;
+        SceneObject.transform.position = mainCamera.position;
+        SceneObject.transform.rotation = Quaternion.Euler(forward);
+        SceneObject.transform.localScale = Vector3.one * (radius * 0.5f);
+        
         PhysicsBody.useGravity = _projectileData.HasGravity;
         PhysicsBody.velocity = Vector3.zero;
         PhysicsBody.AddForce(SceneObject.transform.forward * _projectileData.Speed);
+        
         damage = _projectileData.Damage;
         radius = _projectileData.Radius;
-        SceneObject.transform.localScale = Vector3.one * (radius * 0.5f);
     }
 
     public override void FixedUpdate()
