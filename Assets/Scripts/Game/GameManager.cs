@@ -16,10 +16,10 @@ public class GameManager : MonoBehaviour, IStateRunner
     [SerializeField] private EnemyData enemyData;
     [SerializeField] private float playTime;
 
-    private InputHandler inputHandler;
 
     // PlayerData playerData;
     
+    private InputHandler inputHandler;
     private StateMachine fsm;
     private UpdateManager updateManager;
 

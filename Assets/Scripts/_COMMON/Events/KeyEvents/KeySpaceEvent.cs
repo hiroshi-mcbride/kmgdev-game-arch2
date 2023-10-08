@@ -1,5 +1,5 @@
 ﻿
-public class KeySpaceEvent
+public struct KeySpaceEvent
 {
 }
 

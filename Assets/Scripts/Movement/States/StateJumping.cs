@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class StateJumping : AbstractState
@@ -11,6 +12,13 @@ public class StateJumping : AbstractState
     private float JumpForce = 300f;
 
     private Player.MoveStates previousState;
+
+    private Action<KeyWEvent> onKeyW;
+    private Action<KeyAEvent> onKeyA;
+    private Action<KeySEvent> onKeyS;
+    private Action<KeyDEvent> onKeyD;
+    private Action<KeySpaceEvent> onKeySpace;
+    private Action<KeyLeftShiftEvent> onLeftShift;
 
 
 
@@ -147,6 +155,16 @@ public class StateJumping : AbstractState
             Debug.DrawRay(playerBody.transform.position, playerBody.transform.TransformDirection(Vector3.right) * 1000, Color.red);
         }
     }
+    // events
+    private void SubscribeEvents()
+    {
+        EventManager.Subscribe(typeof(KeyWEvent), onKeyW);
+        EventManager.Subscribe(typeof(KeyAEvent), onKeyA);
+        EventManager.Subscribe(typeof(KeySEvent), onKeyS);
+        EventManager.Subscribe(typeof(KeyDEvent), onKeyD);
+        EventManager.Subscribe(typeof(KeySpaceEvent), onKeySpace);
+    }
+
 
     // Switch States
     private void SwitchToStanding()
