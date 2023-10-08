@@ -31,7 +31,6 @@ public class ObjectPool<T> where T : IPoolable
 
         activePool.Remove(_item);
         _item.OnDisableObject();
-        _item.IsActive = false;
         inactivePool.Add(_item);
     }
     
@@ -45,7 +44,6 @@ public class ObjectPool<T> where T : IPoolable
     private T ActivateItem(T _item)
     {
         _item.OnEnableObject();
-        _item.IsActive = true;
         if (inactivePool.Contains(_item))
         {
             inactivePool.Remove(_item);
