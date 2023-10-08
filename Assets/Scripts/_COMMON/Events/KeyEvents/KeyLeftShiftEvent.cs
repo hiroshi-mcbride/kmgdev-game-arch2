@@ -1,5 +1,5 @@
 ﻿
-public class KeyLeftShiftEvent
+public struct KeyLeftShiftEvent
 {
 }
 

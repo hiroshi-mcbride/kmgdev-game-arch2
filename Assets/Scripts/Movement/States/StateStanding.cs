@@ -10,8 +10,15 @@ public class StateStanding : AbstractState
     private Scratchpad PlayerData;
 
     private Player.MoveStates previousState;
-   
-    
+
+    private Action<KeyWEvent> onKeyW;
+    private Action<KeyAEvent> onKeyA;
+    private Action<KeySEvent> onKeyS;
+    private Action<KeyDEvent> onKeyD;
+    private Action<KeySpaceEvent> onKeySpace;
+    private Action<KeyLeftShiftEvent> onLeftShift;
+
+
 
     //public bool IsActive { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
@@ -25,6 +32,8 @@ public class StateStanding : AbstractState
     public override void OnEnter()
     {
         Debug.Log("Current State : Standing");
+        onLeftShift = EventTest;
+        EventManager.Subscribe(typeof(KeyLeftShiftEvent), onLeftShift);
 
     }
 
@@ -44,7 +53,7 @@ public class StateStanding : AbstractState
 
     private void CheckInput()
     {
-        
+
         if (Input.GetKey(KeyCode.W))
         {
             SwitchToWalking();
@@ -69,6 +78,16 @@ public class StateStanding : AbstractState
         }
     }
 
+    //private void EventTest()
+    //{
+    //    Debug.Log("het werkt!!");
+    //}
+    private void EventTest(KeyLeftShiftEvent _event)
+    {
+        Debug.Log("het werkt!!");
+
+    }
+
 
     //SwitchStates
     private void SwitchToWalking()
@@ -84,6 +103,8 @@ public class StateStanding : AbstractState
         Console.WriteLine("Switch to Jumping");
         stateMachine.SwitchState(typeof(StateJumping));
     }
+
+
 
 
 

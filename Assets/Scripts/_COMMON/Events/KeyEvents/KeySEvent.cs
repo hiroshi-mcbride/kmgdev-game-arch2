@@ -1,5 +1,5 @@
 ﻿
-public class KeySEvent
+public struct KeySEvent
 {
 }
 

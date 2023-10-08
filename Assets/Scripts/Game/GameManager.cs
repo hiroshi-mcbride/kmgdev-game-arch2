@@ -14,10 +14,10 @@ public class GameManager : MonoBehaviour, IStateRunner
     [SerializeField] private WeaponData[] weaponDataAssets;
     [SerializeField] private PlayerData playerData;
 
-    private InputHandler inputHandler;
 
     // PlayerData playerData;
     
+    private InputHandler inputHandler;
     private StateMachine fsm;
     private UpdateManager updateManager;
 
