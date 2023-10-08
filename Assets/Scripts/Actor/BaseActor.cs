@@ -52,6 +52,7 @@ public abstract class BaseActor : IActor, IUpdateable, IDestroyable
         {
             Components.Add(i, this);
         }
+        
         ActorDirectory.Provide(this);
         EventManager.Invoke(new UpdateableCreatedEvent(this));
     }

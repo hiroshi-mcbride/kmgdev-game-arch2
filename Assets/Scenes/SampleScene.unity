@@ -399,6 +399,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6e3a42908ecaba046a72aeb8ce791ccf, type: 2}
   playerData: {fileID: 11400000, guid: 250076c550bb4ee4c803c01c00d007ff, type: 2}
   enemyData: {fileID: 11400000, guid: 15b53a678e4ec6344ba3b08e12694786, type: 2}
+  playTime: 2
 --- !u!4 &1135092466
 Transform:
   m_ObjectHideFlags: 0

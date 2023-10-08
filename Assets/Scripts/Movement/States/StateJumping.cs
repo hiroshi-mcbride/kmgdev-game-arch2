@@ -1,10 +1,3 @@
-using JetBrains.Annotations;
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Text.RegularExpressions;
-using Unity.VisualScripting;
-using UnityEditorInternal;
 using UnityEngine;
 
 public class StateJumping : AbstractState

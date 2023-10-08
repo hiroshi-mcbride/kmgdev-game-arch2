@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour, IStateRunner
     [SerializeField] private WeaponData[] weaponDataAssets;
     [SerializeField] private PlayerData playerData;
     [SerializeField] private EnemyData enemyData;
+    [SerializeField] private float playTime;
 
     private InputHandler inputHandler;
 
@@ -32,6 +33,7 @@ public class GameManager : MonoBehaviour, IStateRunner
         ObjectData.Write("weaponDataAssets", weaponDataAssets);
         ObjectData.Write("enemyData", enemyData);
         ObjectData.Write("PlayerData", playerData);
+        ObjectData.Write("playTime", playTime);
 
 
         inputHandler = new InputHandler();

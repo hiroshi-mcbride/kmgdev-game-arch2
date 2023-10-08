@@ -39,10 +39,12 @@ public class Timer : IUpdateable, IDestroyable
 
     public void Start() => isStarted = true;
     public void Pause() => isStarted = false;
-    public void Stop()
+    public float Stop()
     {
+        float timeLeft = currentTime;
         isStarted = false;
         currentTime = .0f;
+        return timeLeft;
     }
     
     private void RunTimer()
