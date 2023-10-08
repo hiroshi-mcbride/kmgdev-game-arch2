@@ -26,25 +26,38 @@ public class StateStanding : AbstractState
     {
         Debug.Log("Current State : Standing");
 
-
     }
 
     public override void OnUpdate()
     {
         base.OnUpdate();
+        CheckInput();
+
+
+    }
+    public override void OnExit()
+    {
+        OwnerData.Delete("previousState");
+        previousState = Player.MoveStates.Standing;
+        OwnerData.Write("previousState", previousState);
+    }
+
+    private void CheckInput()
+    {
+        
         if (Input.GetKey(KeyCode.W))
         {
             SwitchToWalking();
         }
-        else if (Input.GetKey(KeyCode.A))
+        if (Input.GetKey(KeyCode.A))
         {
             SwitchToWalking();
         }
-        else if (Input.GetKey(KeyCode.S))
+        if (Input.GetKey(KeyCode.S))
         {
             SwitchToWalking();
         }
-        else if (Input.GetKey(KeyCode.D))
+        if (Input.GetKey(KeyCode.D))
         {
             SwitchToWalking();
         }
@@ -54,24 +67,14 @@ public class StateStanding : AbstractState
         {
             SwitchToJumping();
         }
-
-
-
-    }
-
-    public override void OnExit()
-    {
-        OwnerData.Delete("previousState");
-        previousState = Player.MoveStates.Standing;
-        OwnerData.Write("previousState", previousState);
     }
 
 
+    //SwitchStates
     private void SwitchToWalking()
     {
         stateMachine.SwitchState(typeof(StateWalking));
     }
-
     private void SwitchToRunning()
     {
         stateMachine.SwitchState(typeof(StateRunning));

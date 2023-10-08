@@ -48,6 +48,7 @@ public class StateJumping : AbstractState
         base.OnFixedUpdate();
         CheckIfGrounded();
         CheckForWalls();
+        
 
 
 
@@ -62,6 +63,7 @@ public class StateJumping : AbstractState
     {
         playerRigidbody.AddForce(Vector3.up * JumpForce);
     }
+
     private void CheckIfGrounded()
     {
         if (checkIfGrounded == true)
@@ -121,9 +123,25 @@ public class StateJumping : AbstractState
 
     private void CheckForWalls()
     {
+        //Rechts \
         RaycastHit hit;
         // Does the ray intersect any objects excluding the player layer
-        if (Physics.Raycast(playerBody.transform.position, playerBody.transform.TransformDirection(Vector3.right).normalized, out hit, 1.5f))
+        if (Physics.Raycast(playerBody.transform.position, playerBody.transform.TransformDirection(Vector3.right).normalized, out hit, 2.0f))
+        {
+            Debug.DrawRay(playerBody.transform.position, playerBody.transform.TransformDirection(Vector3.right) * hit.distance, Color.yellow);
+            if (hit.transform.gameObject.layer == LayerMask.NameToLayer("WalkAbleWall") /*&& previousState == Player.MoveStates.Running*/)
+            {
+                SwitchToWallRunning();
+            }
+        }
+        else
+        {
+            Debug.DrawRay(playerBody.transform.position, playerBody.transform.TransformDirection(Vector3.right) * 1000, Color.red);
+        }
+
+        //links \
+
+        if (Physics.Raycast(playerBody.transform.position, playerBody.transform.TransformDirection(Vector3.right).normalized, out hit, 2.0f))
         {
             Debug.DrawRay(playerBody.transform.position, playerBody.transform.TransformDirection(Vector3.right) * hit.distance, Color.yellow);
             if (hit.transform.gameObject.layer == LayerMask.NameToLayer("WalkAbleWall") /*&& previousState == Player.MoveStates.Running*/)

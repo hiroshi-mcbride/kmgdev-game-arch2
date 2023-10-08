@@ -80,23 +80,8 @@ public class StateWalking : AbstractState
         playerRigidbody = playerBody.GetComponent<Rigidbody>();
         playerRigidbody.constraints = RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY;
     }
-    private void SwitchWalkStates()
-    {
-        if (playerRigidbody.velocity.magnitude < 1 && playerRigidbody.velocity.magnitude > 0 && currentState == Walkstates.walkState)
-        {
-            currentState = Walkstates.endWalkState;
-            SwitchtoStanding();
-        }
-        if (playerRigidbody.velocity.magnitude < 1 && playerRigidbody.velocity.magnitude > 0 && currentState == Walkstates.endWalkState)
-        {
-            currentState = Walkstates.beginWalkState;
-        }
-        if (playerRigidbody.velocity.magnitude > 5)
-        {
-            currentState = Walkstates.walkState;
-        }
-    }
 
+    //Movement
     private void CheckInput()
     {
         WKey = CalculateInput(KeyCode.W);
@@ -127,12 +112,9 @@ public class StateWalking : AbstractState
         {
             value = 0;
         }
-
-        Debug.Log(value);
         return value;
 
     }
-
     private void Walk()
     {
         float zAxe;
@@ -146,7 +128,23 @@ public class StateWalking : AbstractState
         playerRigidbody.AddRelativeForce(new Vector3(xAxe, 0, zAxe) * walkForce);
     }
     
-
+    // Switching States
+    private void SwitchWalkStates()
+    {
+        if (playerRigidbody.velocity.magnitude < 1 && playerRigidbody.velocity.magnitude > 0 && currentState == Walkstates.walkState)
+        {
+            currentState = Walkstates.endWalkState;
+            SwitchtoStanding();
+        }
+        if (playerRigidbody.velocity.magnitude < 1 && playerRigidbody.velocity.magnitude > 0 && currentState == Walkstates.endWalkState)
+        {
+            currentState = Walkstates.beginWalkState;
+        }
+        if (playerRigidbody.velocity.magnitude > 5)
+        {
+            currentState = Walkstates.walkState;
+        }
+    }
     private void SwitchtoStanding()
     {
         OwnerStateMachine.SwitchState(typeof(StateStanding));
