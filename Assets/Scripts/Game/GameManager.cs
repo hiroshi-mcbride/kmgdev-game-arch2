@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour, IStateRunner
 
     [SerializeField] private WeaponData[] weaponDataAssets;
     [SerializeField] private PlayerData playerData;
+    [SerializeField] private EnemyData enemyData;
 
     private InputHandler inputHandler;
 
@@ -27,6 +28,7 @@ public class GameManager : MonoBehaviour, IStateRunner
 
         ObjectData = new Scratchpad();
         ObjectData.Write("weaponDataAssets", weaponDataAssets);
+        ObjectData.Write("enemyData", enemyData);
 
         //PlayerDataPad = new Scratchpad();
         //PlayerDataPad.Write("PlayerData", playerData);
