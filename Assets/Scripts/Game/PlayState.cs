@@ -22,8 +22,8 @@ public class PlayState : AbstractState
             enemy.Initialize(OwnerData.Read<EnemyData>("enemyData"));
         }
         weaponHandler = new WeaponHandler(OwnerData.Read<WeaponData[]>("weaponDataAssets"));
-        //player = new Player(OwnerData.Read<PlayerData>("PlayerData"));
-        player = new Player();
+        player = new Player(OwnerData.Read<PlayerData>("PlayerData"));
+        //player = new Player();
     }
 
     public override void OnUpdate()

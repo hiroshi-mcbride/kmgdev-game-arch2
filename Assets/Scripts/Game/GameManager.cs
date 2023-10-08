@@ -24,14 +24,15 @@ public class GameManager : MonoBehaviour, IStateRunner
 
     private void Awake()
     {
+        
+
         updateManager = new UpdateManager();
 
         ObjectData = new Scratchpad();
         ObjectData.Write("weaponDataAssets", weaponDataAssets);
         ObjectData.Write("enemyData", enemyData);
+        ObjectData.Write("PlayerData", playerData);
 
-        //PlayerDataPad = new Scratchpad();
-        //PlayerDataPad.Write("PlayerData", playerData);
 
         inputHandler = new InputHandler();
 

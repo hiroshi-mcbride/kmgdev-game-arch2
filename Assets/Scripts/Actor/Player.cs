@@ -1,28 +1,43 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
-public class Player : BasePhysicsActor, IStateRunner
+public class Player : BasePhysicsActor, IStateRunner, IUpdateable
 {
     public Scratchpad ObjectData { get; private set; }
+    public enum MoveStates {Standing, Walking, Running, Jumping, WallRunning}
+    private MoveStates previousState; 
     private StateMachine playerMovementFSM;
 
     private PlayerData playerData;
-    private GameObject playerPrefab;
-    private Rigidbody playerRigidbody;
+    private GameObject playerDataPrefab;
 
-    public Player(/*PlayerData _PlayerDataAssets*/)
+    private float rotationSpeed = 2.0f;
+
+    
+
+
+    public Player(PlayerData _PlayerDataAssets)
     {
-        //playerData = _PlayerDataAssets;
-
-        //PlayerSetup();
-        MakeFSM();
-
-        //ObjectData = new Scratchpad();
+        //LockCursur();
+        ObjectData = new Scratchpad();
         //ObjectData.Write("PlayerDataAssets", _PlayerDataAssets);
 
+        playerData = _PlayerDataAssets;
 
+        SceneObject = GameObject.Instantiate(playerData.PlayerPrefab);
+        playerDataPrefab = SceneObject;
 
+        PhysicsBody = playerDataPrefab.GetComponent<Rigidbody>();
+        ObjectData.Write("playerDataPrefab", playerDataPrefab);
+
+        previousState = MoveStates.Standing;
+        ObjectData.Write("previousState", previousState); 
+
+        MakeFSM();
+
+        base.InitializeActor();
     }
 
     private void MakeFSM()
@@ -37,27 +52,19 @@ public class Player : BasePhysicsActor, IStateRunner
 
         playerMovementFSM.SwitchState(typeof(StateStanding));
 
+    }
 
-        // fsm.EnterSt
-        //InitializeActor();
+    private void LockCursur()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
 
     }
 
-    //private void PlayerSetup()
-    //{
-    //    GameObject capsule = GameObject.CreatePrimitive(PrimitiveType.Capsule);
-    //    capsule.transform.position = new Vector3(2, 1, 0);
-    //    capsule.AddComponent<Rigidbody>();
-    //    playerRigidbody = capsule.GetComponent<Rigidbody>();
-
-    //    //playerRigidbody.AddForce(Vector3.up * 1000.0f);
 
 
 
 
-    //    Debug.Log("PALYERiNSTANTIATE");
-    //    //playerPrefab = playerData.PlayerPrefab;
-    //    //GameObject.Instantiate(playerPrefab);
 
-    //}
+
 }
