@@ -1,0 +1,7 @@
+@startuml
+abstract class BasePhysicsActor {
+    + PhysicsBody : Rigidbody <<get>> <<protected set>>
+    # <<override>> InitializeActor() : void
+}
+BaseActor <|-- BasePhysicsActor
+@enduml

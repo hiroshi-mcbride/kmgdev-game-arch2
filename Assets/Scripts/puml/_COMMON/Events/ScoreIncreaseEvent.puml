@@ -1,0 +1,6 @@
+@startuml
+struct ScoreIncreaseEvent {
+    + Score : float <<get>>
+    + ScoreIncreaseEvent(_score:float)
+}
+@enduml

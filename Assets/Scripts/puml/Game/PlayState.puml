@@ -1,0 +1,15 @@
+@startuml
+class PlayState {
+    - weaponHandler : WeaponHandler
+    - player : Player
+    - enemyManager : EnemyManager
+    - onAllEnemiesKilledEventHandler : Action<AllEnemiesKilledEvent>
+    - gameTimer : Timer
+    + PlayState(_ownerData:Scratchpad, _ownerStateMachine:StateMachine)
+    + <<override>> OnEnter() : void
+    + <<override>> OnUpdate() : void
+    + <<override>> OnFixedUpdate() : void
+    + <<override>> OnExit() : void
+}
+AbstractState <|-- PlayState
+@enduml

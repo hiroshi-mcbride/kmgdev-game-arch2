@@ -1,0 +1,8 @@
+@startuml
+class Scratchpad {
+    - pad : Dictionary<string, object>
+    + Write(_name:string, _data:object, _overwrite:bool) : void
+    + Read(_name:string) : T
+    + Delete(_name:string) : void
+}
+@enduml

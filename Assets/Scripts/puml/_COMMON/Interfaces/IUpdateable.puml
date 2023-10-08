@@ -1,0 +1,7 @@
+@startuml
+interface IUpdateable {
+    Update() : void
+    FixedUpdate() : void
+}
+IToggleActive <|-- IUpdateable
+@enduml

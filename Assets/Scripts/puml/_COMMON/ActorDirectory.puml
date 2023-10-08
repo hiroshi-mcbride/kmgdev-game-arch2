@@ -1,0 +1,8 @@
+@startuml
+class ActorDirectory <<static>> {
+    - {static} directory : Dictionary<GameObject, IActor>
+    + {static} Provide(_actor:IActor) : void
+    + {static} TryLocate(_gameObject:GameObject, _actor:IActor) : bool
+    + {static} Remove(_gameObject:GameObject) : void
+}
+@enduml

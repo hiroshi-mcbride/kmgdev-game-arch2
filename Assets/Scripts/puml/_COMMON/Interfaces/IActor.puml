@@ -1,0 +1,7 @@
+@startuml
+interface IActor {
+    SceneObject : GameObject <<get>>
+    Components : Dictionary<Type, object> <<get>>
+    GetComponent() : T
+}
+@enduml

@@ -1,0 +1,6 @@
+@startuml
+struct UpdateableDestroyedEvent {
+    + DestroyedObject : IUpdateable <<get>>
+    + UpdateableDestroyedEvent(_destroyedObject:IUpdateable)
+}
+@enduml

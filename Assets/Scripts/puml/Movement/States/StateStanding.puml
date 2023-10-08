@@ -1,0 +1,30 @@
+@startuml
+class StateStanding {
+    - stateMachine : StateMachine
+    - PlayerData : Scratchpad
+    - previousState : Player.MoveStates
+    - w : int
+    - a : int
+    - s : int
+    - d : int
+    - onKeyW : Action<KeyWEvent>
+    - onKeyA : Action<KeyAEvent>
+    - onKeyS : Action<KeySEvent>
+    - onKeyD : Action<KeyDEvent>
+    - onKeySpace : Action<KeySpaceEvent>
+    - onLeftShift : Action<KeyLeftShiftEvent>
+    + StateStanding(_ownerData:Scratchpad, _ownerStateMachine:StateMachine)
+    + <<override>> OnEnter() : void
+    + <<override>> OnUpdate() : void
+    + <<override>> OnExit() : void
+    - CheckInput() : void
+    - CheckInputEvent() : void
+    - EventTest(_event:KeyLeftShiftEvent) : void
+    - SubscribeEvents() : void
+    - UnSubscribeEvents() : void
+    - LinkEvents() : void
+    - SwitchToWalking() : void
+    - SwitchToJumping(_event:KeySpaceEvent) : void
+}
+AbstractState <|-- StateStanding
+@enduml

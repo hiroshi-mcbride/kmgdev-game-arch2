@@ -1,0 +1,15 @@
+@startuml
+class WeaponHandler {
+    + IsActive : bool <<get>> <<set>> = true
+    - weapons : List<PlayerWeapon>
+    - equippedWeapon : PlayerWeapon
+    - projectilePool : ObjectPool<Projectile>
+    + WeaponHandler(_weaponDataAssets:WeaponData[])
+    + Update() : void
+    - EquipWeapon(_n:int) : void
+    + FixedUpdate() : void
+    + Destroy() : void
+}
+IUpdateable <|-- WeaponHandler
+IDestroyable <|-- WeaponHandler
+@enduml

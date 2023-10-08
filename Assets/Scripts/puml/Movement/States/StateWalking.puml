@@ -1,0 +1,48 @@
+@startuml
+class StateWalking {
+    - playerRigidbody : Rigidbody
+    - playerBody : GameObject
+    - camTransform : Transform
+    - previousState : Player.MoveStates
+    - currentState : Walkstates
+    - walkForce : float = 10.0f
+    - KeyW : bool
+    - KeyA : bool
+    - KeyS : bool
+    - KeyD : bool
+    - sensX : float
+    - sensY : float
+    - xRotation : float
+    - yRotation : float
+    - WKey : int
+    - AKey : int
+    - SKey : int
+    - DKey : int
+    - onKeyW : Action<KeyWEvent>
+    - onKeyA : Action<KeyAEvent>
+    - onKeyS : Action<KeySEvent>
+    - onKeyD : Action<KeyDEvent>
+    - onKeySpace : Action<KeySpaceEvent>
+    - onLeftShift : Action<KeyLeftShiftEvent>
+    + StateWalking(_ownerData:Scratchpad, _ownerStateMachine:StateMachine)
+    + <<override>> OnEnter() : void
+    + <<override>> OnUpdate() : void
+    + <<override>> OnFixedUpdate() : void
+    + <<override>> OnExit() : void
+    - PlayerSetup() : void
+    - CheckInput() : void
+    - CalculateInput(_keyCode:KeyCode) : int
+    - Walk() : void
+    - SubscribeEvents() : void
+    - SwitchWalkStates() : void
+    - SwitchtoStanding() : void
+    - SwitchToJumping() : void
+}
+enum Walkstates {
+    beginWalkState,
+    walkState,
+    endWalkState,
+}
+AbstractState <|-- StateWalking
+StateWalking +-- Walkstates
+@enduml

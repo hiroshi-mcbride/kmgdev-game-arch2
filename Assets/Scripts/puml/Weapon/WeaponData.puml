@@ -1,0 +1,12 @@
+@startuml
+class WeaponData {
+    + Prefab : GameObject
+    + Position : Vector3
+    + Rotation : Vector3
+    + Ammo : int
+    + FireRate : float
+    + IsAutomatic : bool
+    + Bullet : ProjectileData
+}
+ScriptableObject <|-- WeaponData
+@enduml

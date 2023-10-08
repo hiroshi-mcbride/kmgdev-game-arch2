@@ -1,0 +1,9 @@
+@startuml
+class InputHandler {
+    + IsActive : bool <<get>> <<set>> = true
+    + InputHandler()
+    + Update() : void
+    + FixedUpdate() : void
+}
+IUpdateable <|-- InputHandler
+@enduml

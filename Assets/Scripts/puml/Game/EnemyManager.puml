@@ -1,0 +1,12 @@
+@startuml
+class EnemyManager {
+    - enemies : List<Enemy>
+    - onEnemyKilledEventHandler : Action<EnemyKilledEvent>
+    - enemyCount : int
+    - EnemyCount : int <<get>> <<set>>
+    + EnemyManager()
+    + AggregateAll() : void
+    + InitializeAll(_enemyData:EnemyData) : void
+    + EnableAll() : void
+}
+@enduml

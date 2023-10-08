@@ -1,0 +1,5 @@
+@startuml
+class Utility <<static>> {
+    + {static} Pick(_list:List<T>) : T
+}
+@enduml

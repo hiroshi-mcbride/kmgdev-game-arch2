@@ -1,0 +1,6 @@
+@startuml
+struct UpdateableCreatedEvent {
+    + CreatedObject : IUpdateable <<get>>
+    + UpdateableCreatedEvent(_createdObject:IUpdateable)
+}
+@enduml

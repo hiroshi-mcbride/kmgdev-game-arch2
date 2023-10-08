@@ -1,0 +1,15 @@
+@startuml
+class Projectile {
+    + ReturnToPool : Delegate <<get>> <<set>>
+    - damage : float
+    - radius : float
+    - mainCamera : Transform
+    + Projectile()
+    + Initialize(_projectileData:ProjectileData) : void
+    + <<override>> FixedUpdate() : void
+    + OnEnableObject() : void
+    + OnDisableObject() : void
+}
+BasePhysicsActor <|-- Projectile
+IPoolable <|-- Projectile
+@enduml

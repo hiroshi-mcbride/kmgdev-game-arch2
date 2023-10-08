@@ -1,0 +1,9 @@
+@startuml
+interface IState {
+    OwnerData : Scratchpad <<get>>
+    OnEnter() : void
+    OnUpdate() : void
+    OnFixedUpdate() : void
+    OnExit() : void
+}
+@enduml

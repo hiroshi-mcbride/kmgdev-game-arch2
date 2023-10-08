@@ -1,0 +1,15 @@
+@startuml
+class UpdateManager {
+    - updateables : List<IUpdateable>
+    - createdObjectBuffer : Queue<IUpdateable>
+    - destroyedObjectBuffer : Queue<IUpdateable>
+    - onUpdateableCreatedEventHandler : Action<UpdateableCreatedEvent>
+    - onUpdateableDestroyedEventHandler : Action<UpdateableDestroyedEvent>
+    + UpdateManager()
+    + UpdateAll() : void
+    + FixedUpdateAll() : void
+    + ProcessBuffer() : void
+    - OnUpdateableCreated(_event:UpdateableCreatedEvent) : void
+    - OnUpdateableDestroyed(_event:UpdateableDestroyedEvent) : void
+}
+@enduml

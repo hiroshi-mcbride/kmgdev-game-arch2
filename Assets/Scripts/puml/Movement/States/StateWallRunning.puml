@@ -1,0 +1,47 @@
+@startuml
+class StateWallRunning {
+    - currentSubState : WallRunStates
+    - previousState : Player.MoveStates
+    - playerBody : GameObject
+    - playerRigidbody : Rigidbody
+    - counter : int = 1
+    - counterMax : int = 1000
+    - verticalJumpForce : float = 200.0f
+    - horizontalJumpForce : float = 300.0f
+    - ForwardpushForce : float = 30.0f
+    - goingRight : bool
+    - WKey : int
+    - AKey : int
+    - SKey : int
+    - DKey : int
+    - onKeyW : Action<KeyWEvent>
+    - onKeyA : Action<KeyAEvent>
+    - onKeyS : Action<KeySEvent>
+    - onKeyD : Action<KeyDEvent>
+    - onKeySpace : Action<KeySpaceEvent>
+    - onLeftShift : Action<KeyLeftShiftEvent>
+    + StateWallRunning(_ownerData:Scratchpad, _ownerStateMachine:StateMachine)
+    + <<override>> OnEnter() : void
+    + <<override>> OnUpdate() : void
+    + <<override>> OnFixedUpdate() : void
+    + <<override>> OnExit() : void
+    - PlayerSetup() : void
+    - TurnOnYPos() : void
+    - TurnOffYPos() : void
+    - CheckInput() : void
+    - CalculateInput(_keyCode:KeyCode) : int
+    - JumpFromWall() : void
+    - CheckForWalls() : void
+    - ForcePush() : void
+    - Timer() : void
+    - ResetTimer() : void
+    - SwitchToWalking() : void
+    - SwitchToJump() : void
+}
+enum WallRunStates {
+    WallRunning,
+    InAir,
+}
+AbstractState <|-- StateWallRunning
+StateWallRunning +-- WallRunStates
+@enduml

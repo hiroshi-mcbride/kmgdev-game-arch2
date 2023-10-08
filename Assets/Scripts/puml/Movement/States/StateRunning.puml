@@ -1,0 +1,14 @@
+@startuml
+class StateRunning {
+    - previousState : Player.MoveStates
+    - playerBody : GameObject
+    + StateRunning(_ownerData:Scratchpad, _ownerStateMachine:StateMachine)
+    + <<override>> OnEnter() : void
+    + <<override>> OnUpdate() : void
+    + <<override>> OnFixedUpdate() : void
+    + <<override>> OnExit() : void
+    - SwitchToWalking() : void
+    - SwitchToJump() : void
+}
+AbstractState <|-- StateRunning
+@enduml

@@ -1,0 +1,5 @@
+@startuml
+interface IStateRunner {
+    ObjectData : Scratchpad <<get>>
+}
+@enduml

@@ -1,0 +1,35 @@
+@startuml
+class StateJumping {
+    - checkIfGrounded : bool
+    - playerRigidbody : Rigidbody
+    - playerBody : GameObject
+    - counter : int = 0
+    - counterMax : int = 100
+    - beginPos : Vector3
+    - JumpForce : float = 300f
+    - previousState : Player.MoveStates
+    - onKeyW : Action<KeyWEvent>
+    - onKeyA : Action<KeyAEvent>
+    - onKeyS : Action<KeySEvent>
+    - onKeyD : Action<KeyDEvent>
+    - onKeySpace : Action<KeySpaceEvent>
+    - onLeftShift : Action<KeyLeftShiftEvent>
+    + StateJumping(_ownerData:Scratchpad, _ownerStateMachine:StateMachine)
+    + <<override>> OnEnter() : void
+    + <<override>> OnUpdate() : void
+    + <<override>> OnFixedUpdate() : void
+    + <<override>> OnExit() : void
+    - Jump() : void
+    - CheckIfGrounded() : void
+    - PlayerSetup() : void
+    - Timer() : void
+    - ResetTimer() : void
+    - CheckForWalls() : void
+    - SubscribeEvents() : void
+    - SwitchToStanding() : void
+    - SwitchTowalking() : void
+    - SwitchToRunning() : void
+    - SwitchToWallRunning() : void
+}
+AbstractState <|-- StateJumping
+@enduml

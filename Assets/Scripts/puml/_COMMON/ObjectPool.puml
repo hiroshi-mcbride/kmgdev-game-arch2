@@ -1,0 +1,12 @@
+@startuml
+class "ObjectPool`1"<T> {
+    - activePool : List<T>
+    - inactivePool : List<T>
+    - returnToPoolEventHandler : Action<T>
+    + ObjectPool()
+    + RequestObject() : T
+    + ReturnObjectToPool(_item:T) : void
+    - AddNewItemToPool() : T
+    - ActivateItem(_item:T) : T
+}
+@enduml

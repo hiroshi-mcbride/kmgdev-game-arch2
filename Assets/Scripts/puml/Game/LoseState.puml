@@ -1,0 +1,7 @@
+@startuml
+class LoseState {
+    + LoseState(_ownerData:Scratchpad, _ownerStateMachine:StateMachine)
+    + <<override>> OnEnter() : void
+}
+AbstractState <|-- LoseState
+@enduml

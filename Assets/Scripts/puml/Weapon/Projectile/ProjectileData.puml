@@ -1,0 +1,9 @@
+@startuml
+class ProjectileData {
+    + Damage : float
+    + Speed : float
+    + Radius : float
+    + HasGravity : bool
+}
+ScriptableObject <|-- ProjectileData
+@enduml

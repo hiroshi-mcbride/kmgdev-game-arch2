@@ -1,0 +1,13 @@
+@startuml
+class PlayerWeapon {
+    + IsAutomatic : bool <<get>>
+    - weaponData : WeaponData
+    - ammo : int
+    - fireRateTimer : Timer
+    - canFire : bool = true
+    - projectilePool : ObjectPool<Projectile>
+    + PlayerWeapon(_weaponData:WeaponData, _projectilePool:ObjectPool<Projectile>)
+    + Fire() : void
+}
+BaseActor <|-- PlayerWeapon
+@enduml

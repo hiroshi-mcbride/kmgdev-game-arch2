@@ -1,0 +1,9 @@
+@startuml
+class EventManager {
+    - {static} eventDictionary : Dictionary<Type, Delegate>
+    + {static} Subscribe(_type:Type, _function:Delegate) : void
+    + {static} Unsubscribe(_type:Type, _function:Delegate) : void
+    + {static} Invoke(_event:object) : void
+    + {static} InvokeCallback(_event:object, _callback:T) : bool
+}
+@enduml

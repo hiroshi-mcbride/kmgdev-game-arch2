@@ -1,0 +1,5 @@
+@startuml
+interface IPickup {
+    PickUp() : object
+}
+@enduml

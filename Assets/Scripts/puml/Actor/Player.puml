@@ -1,0 +1,24 @@
+@startuml
+class Player {
+    + ObjectData : Scratchpad <<get>>
+    - previousState : MoveStates
+    - playerMovementFSM : StateMachine
+    - playerData : PlayerData
+    - playerDataPrefab : GameObject
+    - rotationSpeed : float = 2.0f
+    + Player(_PlayerDataAssets:PlayerData)
+    - MakeFSM() : void
+    - LockCursur() : void
+}
+enum MoveStates {
+    Standing,
+    Walking,
+    Running,
+    Jumping,
+    WallRunning,
+}
+BasePhysicsActor <|-- Player
+IStateRunner <|-- Player
+IUpdateable <|-- Player
+Player +-- MoveStates
+@enduml

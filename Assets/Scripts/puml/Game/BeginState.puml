@@ -1,0 +1,6 @@
+@startuml
+class BeginState {
+    + BeginState(_ownerData:Scratchpad, _ownerStateMachine:StateMachine)
+}
+AbstractState <|-- BeginState
+@enduml

@@ -1,0 +1,19 @@
+@startuml
+class GameManager {
+    + ObjectData : Scratchpad <<get>>
+    + PlayerDataPad : Scratchpad <<get>>
+    - weaponDataAssets : WeaponData[]
+    - playerData : PlayerData
+    - enemyData : EnemyData
+    - playTime : float
+    - inputHandler : InputHandler
+    - fsm : StateMachine
+    - updateManager : UpdateManager
+    - Awake() : void
+    - Update() : void
+    - FixedUpdate() : void
+    - LateUpdate() : void
+}
+MonoBehaviour <|-- GameManager
+IStateRunner <|-- GameManager
+@enduml

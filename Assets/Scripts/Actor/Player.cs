@@ -27,6 +27,8 @@ public class Player : BasePhysicsActor, IStateRunner, IUpdateable
         playerData = _PlayerDataAssets;
 
         SceneObject = GameObject.Instantiate(playerData.PlayerPrefab);
+        Camera.main.transform.SetParent(SceneObject.transform);
+        Camera.main.transform.localPosition = Vector3.up;
         playerDataPrefab = SceneObject;
 
         PhysicsBody = playerDataPrefab.GetComponent<Rigidbody>();

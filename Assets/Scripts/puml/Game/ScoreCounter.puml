@@ -1,0 +1,8 @@
+@startuml
+class ScoreCounter {
+    - onScoreIncreaseEventHandler : Action<ScoreIncreaseEvent>
+    + TotalScore : float <<get>>
+    + ScoreCounter()
+    - OnScoreIncrease(_event:ScoreIncreaseEvent) : void
+}
+@enduml

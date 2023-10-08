@@ -1,0 +1,7 @@
+@startuml
+class WinState {
+    + WinState(_ownerData:Scratchpad, _ownerStateMachine:StateMachine)
+    + <<override>> OnEnter() : void
+}
+AbstractState <|-- WinState
+@enduml

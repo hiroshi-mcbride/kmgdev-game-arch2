@@ -1,0 +1,5 @@
+@startuml
+interface IToggleActive {
+    IsActive : bool <<get>> <<set>>
+}
+@enduml
