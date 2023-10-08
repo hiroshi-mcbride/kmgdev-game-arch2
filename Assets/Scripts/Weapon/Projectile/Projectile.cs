@@ -19,7 +19,11 @@ public class Projectile : BasePhysicsActor, IPoolable
         int numColliders = Physics.OverlapSphereNonAlloc(SceneObject.transform.position, 0.5f, hitColliders);
         for (int i = 0; i < numColliders; i++)
         {
-            //hitColliders[i]
+            if (ActorLocator.TryLocate(hitColliders[i].gameObject, out IActor actor))
+            {
+                
+            }
+            
         }
 
     }
