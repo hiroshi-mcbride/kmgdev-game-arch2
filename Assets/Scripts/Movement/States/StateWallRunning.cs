@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
@@ -24,6 +25,13 @@ public class StateWallRunning : AbstractState
     private int AKey;
     private int SKey;
     private int DKey;
+
+    private Action<KeyWEvent> onKeyW;
+    private Action<KeyAEvent> onKeyA;
+    private Action<KeySEvent> onKeyS;
+    private Action<KeyDEvent> onKeyD;
+    private Action<KeySpaceEvent> onKeySpace;
+    private Action<KeyLeftShiftEvent> onLeftShift;
 
     public StateWallRunning(Scratchpad _ownerData, StateMachine _ownerStateMachine) : base(_ownerData, _ownerStateMachine)
     {

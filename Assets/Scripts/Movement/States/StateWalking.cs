@@ -34,6 +34,12 @@ public class StateWalking : AbstractState
     private int SKey;
     private int DKey;
 
+    private Action<KeyWEvent> onKeyW;
+    private Action<KeyAEvent> onKeyA;
+    private Action<KeySEvent> onKeyS;
+    private Action<KeyDEvent> onKeyD;
+    private Action<KeySpaceEvent> onKeySpace;
+    private Action<KeyLeftShiftEvent> onLeftShift;
 
 
 
@@ -45,6 +51,7 @@ public class StateWalking : AbstractState
 
     public override void OnEnter()
     {
+        SubscribeEvents();
         base.OnEnter();
         Debug.Log("Current State : Walking");
 
@@ -127,7 +134,17 @@ public class StateWalking : AbstractState
 
         playerRigidbody.AddRelativeForce(new Vector3(xAxe, 0, zAxe) * walkForce);
     }
-    
+
+    // Events
+    private void SubscribeEvents()
+    {
+        EventManager.Subscribe(typeof(KeyWEvent), onKeyW);
+        EventManager.Subscribe(typeof(KeyAEvent), onKeyA);
+        EventManager.Subscribe(typeof(KeySEvent), onKeyS);
+        EventManager.Subscribe(typeof(KeyDEvent), onKeyD);
+        EventManager.Subscribe(typeof(KeySpaceEvent), onKeySpace);
+    }
+
     // Switching States
     private void SwitchWalkStates()
     {
