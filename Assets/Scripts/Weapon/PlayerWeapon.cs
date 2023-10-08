@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Weapon : BaseActor, IWeapon
+public class PlayerWeapon : BaseActor
 {
     public bool IsAutomatic { get; }
     private WeaponData weaponData;
@@ -12,7 +12,7 @@ public class Weapon : BaseActor, IWeapon
     private bool canFire = true;
     private ObjectPool<Projectile> projectilePool;
 
-    public Weapon(WeaponData _weaponData, ObjectPool<Projectile> _projectilePool)
+    public PlayerWeapon(WeaponData _weaponData, ObjectPool<Projectile> _projectilePool)
     {
         weaponData = _weaponData;
         SceneObject = GameObject.Instantiate(weaponData.Prefab, Camera.main.transform);
@@ -38,7 +38,6 @@ public class Weapon : BaseActor, IWeapon
         {
             Projectile projectile = projectilePool.RequestObject();
             projectile.Initialize(weaponData.Bullet);
-            Debug.Log("Bang!");
             fireRateTimer.Start();
             canFire = false;
             ammo -= 1;

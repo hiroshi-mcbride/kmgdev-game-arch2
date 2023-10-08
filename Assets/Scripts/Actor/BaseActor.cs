@@ -10,7 +10,7 @@ public abstract class BaseActor : IActor, IUpdateable, IDestroyable
     public GameObject SceneObject { get; protected set; }
     public Dictionary<Type, object> Components { get; } = new();
 
-    private bool isActive;
+    private bool isActive = true;
     public bool IsActive
     {
         get => isActive;

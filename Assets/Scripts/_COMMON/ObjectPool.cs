@@ -22,12 +22,6 @@ public class ObjectPool<T> where T : IPoolable
 
         return ActivateItem(AddNewItemToPool());
     }
-
-    public bool TryGetActiveObjects(out T[] _objects)
-    {
-        _objects = activePool.ToArray();
-        return activePool.Count > 0;
-    }
     
     public void ReturnObjectToPool(T _item)
     {
@@ -41,12 +35,6 @@ public class ObjectPool<T> where T : IPoolable
         inactivePool.Add(_item);
     }
 
-    public void ClearAll()
-    {
-        activePool.Clear();
-        inactivePool.Clear();
-    }
-    
     private T AddNewItemToPool()
     {
         var instance = (T)Activator.CreateInstance(typeof(T));

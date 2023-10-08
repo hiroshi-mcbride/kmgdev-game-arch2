@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1813163ff1d4ccbb49781b44b38f657, type: 3}
   m_Name: SimpleProjectile
   m_EditorClassIdentifier: 
-  Damage: 1
+  Damage: 5
   Speed: 2048
   Radius: 0.5
   HasGravity: 0

@@ -1,7 +1,8 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 /// <summary>
-/// The primary gameplay loop is run from PlayState.
+/// Primary gameplay loop
 /// </summary>
 public class PlayState : AbstractState
 {
@@ -15,7 +16,11 @@ public class PlayState : AbstractState
         base.OnEnter();
         
         OwnerData.Write("scoreCounter", new ScoreCounter());
-        EnemyAggregator.AggregateAll();
+        List<Enemy> enemies = EnemyAggregator.AggregateAll();
+        foreach (Enemy enemy in enemies)
+        {
+            enemy.Initialize(OwnerData.Read<EnemyData>("enemyData"));
+        }
         weaponHandler = new WeaponHandler(OwnerData.Read<WeaponData[]>("weaponDataAssets"));
         //player = new Player(OwnerData.Read<PlayerData>("PlayerData"));
         player = new Player();

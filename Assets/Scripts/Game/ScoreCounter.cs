@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 
 public class ScoreCounter
 {
@@ -14,6 +15,7 @@ public class ScoreCounter
     private void OnScoreIncrease(ScoreIncreaseEvent _event)
     {
         TotalScore += _event.Score;
+        Debug.Log($"Score increased by {_event.Score}! new score: {TotalScore}");
     }
 
     ~ScoreCounter()

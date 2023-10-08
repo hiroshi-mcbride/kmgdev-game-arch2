@@ -11,15 +11,15 @@ public class WeaponHandler : IUpdateable, IDestroyable
 {
     public bool IsActive { get; set; } = true;
 
-    private List<IWeapon> weapons = new();
-    private IWeapon equippedWeapon;
+    private List<PlayerWeapon> weapons = new();
+    private PlayerWeapon equippedWeapon;
     private ObjectPool<Projectile> projectilePool = new();
     
     public WeaponHandler(params WeaponData[] _weaponDataAssets)
     {
         foreach (WeaponData asset in _weaponDataAssets)
         {
-            weapons.Add(new Weapon(asset, projectilePool));
+            weapons.Add(new PlayerWeapon(asset, projectilePool));
         }
         EquipWeapon(0);
         
