@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-public class Projectile : BasePhysicsActor, IProjectile, IPoolable
+public class Projectile : BasePhysicsActor, IPoolable
 {
     
     public Projectile(WeaponData _weaponData)

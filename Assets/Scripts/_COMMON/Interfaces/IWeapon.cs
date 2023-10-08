@@ -2,5 +2,4 @@
 {
     bool IsAutomatic { get; }
     void Fire();
-    void Update();
 }
