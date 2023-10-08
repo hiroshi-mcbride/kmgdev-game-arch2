@@ -1,18 +1,20 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TreeEditor;
 using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class StateWalking : AbstractState
 {
-    private StateMachine stateMachine;
-
     private Rigidbody playerRigidbody;
-    private GameObject TempPlayer;
+    private GameObject playerBody;
+    private Transform camTransform;
+    private Player.MoveStates previousState;
 
-    private enum Movestates { beginWalkState, walkState, endWalkState }
-    private Movestates currentState;
+    private enum Walkstates { beginWalkState, walkState, endWalkState }
+    private Walkstates currentState;
 
     float walkForce = 10.0f;
 
@@ -21,150 +23,137 @@ public class StateWalking : AbstractState
     private bool KeyS;
     private bool KeyD;
 
+    private float sensX;
+    private float sensY;
+
+    private float xRotation;
+    private float yRotation;
+
+    private int WKey;
+    private int AKey;
+    private int SKey;
+    private int DKey;
+
+
+
+
 
     public StateWalking(Scratchpad _ownerData, StateMachine _ownerStateMachine) : base(_ownerData, _ownerStateMachine)
     {
-        stateMachine = _ownerStateMachine;
+
     }
 
     public override void OnEnter()
     {
         base.OnEnter();
-        Debug.Log("Switched to Jumping");
-        PlayerSetup();
-        currentState = Movestates.endWalkState;
-        Debug.Log(currentState);
+        Debug.Log("Current State : Walking");
 
+
+        PlayerSetup();
+        currentState = Walkstates.endWalkState;
+        //camTransform = playerBody.transform.GetChild(0);
     }
 
     public override void OnUpdate()
     {
         base.OnUpdate();
         SwitchWalkStates();
-
-        if (Input.GetKey(KeyCode.W))
-        {
-            KeyW = true;
-        }
-        else 
-        {
-            KeyW = false;
-        }
-        //else if (Input.GetKey(KeyCode.A))
-        //{
-        //    KeyA = true;
-        //}
-        //else if (Input.GetKeyUp(KeyCode.A))
-        //{
-        //    KeyA = false;
-        //}
-
-        //else if (Input.GetKey(KeyCode.S))
-        //{
-        //    KeyS = true;
-        //}
-        //else if (Input.GetKeyUp(KeyCode.S))
-        //{
-        //    KeyS = false;
-        //}
-        //else if (Input.GetKey(KeyCode.D))
-        //{
-        //    KeyD = true;
-        //}
-        //else if (Input.GetKeyUp(KeyCode.D))
-        //{
-        //    KeyD = false;
-        //}
+        CheckInput();
+        //RotateCamera();
 
     }
 
     public override void OnFixedUpdate()
     {
-        base.OnFixedUpdate();
-        if (KeyW == true)
-        {
-            WalkForward();
-        }
-        else if (KeyA == true)
-        {
-            WalkLeft();
-        }
-        else if (KeyS == true)
-        {
-            WalkBackward();
-        }
-        else if (KeyD == true)
-        {
-            WalkRight();
-        }
+        Walk();
     }
 
     public override void OnExit()
     {
-        base.OnExit();
-        GameObject.Destroy(TempPlayer);
+        OwnerData.Delete("previousState");
+        previousState = Player.MoveStates.Walking;
+        OwnerData.Write("previousState", previousState);
     }
     private void PlayerSetup()
     {
-        TempPlayer = GameObject.CreatePrimitive(PrimitiveType.Capsule);
-        TempPlayer.transform.position = new Vector3(4, 1, 4);
-        TempPlayer.AddComponent<Rigidbody>();
-        playerRigidbody = TempPlayer.GetComponent<Rigidbody>();
-        playerRigidbody.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationX;
+        playerBody = OwnerData.Read<GameObject>("playerDataPrefab");
+        playerRigidbody = playerBody.GetComponent<Rigidbody>();
+        playerRigidbody.constraints = RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY;
     }
-
     private void SwitchWalkStates()
     {
-        if (playerRigidbody.velocity.magnitude < 1 && playerRigidbody.velocity.magnitude > 0 && currentState == Movestates.walkState)
+        if (playerRigidbody.velocity.magnitude < 1 && playerRigidbody.velocity.magnitude > 0 && currentState == Walkstates.walkState)
         {
-            //Debug.Log(playerRigidbody.velocity.magnitude);
-
-            currentState = Movestates.endWalkState;
+            currentState = Walkstates.endWalkState;
             SwitchtoStanding();
-            Debug.Log(currentState);
         }
-        if (playerRigidbody.velocity.magnitude < 1 && playerRigidbody.velocity.magnitude > 0 && currentState == Movestates.endWalkState)
+        if (playerRigidbody.velocity.magnitude < 1 && playerRigidbody.velocity.magnitude > 0 && currentState == Walkstates.endWalkState)
         {
-            //Debug.Log(playerRigidbody.velocity.magnitude);
-
-            currentState = Movestates.beginWalkState;
-            Debug.Log(currentState);
-
+            currentState = Walkstates.beginWalkState;
         }
         if (playerRigidbody.velocity.magnitude > 5)
         {
-            //Debug.Log(playerRigidbody.velocity.magnitude);
-
-            currentState = Movestates.walkState;
-            Debug.Log(currentState);
-
+            currentState = Walkstates.walkState;
         }
     }
 
-
-    private void WalkForward()
+    private void CheckInput()
     {
-        playerRigidbody.AddRelativeForce(Vector3.forward * walkForce);
+        WKey = CalculateInput(KeyCode.W);
+        AKey = CalculateInput(KeyCode.A);
+        SKey = CalculateInput(KeyCode.S);
+        DKey = CalculateInput(KeyCode.D);
+
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            SwitchToJumping();
+        }
     }
-    private void WalkBackward()
+    private int CalculateInput(KeyCode _keyCode)
     {
-        playerRigidbody.AddRelativeForce(Vector3.back * walkForce);
+        int value;
+        if (Input.GetKey(_keyCode))
+        {
+            if (_keyCode == KeyCode.W || _keyCode == KeyCode.D)
+            {
+                value = 1;
+            }
+            else
+            {
+                value = -1;
+            }
+        }
+        else
+        {
+            value = 0;
+        }
+
+        Debug.Log(value);
+        return value;
 
     }
-    private void WalkLeft()
+
+    private void Walk()
     {
-        playerRigidbody.AddRelativeForce(Vector3.left * walkForce);
+        float zAxe;
+        float xAxe;
 
+        xAxe = AKey + DKey;
+        zAxe = WKey + SKey;
+        Vector3 test = new Vector3(xAxe, 0 ,zAxe);
+        //Debug.Log(test);
+
+        playerRigidbody.AddRelativeForce(new Vector3(xAxe, 0, zAxe) * walkForce);
     }
-
-    private void WalkRight()
-    {
-        playerRigidbody.AddRelativeForce(Vector3.right * walkForce);
-
-    }
+    
 
     private void SwitchtoStanding()
     {
-        stateMachine.SwitchState(typeof(StateStanding));
+        OwnerStateMachine.SwitchState(typeof(StateStanding));
+    }
+    private void SwitchToJumping()
+    {
+        OwnerStateMachine.SwitchState(typeof(StateJumping));
+
     }
 }

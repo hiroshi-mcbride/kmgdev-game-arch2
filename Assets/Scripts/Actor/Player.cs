@@ -3,17 +3,24 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 
-public class Player : BasePhysicsActor, IStateRunner
+public class Player : BasePhysicsActor, IStateRunner, IUpdateable
 {
     public Scratchpad ObjectData { get; private set; }
+    public enum MoveStates {Standing, Walking, Running, Jumping, WallRunning}
+    private MoveStates previousState; 
     private StateMachine playerMovementFSM;
 
     private PlayerData playerData;
     private GameObject playerDataPrefab;
 
+    private float rotationSpeed = 2.0f;
+
+    
+
 
     public Player(PlayerData _PlayerDataAssets)
     {
+        //LockCursur();
         ObjectData = new Scratchpad();
         //ObjectData.Write("PlayerDataAssets", _PlayerDataAssets);
 
@@ -25,9 +32,12 @@ public class Player : BasePhysicsActor, IStateRunner
         PhysicsBody = playerDataPrefab.GetComponent<Rigidbody>();
         ObjectData.Write("playerDataPrefab", playerDataPrefab);
 
+        previousState = MoveStates.Standing;
+        ObjectData.Write("previousState", previousState); 
+
         MakeFSM();
 
-        InitializeActor();
+        base.InitializeActor();
     }
 
     private void MakeFSM()
@@ -44,21 +54,17 @@ public class Player : BasePhysicsActor, IStateRunner
 
     }
 
-    //private void PlayerSetup()
-    //{
-    //    GameObject capsule = GameObject.CreatePrimitive(PrimitiveType.Capsule);
-    //    capsule.transform.position = new Vector3(2, 1, 0);
-    //    capsule.AddComponent<Rigidbody>();
-    //    playerRigidbody = capsule.GetComponent<Rigidbody>();
+    private void LockCursur()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
 
-    //    //playerRigidbody.AddForce(Vector3.up * 1000.0f);
+    }
 
 
 
 
-    //    Debug.Log("PALYERiNSTANTIATE");
-    //    //playerPrefab = playerData.PlayerPrefab;
-    //    //GameObject.Instantiate(playerPrefab);
 
-    //}
+
+
 }

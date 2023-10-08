@@ -23,6 +23,8 @@ public class GameManager : MonoBehaviour, IStateRunner
 
     private void Awake()
     {
+        
+
         updateManager = new UpdateManager();
 
         ObjectData = new Scratchpad();

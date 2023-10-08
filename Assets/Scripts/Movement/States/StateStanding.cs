@@ -8,6 +8,8 @@ public class StateStanding : AbstractState
 {
     private StateMachine stateMachine;
     private Scratchpad PlayerData;
+
+    private Player.MoveStates previousState;
    
     
 
@@ -17,37 +19,38 @@ public class StateStanding : AbstractState
     {
         stateMachine = _ownerStateMachine;
         PlayerData = _ownerData;
-        
-        
+
+
     }
     public override void OnEnter()
     {
-        Debug.Log("Switched to Standing");
+        Debug.Log("Current State : Standing");
+
 
     }
 
     public override void OnUpdate()
     {
         base.OnUpdate();
-        if (Input.GetKeyDown(KeyCode.W))
+        if (Input.GetKey(KeyCode.W))
         {
             SwitchToWalking();
         }
-        else if (Input.GetKeyUp(KeyCode.A))
+        else if (Input.GetKey(KeyCode.A))
         {
             SwitchToWalking();
         }
-        else if (Input.GetKeyDown(KeyCode.S))
+        else if (Input.GetKey(KeyCode.S))
         {
             SwitchToWalking();
         }
-        else if (Input.GetKeyUp(KeyCode.D))
+        else if (Input.GetKey(KeyCode.D))
         {
             SwitchToWalking();
         }
 
 
-        if (Input.GetKeyUp(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             SwitchToJumping();
         }
@@ -58,7 +61,9 @@ public class StateStanding : AbstractState
 
     public override void OnExit()
     {
-
+        OwnerData.Delete("previousState");
+        previousState = Player.MoveStates.Standing;
+        OwnerData.Write("previousState", previousState);
     }
 
 

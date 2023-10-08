@@ -11,12 +11,13 @@ public class StateJumping : AbstractState
 {
     private bool checkIfGrounded;
     private Rigidbody playerRigidbody;
-    private GameObject TempPlayer;
-    private StateMachine statmachine;
+    private GameObject playerBody;
     private int counter = 0;
     private int counterMax = 100;
     private Vector3 beginPos;
     private float JumpForce = 300f;
+
+    private Player.MoveStates previousState;
 
 
 
@@ -24,15 +25,14 @@ public class StateJumping : AbstractState
 
     public StateJumping(Scratchpad _ownerData, StateMachine _ownerStateMachine) : base(_ownerData, _ownerStateMachine)
     {
-        statmachine = _ownerStateMachine;
         checkIfGrounded = false;
-        TempPlayer = OwnerData.Read<GameObject>("playerDataPrefab");
-        playerRigidbody = TempPlayer.GetComponent<Rigidbody>();
     }
 
     public override void OnEnter()
     {
-        Debug.Log("Switched to Jumping");
+        previousState = OwnerData.Read<Player.MoveStates>("previousState");
+        Debug.Log("Current State : Jumping");
+        Debug.Log("Previous State was : " + previousState.ToString());
         PlayerSetup();
         Jump();
 
@@ -41,18 +41,22 @@ public class StateJumping : AbstractState
     {
         base.OnUpdate();
         Timer();
+
     }
     public override void OnFixedUpdate()
     {
         base.OnFixedUpdate();
         CheckIfGrounded();
+        CheckForWalls();
 
 
 
     }
     public override void OnExit()
     {
-        //GameObject.Destroy(TempPlayer);
+        OwnerData.Delete("previousState");
+        previousState = Player.MoveStates.Jumping;
+        OwnerData.Write("previousState", previousState);
     }
     private void Jump()
     {
@@ -64,47 +68,37 @@ public class StateJumping : AbstractState
         {
             RaycastHit hit;
             // Does the ray intersect any objects excluding the player layer
-            if (Physics.Raycast(TempPlayer.transform.position, TempPlayer.transform.TransformDirection(Vector3.down).normalized, out hit, 2.0f))
+            if (Physics.Raycast(playerBody.transform.position, playerBody.transform.TransformDirection(Vector3.down).normalized, out hit, 2.0f))
             {
-                //Debug.Log("Did Hit");
-                if (!DecideIfMoving())
+                if (previousState == Player.MoveStates.Standing)
                 {
                     checkIfGrounded = false;
                     SwitchToStanding();
 
                 }
-                else
+
+                if (previousState == Player.MoveStates.Walking)
                 {
                     checkIfGrounded = false;
                     SwitchTowalking();
                 }
 
+                if (previousState == Player.MoveStates.Running)
+                {
+                    checkIfGrounded = false;
+                    SwitchToRunning();
 
-            }
-            else
-            {
-                //Debug.Log("Did not Hit");
+                }
             }
         }
     }
     private void PlayerSetup()
     {
-        //TempPlayer = GameObject.CreatePrimitive(PrimitiveType.Capsule);
-        //TempPlayer.transform.position = new Vector3(2, 1, 4);
-        //TempPlayer.AddComponent<Rigidbody>();
-        //playerRigidbody = TempPlayer.GetComponent<Rigidbody>();
-        playerRigidbody.constraints = RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationX;
+        playerBody = OwnerData.Read<GameObject>("playerDataPrefab");
+        playerRigidbody = playerBody.GetComponent<Rigidbody>();
 
-        beginPos = TempPlayer.transform.position;
+        beginPos = playerBody.transform.position;
 
-    }
-    private void SwitchToStanding()
-    {
-        statmachine.SwitchState(typeof(StateStanding));
-    }
-    private void SwitchTowalking()
-    {
-        statmachine.SwitchState(typeof(StateWalking));
     }
 
     private void Timer()
@@ -116,7 +110,7 @@ public class StateJumping : AbstractState
         }
         else
         {
-            ResetTimer();
+            //ResetTimer();
             checkIfGrounded = true;
         }
     }
@@ -125,24 +119,40 @@ public class StateJumping : AbstractState
         counter = 0;
     }
 
-    private bool DecideIfMoving()
+    private void CheckForWalls()
     {
-        Vector3 currentPos = TempPlayer.transform.position;
-        float checkXMovement = currentPos.x - beginPos.x;
-        float checkZMovement = currentPos.z - beginPos.z;
-        bool tempBool;
-
-        if (checkXMovement == 0)
+        RaycastHit hit;
+        // Does the ray intersect any objects excluding the player layer
+        if (Physics.Raycast(playerBody.transform.position, playerBody.transform.TransformDirection(Vector3.right).normalized, out hit, 1.5f))
         {
-            tempBool = false;
+            Debug.DrawRay(playerBody.transform.position, playerBody.transform.TransformDirection(Vector3.right) * hit.distance, Color.yellow);
+            if (hit.transform.gameObject.layer == LayerMask.NameToLayer("WalkAbleWall") /*&& previousState == Player.MoveStates.Running*/)
+            {
+                SwitchToWallRunning();
+            }
         }
         else
         {
-            tempBool = true;
+            Debug.DrawRay(playerBody.transform.position, playerBody.transform.TransformDirection(Vector3.right) * 1000, Color.red);
         }
+    }
 
-        //float distance = Vector3.Distance(currentPos, beginPos);
+    // Switch States
+    private void SwitchToStanding()
+    {
+        OwnerStateMachine.SwitchState(typeof(StateStanding));
+    }
+    private void SwitchTowalking()
+    {
+        OwnerStateMachine.SwitchState(typeof(StateWalking));
+    }
 
-        return tempBool;
+    private void SwitchToRunning()
+    {
+        OwnerStateMachine.SwitchState(typeof(StateRunning));
+    }
+    private void SwitchToWallRunning()
+    {
+        OwnerStateMachine.SwitchState(typeof (StateWallRunning));
     }
 }
