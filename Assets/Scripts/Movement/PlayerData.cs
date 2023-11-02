@@ -9,6 +9,7 @@ using UnityEngine;
 public class PlayerData : ScriptableObject
 {
     public GameObject PlayerPrefab;
+    public GameObject CameraHolder;
     public Rigidbody PlayerRigidbody;
     public float JumpForce;
     public float WalkForce; 

@@ -33,6 +33,7 @@ public class PlayState : AbstractState
         
         weaponHandler = new WeaponHandler(OwnerData.Read<WeaponData[]>("weaponDataAssets"));
         player = new Player(OwnerData.Read<PlayerData>("PlayerData"));
+
         //player = new Player();
     }
 

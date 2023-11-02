@@ -32,6 +32,8 @@ public class StateWalking : AbstractState
     private int DKey;
 
 
+    // variable voor de nieuwe playerController
+
 
 
 

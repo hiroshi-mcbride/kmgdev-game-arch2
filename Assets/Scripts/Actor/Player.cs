@@ -1,40 +1,49 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
 
 public class Player : BasePhysicsActor, IStateRunner, IUpdateable
 {
     public Scratchpad ObjectData { get; private set; }
-    public enum MoveStates {Standing, Walking, Running, Jumping, WallRunning}
-    private MoveStates previousState; 
+    public enum MoveStates { Standing, Walking, Running, Jumping, WallRunning }
+    private MoveStates previousState;
     private StateMachine playerMovementFSM;
 
     private PlayerData playerData;
     private GameObject playerDataPrefab;
 
+    // Camera
+    private GameObject cameraHolderPrefab;
+    private PlayerCam playerCameraScript;
+    private MoveCamera moveCameraScript;
+    private Transform CameraTransform;
+
+    // new Camera variables
+    private NewPlayerCam newPlayerCameraScript;
+    private NewMoveCamera newMoveCameraScript;
+    private Transform camHolderTrans;
+
+    //player Gameobject
+    private GameObject playerOrientation;
+    private GameObject playerCameraPos;
+
+
     private float rotationSpeed = 2.0f;
 
-    
+
 
 
     public Player(PlayerData _PlayerDataAssets)
     {
-        //LockCursur();
         ObjectData = new Scratchpad();
-        //ObjectData.Write("PlayerDataAssets", _PlayerDataAssets);
-
         playerData = _PlayerDataAssets;
 
-        SceneObject = GameObject.Instantiate(playerData.PlayerPrefab);
-        playerDataPrefab = SceneObject;
-
-        PhysicsBody = playerDataPrefab.GetComponent<Rigidbody>();
-        ObjectData.Write("playerDataPrefab", playerDataPrefab);
-
-        previousState = MoveStates.Standing;
-        ObjectData.Write("previousState", previousState); 
-
+        SetupPlayer();
+        CameraAssignMent();
         MakeFSM();
 
         base.InitializeActor();
@@ -60,6 +69,59 @@ public class Player : BasePhysicsActor, IStateRunner, IUpdateable
         Cursor.visible = false;
 
     }
+
+    private void CameraAssignMent()
+    {
+        // getting Camera Data
+        cameraHolderPrefab = GameObject.Instantiate(playerData.CameraHolder);
+        camHolderTrans = cameraHolderPrefab.transform;
+        CameraTransform = cameraHolderPrefab.GetComponentInChildren<Transform>();
+
+        moveCameraScript = cameraHolderPrefab.GetComponentInChildren<MoveCamera>();
+        playerCameraScript = cameraHolderPrefab.GetComponentInChildren<PlayerCam>();
+
+        
+        // gets the child object from the player
+        playerOrientation = GameObject.Find("orientation");
+        playerCameraPos = GameObject.Find("CameraPos");
+
+        Debug.Log("CameraPos : " + playerCameraPos);
+        Debug.Log("playerorientation : " + playerOrientation);
+
+        //
+        newPlayerCameraScript = new NewPlayerCam(CameraTransform, playerOrientation.transform);
+        newMoveCameraScript = new NewMoveCamera();
+
+        if (playerOrientation != null)
+        {
+            //playerCameraScript.orientation = playerOrientation.transform;
+        }
+
+        if (playerCameraPos != null)
+        {
+            //moveCameraScript.CameraPosition = playerCameraPos.transform;
+        }
+    }
+
+    private void SetupPlayer()
+    {
+        SceneObject = GameObject.Instantiate(playerData.PlayerPrefab);
+        playerDataPrefab = SceneObject;
+
+        PhysicsBody = playerDataPrefab.GetComponent<Rigidbody>();
+        ObjectData.Write("playerDataPrefab", playerDataPrefab);
+
+        previousState = MoveStates.Standing;
+        ObjectData.Write("previousState", previousState);
+    }
+
+    public override void Update()
+    {
+        newMoveCameraScript.UpdatingCameraHolderPos(camHolderTrans, playerCameraPos.transform);
+        newPlayerCameraScript.UpdatingCamera();
+        base.Update();
+    }
+
 
 
 
