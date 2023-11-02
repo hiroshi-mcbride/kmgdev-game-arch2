@@ -73,34 +73,18 @@ public class Player : BasePhysicsActor, IStateRunner, IUpdateable
     private void CameraAssignMent()
     {
         // getting Camera Data
-        cameraHolderPrefab = GameObject.Instantiate(playerData.CameraHolder);
+        //cameraHolderPrefab = GameObject.Instantiate(playerData.CameraHolder);
+        cameraHolderPrefab = GameObject.Find("CameraHolder 1");
         camHolderTrans = cameraHolderPrefab.transform;
         CameraTransform = cameraHolderPrefab.GetComponentInChildren<Transform>();
 
-        moveCameraScript = cameraHolderPrefab.GetComponentInChildren<MoveCamera>();
-        playerCameraScript = cameraHolderPrefab.GetComponentInChildren<PlayerCam>();
-
-        
         // gets the child object from the player
         playerOrientation = GameObject.Find("orientation");
         playerCameraPos = GameObject.Find("CameraPos");
 
-        Debug.Log("CameraPos : " + playerCameraPos);
-        Debug.Log("playerorientation : " + playerOrientation);
-
         //
         newPlayerCameraScript = new NewPlayerCam(CameraTransform, playerOrientation.transform);
         newMoveCameraScript = new NewMoveCamera();
-
-        if (playerOrientation != null)
-        {
-            //playerCameraScript.orientation = playerOrientation.transform;
-        }
-
-        if (playerCameraPos != null)
-        {
-            //moveCameraScript.CameraPosition = playerCameraPos.transform;
-        }
     }
 
     private void SetupPlayer()
