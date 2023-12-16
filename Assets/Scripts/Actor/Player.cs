@@ -4,6 +4,7 @@ using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.PlayerLoop;
 
 public class Player : BasePhysicsActor, IStateRunner, IUpdateable
@@ -33,6 +34,15 @@ public class Player : BasePhysicsActor, IStateRunner, IUpdateable
 
 
     private float rotationSpeed = 2.0f;
+    private  float moveSpeed = 14.0f;
+
+    // player Input
+    private float horizontalInput;
+    private float verticalInput;
+
+
+    private Vector3 moveDirection;
+
 
 
 
@@ -47,6 +57,20 @@ public class Player : BasePhysicsActor, IStateRunner, IUpdateable
         MakeFSM();
 
         base.InitializeActor();
+    }
+    public override void Update()
+    {
+        newMoveCameraScript.UpdatingCameraHolderPos(camHolderTrans, playerCameraPos.transform);
+        newPlayerCameraScript.UpdatingCamera();
+        MyInput();
+        base.Update();
+    }
+
+    public override void FixedUpdate()
+    {
+        MovePlayer();
+        SpeedControl();
+        base.FixedUpdate();
     }
 
     private void MakeFSM()
@@ -98,19 +122,29 @@ public class Player : BasePhysicsActor, IStateRunner, IUpdateable
         previousState = MoveStates.Standing;
         ObjectData.Write("previousState", previousState);
     }
-
-    public override void Update()
+    private void MyInput()
     {
-        newMoveCameraScript.UpdatingCameraHolderPos(camHolderTrans, playerCameraPos.transform);
-        newPlayerCameraScript.UpdatingCamera();
-        base.Update();
+        horizontalInput = Input.GetAxisRaw("Horizontal");
+        verticalInput = Input.GetAxisRaw("Vertical");
     }
 
+    private void MovePlayer()
+    {
+        //calculate movementDirection
+        moveDirection = playerOrientation.transform.forward * verticalInput + playerOrientation.transform.right * horizontalInput;
 
+        PhysicsBody.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
+    }
 
+    private void SpeedControl()
+    {
+        Vector3 flatVel = new Vector3(PhysicsBody.velocity.x, 0f, PhysicsBody.velocity.z);
 
-
-
-
+        if (flatVel.magnitude > moveSpeed)
+        {
+            Vector3 limitedVel = flatVel.normalized * moveSpeed;
+            PhysicsBody.velocity = new Vector3(limitedVel.x, PhysicsBody.velocity.y, limitedVel.z);
+        }
+    }
 
 }
