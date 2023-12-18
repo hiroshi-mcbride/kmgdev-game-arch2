@@ -22,6 +22,7 @@ public class Enemy : BaseActor, IDamageable
         if (Health <= 0)
         {
             IsActive = false;
+            
             EventManager.Invoke(new ScoreIncreaseEvent(PointValue));
         }
     }

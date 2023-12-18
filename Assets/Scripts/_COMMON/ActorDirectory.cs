@@ -16,8 +16,7 @@ public static class ActorDirectory
 
     public static bool TryLocate(GameObject _gameObject, out IActor _actor)
     {
-        bool found = directory.TryGetValue(_gameObject, out IActor actor);
-        _actor = actor;
+        bool found = directory.TryGetValue(_gameObject, out _actor);
         return found;
     }
 

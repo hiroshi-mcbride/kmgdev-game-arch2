@@ -1,5 +1,6 @@
-﻿public interface IUpdateable : IToggleActive
+﻿public interface IUpdateable
 {
+    bool IsActive { get; }
     void Update();
     void FixedUpdate();
 }

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 /// <summary>
 /// Game root. Any UnityEngine callbacks are run through here and delegated to other classes, mainly a State Machine.
@@ -15,6 +15,9 @@ public class GameManager : MonoBehaviour, IStateRunner
     [SerializeField] private PlayerData playerData;
     [SerializeField] private EnemyData enemyData;
     [SerializeField] private float playTime;
+    [SerializeField] private TMP_Text timeText;
+    [SerializeField] private TMP_Text enemiesText;
+    
 
     private InputHandler inputHandler;
 

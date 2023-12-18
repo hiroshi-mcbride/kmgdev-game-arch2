@@ -39,6 +39,8 @@ public class UpdateManager
         }
     }
 
+    //When an object is created or destroyed, we don't modify the list immediately.
+    //Instead we buffer it and wait until the end of each frame
     public void ProcessBuffer()
     {
         while (createdObjectBuffer.Count > 0)

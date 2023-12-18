@@ -29,7 +29,7 @@ public class EnemyManager
 
     public EnemyManager()
     {
-        onEnemyKilledEventHandler = _event => EnemyCount--;
+        onEnemyKilledEventHandler = OnEnemyKilled;
         EventManager.Subscribe(typeof(EnemyKilledEvent), onEnemyKilledEventHandler);
     }
 
@@ -53,12 +53,11 @@ public class EnemyManager
         }
     }
 
-    public void EnableAll()
+    private void OnEnemyKilled(EnemyKilledEvent _event)
     {
-        foreach (Enemy enemy in enemies)
-        {
-            enemy.IsActive = true;
-        }
+        enemies.Remove(_event.KilledEnemy);
+        EnemyCount--;
+        EventManager.Invoke(new EnemyCountChangedEvent(EnemyCount));
     }
 
     ~EnemyManager()
