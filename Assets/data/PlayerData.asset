@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c93b8b85fa8b2eb48b1c95c1b63cf416, type: 3}
   m_Name: PlayerData
   m_EditorClassIdentifier: 
-  PlayerPrefab: {fileID: 9158837475821699573, guid: e76202d12a45a9047919b6ab76e0d881, type: 3}
+  PlayerPrefab: {fileID: 5115767265201088827, guid: b24802882f9e0a646883648a1898586a, type: 3}
+  CameraHolder: {fileID: 346369900617297099, guid: b81f3c53942bf334e8714f8291fa1b81, type: 3}
   PlayerRigidbody: {fileID: 5530328394783348589, guid: ac53f6d759d7b204ca16050b952345f8, type: 3}
   JumpForce: 1000
   WalkForce: 300

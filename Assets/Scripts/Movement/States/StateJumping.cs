@@ -134,9 +134,9 @@ public class StateJumping : AbstractState
 
         //links \
 
-        if (Physics.Raycast(playerBody.transform.position, playerBody.transform.TransformDirection(Vector3.right).normalized, out hit, 2.0f))
+        if (Physics.Raycast(playerBody.transform.position, playerBody.transform.TransformDirection(Vector3.left).normalized, out hit, 2.0f))
         {
-            Debug.DrawRay(playerBody.transform.position, playerBody.transform.TransformDirection(Vector3.right) * hit.distance, Color.yellow);
+            Debug.DrawRay(playerBody.transform.position, playerBody.transform.TransformDirection(Vector3.left) * hit.distance, Color.yellow);
             if (hit.transform.gameObject.layer == LayerMask.NameToLayer("WalkAbleWall") /*&& previousState == Player.MoveStates.Running*/)
             {
                 SwitchToWallRunning();
