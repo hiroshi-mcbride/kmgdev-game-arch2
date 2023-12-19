@@ -7,6 +7,7 @@ public class Projectile : BasePhysicsActor, IPoolable
     private float damage;
     private float radius;
     private Transform mainCamera;
+    private Timer lifeTimer;
 
     private const int PROJECTILE_LAYER = 31;
     public Projectile()
@@ -14,7 +15,7 @@ public class Projectile : BasePhysicsActor, IPoolable
         SceneObject = GameObject.CreatePrimitive(PrimitiveType.Sphere);
         PhysicsBody = SceneObject.AddComponent<Rigidbody>();
         base.InitializeActor();
-        
+        lifeTimer = new Timer(5.0f, ReturnToPool, false);
     }
     
     public void Initialize(ProjectileData _projectileData)
@@ -32,6 +33,7 @@ public class Projectile : BasePhysicsActor, IPoolable
         PhysicsBody.AddForce(SceneObject.transform.forward * _projectileData.Speed);
         
         SceneObject.layer = PROJECTILE_LAYER;
+        lifeTimer.Start();
     }
 
     public override void FixedUpdate()
@@ -48,6 +50,7 @@ public class Projectile : BasePhysicsActor, IPoolable
                 }
             }
             ReturnToPool.DynamicInvoke(this);
+            lifeTimer.Stop();
         }
     }
 
