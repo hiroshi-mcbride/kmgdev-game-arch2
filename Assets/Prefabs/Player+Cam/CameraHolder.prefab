@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1150252966647597900}
   - component: {fileID: 7353259148283241986}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: CameraHolder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -58,7 +58,7 @@ GameObject:
   - component: {fileID: 4773064821341249952}
   - component: {fileID: 1921862921114566480}
   - component: {fileID: 6393898159757931177}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
