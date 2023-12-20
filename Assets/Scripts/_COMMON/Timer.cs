@@ -18,7 +18,6 @@ public class Timer : IUpdateable, IDestroyable
         onExpired = _onExpired;
         isStarted = _startImmediately;
         isLooping = _isLooping;
-        
         EventManager.Invoke(new UpdateableCreatedEvent(this));
     }
 
@@ -57,6 +56,7 @@ public class Timer : IUpdateable, IDestroyable
         {
             if (!isLooping) isStarted = false;
             currentTime = .0f;
+            
             onExpired.DynamicInvoke();
         }
     }
