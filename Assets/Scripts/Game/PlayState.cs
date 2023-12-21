@@ -16,7 +16,7 @@ public class PlayState : AbstractState
     public PlayState(Scratchpad _ownerData, StateMachine _ownerStateMachine)
         : base(_ownerData, _ownerStateMachine)
     {
-        onAllEnemiesKilledEventHandler = _event => OwnerStateMachine.SwitchState(typeof(WinState));
+        onAllEnemiesKilledEventHandler = _ => OwnerStateMachine.SwitchState(typeof(WinState));
     }
     
     public override void OnEnter()
@@ -33,8 +33,6 @@ public class PlayState : AbstractState
         
         weaponHandler = new WeaponHandler(OwnerData.Read<WeaponData[]>("weaponDataAssets"));
         player = new Player(OwnerData.Read<PlayerData>("PlayerData"));
-
-        //player = new Player();
     }
 
     public override void OnUpdate()
@@ -49,6 +47,7 @@ public class PlayState : AbstractState
     public override void OnExit()
     {
         OwnerData.Write("timeLeft", gameTimer.Stop());
+        player.Destroy();
         EventManager.Unsubscribe(typeof(AllEnemiesKilledEvent), onAllEnemiesKilledEventHandler);
     }
 }

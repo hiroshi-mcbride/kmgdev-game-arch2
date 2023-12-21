@@ -24,6 +24,7 @@ public class Enemy : BaseActor, IDamageable
             IsActive = false;
             
             EventManager.Invoke(new ScoreIncreaseEvent(PointValue));
+            EventManager.Invoke(new EnemyKilledEvent(this));
         }
     }
 
