@@ -1,7 +1,7 @@
-﻿public struct EnemyKilledEvent
+﻿public struct EnemyKillEvent
 {
     public Enemy KilledEnemy { get; }
-    public EnemyKilledEvent(Enemy _killedEnemy)
+    public EnemyKillEvent(Enemy _killedEnemy)
     {
         KilledEnemy = _killedEnemy;
     }

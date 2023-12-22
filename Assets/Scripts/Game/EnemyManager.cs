@@ -9,7 +9,7 @@ using UnityEngine;
 public class EnemyManager
 {
     private List<Enemy> enemies = new();
-    private Action<EnemyKilledEvent> onEnemyKilledEventHandler;
+    private Action<EnemyKillEvent> onEnemyKillEventHandler;
     private int enemyCount;
     private int EnemyCount
     {
@@ -20,7 +20,7 @@ public class EnemyManager
             {
                 if (value == 0)
                 {
-                    EventManager.Invoke(new AllEnemiesKilledEvent());
+                    EventManager.Invoke(new GameWinEvent());
                 }
                 enemyCount = value;
             }
@@ -29,8 +29,8 @@ public class EnemyManager
 
     public EnemyManager()
     {
-        onEnemyKilledEventHandler = OnEnemyKilled;
-        EventManager.Subscribe(typeof(EnemyKilledEvent), onEnemyKilledEventHandler);
+        onEnemyKillEventHandler = OnEnemyKilled;
+        EventManager.Subscribe(typeof(EnemyKillEvent), onEnemyKillEventHandler);
     }
 
 
@@ -53,7 +53,7 @@ public class EnemyManager
         }
     }
 
-    private void OnEnemyKilled(EnemyKilledEvent _event)
+    private void OnEnemyKilled(EnemyKillEvent _event)
     {
         enemies.Remove(_event.KilledEnemy);
         EnemyCount--;
@@ -62,6 +62,6 @@ public class EnemyManager
 
     ~EnemyManager()
     {
-        EventManager.Unsubscribe(typeof(EnemyKilledEvent), onEnemyKilledEventHandler);
+        EventManager.Unsubscribe(typeof(EnemyKillEvent), onEnemyKillEventHandler);
     }
 }

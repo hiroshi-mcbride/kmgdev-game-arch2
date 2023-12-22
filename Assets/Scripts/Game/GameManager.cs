@@ -9,36 +9,32 @@ using UnityEngine;
 public class GameManager : MonoBehaviour, IStateRunner
 {
     public Scratchpad ObjectData { get; private set; }
-    public Scratchpad PlayerDataPad { get; private set; }
 
-    [SerializeField] private WeaponData[] weaponDataAssets;
-    [SerializeField] private PlayerData playerData;
-    [SerializeField] private EnemyData enemyData;
-    [SerializeField] private float playTime;
-    [SerializeField] private TMP_Text scoreText;
-    [SerializeField] private TMP_Text timeText;
-    [SerializeField] private TMP_Text enemiesText;
+    [SerializeField] private WeaponData[] WeaponDataAssets;
+    [SerializeField] private PlayerData PlayerDataAsset;
+    [SerializeField] private EnemyData EnemyDataAsset;
+    [SerializeField] private float PlayTime;
+    [SerializeField] private TMP_Text ScoreText;
+    [SerializeField] private TMP_Text TimeText;
+    [SerializeField] private TMP_Text EnemiesText;
+    [SerializeField] private GameObject WinCanvas;
+    [SerializeField] private GameObject LoseCanvas;
     
-
     private InputHandler inputHandler;
-
-    // PlayerData playerData;
-    
     private StateMachine fsm;
     private UpdateManager updateManager;
+    private UIManager uiManager;
 
     private void Awake()
     {
-        
-
         updateManager = new UpdateManager();
+        uiManager = new UIManager(TimeText, EnemiesText);
 
         ObjectData = new Scratchpad();
-        ObjectData.Write("weaponDataAssets", weaponDataAssets);
-        ObjectData.Write("enemyData", enemyData);
-        ObjectData.Write("PlayerData", playerData);
-        ObjectData.Write("playTime", playTime);
-
+        ObjectData.Write("weaponDataAssets", WeaponDataAssets);
+        ObjectData.Write("enemyData", EnemyDataAsset);
+        ObjectData.Write("PlayerData", PlayerDataAsset);
+        ObjectData.Write("playTime", PlayTime);
 
         inputHandler = new InputHandler();
 

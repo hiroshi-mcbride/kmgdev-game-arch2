@@ -10,13 +10,13 @@ public class PlayState : AbstractState
     private WeaponHandler weaponHandler;
     private Player player;
     private EnemyManager enemyManager = new();
-    private Action<AllEnemiesKilledEvent> onAllEnemiesKilledEventHandler;
+    private Action<GameWinEvent> onGameWinEventHandler;
     private Timer gameTimer;
 
     public PlayState(Scratchpad _ownerData, StateMachine _ownerStateMachine)
         : base(_ownerData, _ownerStateMachine)
     {
-        onAllEnemiesKilledEventHandler = _ => OwnerStateMachine.SwitchState(typeof(WinState));
+        onGameWinEventHandler = _ => OwnerStateMachine.SwitchState(typeof(WinState));
     }
     
     public override void OnEnter()
@@ -24,15 +24,16 @@ public class PlayState : AbstractState
         base.OnEnter();
         
         OwnerData.Write("scoreCounter", new ScoreCounter());
-        Action onTimeExpiredEventHandler = () => OwnerStateMachine.SwitchState(typeof(LoseState));
-        gameTimer = new Timer(OwnerData.Read<float>("playTime"), onTimeExpiredEventHandler);
-        
         enemyManager.AggregateAll();
         enemyManager.InitializeAll(OwnerData.Read<EnemyData>("enemyData"));
-        EventManager.Subscribe(typeof(AllEnemiesKilledEvent), onAllEnemiesKilledEventHandler);
+        EventManager.Subscribe(typeof(GameWinEvent), onGameWinEventHandler);
         
         weaponHandler = new WeaponHandler(OwnerData.Read<WeaponData[]>("weaponDataAssets"));
         player = new Player(OwnerData.Read<PlayerData>("PlayerData"));
+        
+        Action onTimeExpiredEventHandler = () => OwnerStateMachine.SwitchState(typeof(LoseState));
+        gameTimer = new Timer(OwnerData.Read<float>("playTime"), onTimeExpiredEventHandler);
+        EventManager.Invoke(new GameStartEvent(gameTimer));
     }
 
     public override void OnUpdate()
@@ -47,7 +48,7 @@ public class PlayState : AbstractState
     public override void OnExit()
     {
         OwnerData.Write("timeLeft", gameTimer.Stop());
-        player.Destroy();
-        EventManager.Unsubscribe(typeof(AllEnemiesKilledEvent), onAllEnemiesKilledEventHandler);
+        //player.Destroy();
+        EventManager.Unsubscribe(typeof(GameWinEvent), onGameWinEventHandler);
     }
 }

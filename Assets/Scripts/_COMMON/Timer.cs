@@ -4,11 +4,11 @@ using UnityEngine;
 public class Timer : IUpdateable, IDestroyable
 {
     public bool IsActive { get; set; } = true;
-
-
+    public float TimeRemaining => length - currentTime;
+    
+    private float currentTime;
     private float length;
     private bool isLooping;
-    private float currentTime;
     private bool isStarted;
     private Delegate onExpired;
 
@@ -60,5 +60,4 @@ public class Timer : IUpdateable, IDestroyable
             onExpired.DynamicInvoke();
         }
     }
-
 }
