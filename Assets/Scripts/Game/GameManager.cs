@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour, IStateRunner
     [SerializeField] private PlayerData playerData;
     [SerializeField] private EnemyData enemyData;
     [SerializeField] private float playTime;
+    [SerializeField] private TMP_Text scoreText;
     [SerializeField] private TMP_Text timeText;
     [SerializeField] private TMP_Text enemiesText;
     

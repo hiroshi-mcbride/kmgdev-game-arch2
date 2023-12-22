@@ -15,7 +15,9 @@ public class Projectile : BasePhysicsActor, IPoolable
         SceneObject = GameObject.CreatePrimitive(PrimitiveType.Sphere);
         PhysicsBody = SceneObject.AddComponent<Rigidbody>();
         base.InitializeActor();
-        lifeTimer = new Timer(5.0f, ReturnToPool, false);
+
+        Func<object> returnToPool = () => ReturnToPool.DynamicInvoke(this);
+        lifeTimer = new Timer(5.0f, returnToPool, false);
     }
     
     public void Initialize(ProjectileData _projectileData)
