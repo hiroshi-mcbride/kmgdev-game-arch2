@@ -10,13 +10,14 @@ public class PlayState : AbstractState
     private WeaponHandler weaponHandler;
     private Player player;
     private EnemyManager enemyManager = new();
-    private Action<GameWinEvent> onGameWinEventHandler;
+    private Action<AllEnemiesKilledEvent> onAllEnemiesKilledEventHandler;
+    
     private Timer gameTimer;
 
     public PlayState(Scratchpad _ownerData, StateMachine _ownerStateMachine)
         : base(_ownerData, _ownerStateMachine)
     {
-        onGameWinEventHandler = _ => OwnerStateMachine.SwitchState(typeof(WinState));
+        onAllEnemiesKilledEventHandler = OnAllEnemiesKilled;
     }
     
     public override void OnEnter()
@@ -26,12 +27,12 @@ public class PlayState : AbstractState
         OwnerData.Write("scoreCounter", new ScoreCounter());
         enemyManager.AggregateAll();
         enemyManager.InitializeAll(OwnerData.Read<EnemyData>("enemyData"));
-        EventManager.Subscribe(typeof(GameWinEvent), onGameWinEventHandler);
+        EventManager.Subscribe(typeof(AllEnemiesKilledEvent), onAllEnemiesKilledEventHandler);
         
         weaponHandler = new WeaponHandler(OwnerData.Read<WeaponData[]>("weaponDataAssets"));
         player = new Player(OwnerData.Read<PlayerData>("PlayerData"));
-        
-        Action onTimeExpiredEventHandler = () => OwnerStateMachine.SwitchState(typeof(LoseState));
+
+        Action onTimeExpiredEventHandler = OnTimerExpired;
         gameTimer = new Timer(OwnerData.Read<float>("playTime"), onTimeExpiredEventHandler);
         EventManager.Invoke(new GameStartEvent(gameTimer));
     }
@@ -47,8 +48,19 @@ public class PlayState : AbstractState
 
     public override void OnExit()
     {
-        OwnerData.Write("timeLeft", gameTimer.Stop());
-        //player.Destroy();
-        EventManager.Unsubscribe(typeof(GameWinEvent), onGameWinEventHandler);
+        EventManager.Unsubscribe(typeof(AllEnemiesKilledEvent), onAllEnemiesKilledEventHandler);
+    }
+
+    private void OnAllEnemiesKilled(AllEnemiesKilledEvent _event)
+    {
+        EventManager.Invoke(new GameWinEvent(gameTimer.Stop()));
+        OwnerStateMachine.SwitchState(typeof(WinState));
+    }
+
+    private void OnTimerExpired()
+    {
+        gameTimer.Stop();
+        OwnerStateMachine.SwitchState(typeof(LoseState));
+        EventManager.Invoke(new GameLoseEvent());
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 /// <summary>
@@ -20,7 +21,7 @@ public class EnemyManager
             {
                 if (value == 0)
                 {
-                    EventManager.Invoke(new GameWinEvent());
+                    EventManager.Invoke(new AllEnemiesKilledEvent());
                 }
                 enemyCount = value;
             }
@@ -43,6 +44,7 @@ public class EnemyManager
         }
 
         EnemyCount = enemies.Count;
+        EventManager.Invoke(new EnemyCountChangedEvent(EnemyCount));
     }
 
     public void InitializeAll(EnemyData _enemyData)

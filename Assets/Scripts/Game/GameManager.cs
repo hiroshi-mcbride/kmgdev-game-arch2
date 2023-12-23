@@ -14,11 +14,9 @@ public class GameManager : MonoBehaviour, IStateRunner
     [SerializeField] private PlayerData PlayerDataAsset;
     [SerializeField] private EnemyData EnemyDataAsset;
     [SerializeField] private float PlayTime;
-    [SerializeField] private TMP_Text ScoreText;
-    [SerializeField] private TMP_Text TimeText;
-    [SerializeField] private TMP_Text EnemiesText;
-    [SerializeField] private GameObject WinCanvas;
-    [SerializeField] private GameObject LoseCanvas;
+    [SerializeField] private GameObject PlayContainer;
+    [SerializeField] private GameObject WinContainer;
+    [SerializeField] private GameObject LoseContainer;
     
     private InputHandler inputHandler;
     private StateMachine fsm;
@@ -28,7 +26,14 @@ public class GameManager : MonoBehaviour, IStateRunner
     private void Awake()
     {
         updateManager = new UpdateManager();
-        uiManager = new UIManager(TimeText, EnemiesText);
+
+        CanvasItems canvasItems = new()
+        {
+            Play = PlayContainer,
+            Win = WinContainer,
+            Lose = LoseContainer
+        };
+        uiManager = new UIManager(canvasItems);
 
         ObjectData = new Scratchpad();
         ObjectData.Write("weaponDataAssets", WeaponDataAssets);

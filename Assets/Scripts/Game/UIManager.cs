@@ -8,21 +8,33 @@ public class UIManager : IUpdateable
     
     private const string TIME_PREFIX = "Time left: ";
     private const string ENEMIES_PREFIX = "Enemies remaining: ";
-    private TMP_Text timeText;
-    private TMP_Text enemiesText;
-    private GameObject winCard;
-    private GameObject loseCard;
+    private GameObject playContainer;
+    private GameObject winContainer;
+    private GameObject loseContainer;
+
+    private TMP_Text playText;
+    private string enemiesString;
+    private int enemyCount;
+
+    private TMP_Text winText;
+    private TMP_Text loseText;
 
     private Timer gameTimer;
     private Action<EnemyCountChangedEvent> onEnemyCountChangedEventHandler;
     private Action<GameStartEvent> onGameStartEventHandler;
+    private Action<GameWinEvent> onGameWinEventHandler;
     private Action<GameLoseEvent> onGameLoseEventHandler;
     
-    public UIManager(TMP_Text _timeText, TMP_Text _enemiesText)
+    public UIManager(CanvasItems _canvasItems)
     {
-        timeText = _timeText;
-        enemiesText = _enemiesText;
-        //gameTimer = _gameTimer;
+        playContainer = _canvasItems.Play;
+        playText = playContainer.GetComponentInChildren<TMP_Text>();
+        
+        winContainer = _canvasItems.Win;
+        winText = winContainer.GetComponentInChildren<TMP_Text>();
+        
+        loseContainer = _canvasItems.Lose;
+        loseText = loseContainer.GetComponentInChildren<TMP_Text>();
         
         EventManager.Invoke(new UpdateableCreatedEvent(this));
         
@@ -31,32 +43,28 @@ public class UIManager : IUpdateable
 
         onGameStartEventHandler = OnGameStart;
         EventManager.Subscribe(typeof(GameStartEvent), onGameStartEventHandler);
+
+        onGameWinEventHandler = OnGameWin;
+        EventManager.Subscribe(typeof(GameWinEvent), onGameWinEventHandler);
         
         onGameLoseEventHandler = OnGameLose;
         EventManager.Subscribe(typeof(GameLoseEvent), onGameLoseEventHandler);
     }
-    
+
     public void Update()
     {
         if (gameTimer == null)
         {
-            Debug.Log("am i even here");
             return;
         }
+        
         /*
          * TimeSpan code from Microsoft .NET documentation
          * https://learn.microsoft.com/en-us/dotnet/api/system.timespan.fromseconds
          */
-        TimeSpan    interval = TimeSpan.FromSeconds( gameTimer.TimeRemaining );
-        string      timeInterval = interval.ToString( @"mm\:ss\:fff");
-
-        // Pad the end of the TimeSpan string with spaces if it 
-        // does not contain milliseconds.
-        // int pIndex = timeInterval.IndexOf( ':' );
-        // pIndex = timeInterval.IndexOf( '.', pIndex );
-        // if( pIndex < 0 )   timeInterval += "        ";
-        //
-        timeText.text = TIME_PREFIX + timeInterval;
+        TimeSpan interval = TimeSpan.FromSeconds(gameTimer.TimeRemaining);
+        string timeString = TIME_PREFIX + interval.ToString(@"mm\:ss\:fff");
+        playText.text = enemiesString + "\n" + timeString;
     }
 
     public void FixedUpdate()
@@ -65,23 +73,37 @@ public class UIManager : IUpdateable
 
     private void OnGameStart(GameStartEvent _event)
     {
+        winContainer.SetActive(false);
+        loseContainer.SetActive(false);
+        playContainer.SetActive(true);
         gameTimer = _event.GameTimer;
+    }
+
+    private void OnGameWin(GameWinEvent _event)
+    {
+        winContainer.SetActive(true);
+        loseContainer.SetActive(false);
+        playContainer.SetActive(false);
     }
     
     private void OnGameLose(GameLoseEvent _event)
     {
-        
+        winContainer.SetActive(false);
+        loseContainer.SetActive(true);
+        playContainer.SetActive(false);
     }
     
     private void OnEnemyCountChanged(EnemyCountChangedEvent _event)
     {
-        enemiesText.text = ENEMIES_PREFIX + _event.NewCount;
+        enemyCount = _event.NewCount;
+        enemiesString = ENEMIES_PREFIX + enemyCount;
     }
 
     ~UIManager()
     {
         EventManager.Unsubscribe(typeof(EnemyCountChangedEvent), onEnemyCountChangedEventHandler);
         EventManager.Unsubscribe(typeof(GameStartEvent), onGameStartEventHandler);
+        EventManager.Unsubscribe(typeof(GameLoseEvent), onGameLoseEventHandler);
     }
 }
 
@@ -90,7 +112,4 @@ public struct CanvasItems
     public GameObject Play;
     public GameObject Win;
     public GameObject Lose;
-
-    public TMP_Text EnemiesHUD;
-    public TMP_Text TimeHUD;
 }
