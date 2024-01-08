@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// State entered when the timer runs out before all enemies are cleared
@@ -12,5 +13,13 @@ public class LoseState : AbstractState
     {
         base.OnEnter();
         Debug.Log($"You lost! Score: {OwnerData.Read<ScoreCounter>("scoreCounter").TotalScore}");
+    }
+    
+    public override void OnUpdate()
+    {
+        if (Input.anyKey)
+        {
+            //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }       
     }
 }

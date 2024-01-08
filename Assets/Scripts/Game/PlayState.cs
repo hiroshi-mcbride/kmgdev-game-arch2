@@ -30,8 +30,13 @@ public class PlayState : AbstractState
         EventManager.Subscribe(typeof(AllEnemiesKilledEvent), onAllEnemiesKilledEventHandler);
         
         weaponHandler = new WeaponHandler(OwnerData.Read<WeaponData[]>("weaponDataAssets"));
-        player = new Player(OwnerData.Read<PlayerData>("PlayerData"));
 
+        if (player == null)
+        {
+            player = new Player(OwnerData.Read<PlayerData>("PlayerData"));
+        }
+        player.IsActive = true;
+        
         Action onTimeExpiredEventHandler = OnTimerExpired;
         gameTimer = new Timer(OwnerData.Read<float>("playTime"), onTimeExpiredEventHandler);
         EventManager.Invoke(new GameStartEvent(gameTimer));
@@ -48,6 +53,8 @@ public class PlayState : AbstractState
 
     public override void OnExit()
     {
+        player.IsActive = false;
+        
         EventManager.Unsubscribe(typeof(AllEnemiesKilledEvent), onAllEnemiesKilledEventHandler);
     }
 

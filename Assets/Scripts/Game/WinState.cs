@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// State entered if the player clears all enemies from the level
@@ -11,8 +12,13 @@ public class WinState : AbstractState
     public override void OnEnter()
     {
         base.OnEnter();
-        Debug.Log($"You win! " +
-                  $"Score: {OwnerData.Read<ScoreCounter>("scoreCounter").TotalScore}." +
-                  $"Time left: {OwnerData.Read<float>("timeLeft")} seconds. ");
+    }
+    
+    public override void OnUpdate()
+    {
+        if (Input.anyKey)
+        {
+            //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }       
     }
 }

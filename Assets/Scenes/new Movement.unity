@@ -2523,6 +2523,7 @@ MonoBehaviour:
   PlayerDataAsset: {fileID: 11400000, guid: 250076c550bb4ee4c803c01c00d007ff, type: 2}
   EnemyDataAsset: {fileID: 11400000, guid: 15b53a678e4ec6344ba3b08e12694786, type: 2}
   PlayTime: 60
+  BeginContainer: {fileID: 1957773488}
   PlayContainer: {fileID: 415182501}
   WinContainer: {fileID: 22055989}
   LoseContainer: {fileID: 1427670203}
@@ -3737,6 +3738,11 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1911990973}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1957773488 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1495727165335555784, guid: 986fab599c2abbb47a1f9c85b2041bc5, type: 3}
+  m_PrefabInstance: {fileID: 2050004157}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1983749072
 GameObject:
   m_ObjectHideFlags: 0

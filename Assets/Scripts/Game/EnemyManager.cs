@@ -9,7 +9,8 @@ using UnityEngine;
 
 public class EnemyManager
 {
-    private List<Enemy> enemies = new();
+    private List<Enemy> livingEnemies = new();
+    private List<Enemy> killedEnemies = new();
     private Action<EnemyKillEvent> onEnemyKillEventHandler;
     private int enemyCount;
     private int EnemyCount
@@ -40,16 +41,16 @@ public class EnemyManager
         GameObject[] objects = GameObject.FindGameObjectsWithTag("Enemy");
         foreach (GameObject gameObject in objects)
         {
-            enemies.Add(new Enemy(gameObject));
+            livingEnemies.Add(new Enemy(gameObject));
         }
 
-        EnemyCount = enemies.Count;
+        EnemyCount = livingEnemies.Count;
         EventManager.Invoke(new EnemyCountChangedEvent(EnemyCount));
     }
 
     public void InitializeAll(EnemyData _enemyData)
     {
-        foreach (Enemy enemy in enemies)
+        foreach (Enemy enemy in livingEnemies)
         {
             enemy.Initialize(_enemyData);
         }
@@ -57,7 +58,8 @@ public class EnemyManager
 
     private void OnEnemyKilled(EnemyKillEvent _event)
     {
-        enemies.Remove(_event.KilledEnemy);
+        livingEnemies.Remove(_event.KilledEnemy);
+        killedEnemies.Add(_event.KilledEnemy);
         EnemyCount--;
         EventManager.Invoke(new EnemyCountChangedEvent(EnemyCount));
     }

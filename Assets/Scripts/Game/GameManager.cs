@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour, IStateRunner
     [SerializeField] private PlayerData PlayerDataAsset;
     [SerializeField] private EnemyData EnemyDataAsset;
     [SerializeField] private float PlayTime;
+    [SerializeField] private GameObject BeginContainer;
     [SerializeField] private GameObject PlayContainer;
     [SerializeField] private GameObject WinContainer;
     [SerializeField] private GameObject LoseContainer;
@@ -29,6 +30,7 @@ public class GameManager : MonoBehaviour, IStateRunner
 
         CanvasItems canvasItems = new()
         {
+            Begin = BeginContainer,
             Play = PlayContainer,
             Win = WinContainer,
             Lose = LoseContainer
@@ -48,7 +50,7 @@ public class GameManager : MonoBehaviour, IStateRunner
         fsm.AddState(new PlayState(ObjectData, fsm));
         fsm.AddState(new WinState(ObjectData, fsm));
         fsm.AddState(new LoseState(ObjectData, fsm));
-        fsm.SwitchState(typeof(PlayState));
+        fsm.SwitchState(typeof(BeginState));
     }
 
     private void Update()

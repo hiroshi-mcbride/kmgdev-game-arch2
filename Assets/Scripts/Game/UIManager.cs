@@ -8,6 +8,7 @@ public class UIManager : IUpdateable
     
     private const string TIME_PREFIX = "Time left: ";
     private const string ENEMIES_PREFIX = "Enemies remaining: ";
+    private GameObject beginContainer;
     private GameObject playContainer;
     private GameObject winContainer;
     private GameObject loseContainer;
@@ -27,6 +28,8 @@ public class UIManager : IUpdateable
     
     public UIManager(CanvasItems _canvasItems)
     {
+        beginContainer = _canvasItems.Begin;
+        
         playContainer = _canvasItems.Play;
         playText = playContainer.GetComponentInChildren<TMP_Text>();
         
@@ -73,6 +76,7 @@ public class UIManager : IUpdateable
 
     private void OnGameStart(GameStartEvent _event)
     {
+        beginContainer.SetActive(false);
         winContainer.SetActive(false);
         loseContainer.SetActive(false);
         playContainer.SetActive(true);
@@ -84,6 +88,7 @@ public class UIManager : IUpdateable
         winContainer.SetActive(true);
         loseContainer.SetActive(false);
         playContainer.SetActive(false);
+        winText.text = $"You Win! \n Score: ";
     }
     
     private void OnGameLose(GameLoseEvent _event)
@@ -104,11 +109,13 @@ public class UIManager : IUpdateable
         EventManager.Unsubscribe(typeof(EnemyCountChangedEvent), onEnemyCountChangedEventHandler);
         EventManager.Unsubscribe(typeof(GameStartEvent), onGameStartEventHandler);
         EventManager.Unsubscribe(typeof(GameLoseEvent), onGameLoseEventHandler);
+        EventManager.Invoke(new UpdateableDestroyedEvent(this));
     }
 }
 
 public struct CanvasItems
 {
+    public GameObject Begin;
     public GameObject Play;
     public GameObject Win;
     public GameObject Lose;
