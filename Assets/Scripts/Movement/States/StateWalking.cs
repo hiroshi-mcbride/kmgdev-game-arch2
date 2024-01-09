@@ -45,9 +45,6 @@ public class StateWalking : AbstractState
     public override void OnEnter()
     {
         base.OnEnter();
-        Debug.Log("Current State : Walking");
-
-
         PlayerSetup();
         currentState = Walkstates.endWalkState;
         //camTransform = playerBody.transform.GetChild(0);

@@ -18,7 +18,7 @@ public class WinState : AbstractState
     {
         if (Input.anyKey)
         {
-            OwnerStateMachine.SwitchState(typeof(PlayState));
+            //OwnerStateMachine.SwitchState(typeof(PlayState));
         }       
     }
 }

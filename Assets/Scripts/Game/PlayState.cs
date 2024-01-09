@@ -10,7 +10,9 @@ public class PlayState : AbstractState
     private WeaponHandler weaponHandler;
     private Player player;
     private EnemyManager enemyManager = new();
+    private ScoreCounter scoreCounter = new();
     private Action<AllEnemiesKilledEvent> onAllEnemiesKilledEventHandler;
+    
     
     private Timer gameTimer;
 
@@ -18,26 +20,25 @@ public class PlayState : AbstractState
         : base(_ownerData, _ownerStateMachine)
     {
         onAllEnemiesKilledEventHandler = OnAllEnemiesKilled;
+        OwnerData.Write("scoreCounter", scoreCounter);
+        Action onTimeExpiredEventHandler = OnTimerExpired;
+        gameTimer = new Timer(OwnerData.Read<float>("playTime"), onTimeExpiredEventHandler, false);
     }
     
     public override void OnEnter()
     {
         base.OnEnter();
         
-        OwnerData.Write("scoreCounter", new ScoreCounter());
         enemyManager.InitializeAll(OwnerData.Read<EnemyData>("enemyData"));
         EventManager.Subscribe(typeof(AllEnemiesKilledEvent), onAllEnemiesKilledEventHandler);
-        
-        weaponHandler = new WeaponHandler(OwnerData.Read<WeaponData[]>("weaponDataAssets"));
 
-        if (player == null)
-        {
-            player = new Player(OwnerData.Read<PlayerData>("PlayerData"));
-        }
+        weaponHandler ??= new WeaponHandler(OwnerData.Read<WeaponData[]>("weaponDataAssets"));
+        weaponHandler.IsActive = true;
+        
+        player ??= new Player(OwnerData.Read<PlayerData>("PlayerData"));
         player.IsActive = true;
         
-        Action onTimeExpiredEventHandler = OnTimerExpired;
-        gameTimer = new Timer(OwnerData.Read<float>("playTime"), onTimeExpiredEventHandler);
+        gameTimer.Start();
         EventManager.Invoke(new GameStartEvent(gameTimer));
     }
 
@@ -53,7 +54,7 @@ public class PlayState : AbstractState
     public override void OnExit()
     {
         player.IsActive = false;
-        
+        weaponHandler.IsActive = false;
         EventManager.Unsubscribe(typeof(AllEnemiesKilledEvent), onAllEnemiesKilledEventHandler);
     }
 

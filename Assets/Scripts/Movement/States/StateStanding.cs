@@ -21,11 +21,6 @@ public class StateStanding : AbstractState
 
 
     }
-    public override void OnEnter()
-    {
-        Debug.Log("Current State : Standing");
-
-    }
 
     public override void OnUpdate()
     {
@@ -80,7 +75,6 @@ public class StateStanding : AbstractState
     }
     private void SwitchToJumping()
     {
-        Console.WriteLine("Switch to Jumping");
         stateMachine.SwitchState(typeof(StateJumping));
     }
 

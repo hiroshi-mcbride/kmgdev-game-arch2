@@ -11,7 +11,7 @@ public abstract class BaseActor : IActor, IUpdateable, IDestroyable
     public Dictionary<Type, object> Components { get; } = new();
 
     private bool isActive = true;
-    public bool IsActive
+    public virtual bool IsActive
     {
         get => isActive;
         set

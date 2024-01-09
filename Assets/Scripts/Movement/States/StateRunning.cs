@@ -12,12 +12,6 @@ public class StateRunning : AbstractState
         
     }
 
-    public override void OnEnter()
-    {
-        Debug.Log("Current State : Running");
-
-
-    }
     public override void OnUpdate()
     {
         base.OnUpdate();
@@ -31,13 +25,6 @@ public class StateRunning : AbstractState
         {
             SwitchToWalking();
         }
-
-    }
-    public override void OnFixedUpdate()
-    {
-        base.OnFixedUpdate();
-
-
 
     }
     public override void OnExit()

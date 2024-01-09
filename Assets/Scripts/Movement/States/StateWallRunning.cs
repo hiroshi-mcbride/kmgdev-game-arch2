@@ -29,7 +29,6 @@ public class StateWallRunning : AbstractState
     public override void OnEnter()
     {
         currentSubState = WallRunStates.WallRunning;
-        Debug.Log("Current State : Wallrunning");
         PlayerSetup();
 
     }

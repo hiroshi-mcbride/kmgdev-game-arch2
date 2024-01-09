@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.PlayerLoop;
 
-public class Player : BasePhysicsActor, IStateRunner, IUpdateable
+public class Player : BasePhysicsActor, IStateRunner
 {
     public Scratchpad ObjectData { get; private set; }
     public enum MoveStates { Standing, Walking, Running, Jumping, WallRunning }
@@ -43,9 +43,20 @@ public class Player : BasePhysicsActor, IStateRunner, IUpdateable
 
     private Vector3 moveDirection;
 
-
-
-
+    private bool isActive = true;
+    public override bool IsActive
+    {
+        get => isActive;
+        set
+        {
+            if (isActive != value)
+            {
+                SceneObject.SetActive(value);
+                playerMovementFSM.IsActive = value;
+                isActive = value;
+            }
+        }
+    }
 
     public Player(PlayerData _PlayerDataAssets)
     {

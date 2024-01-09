@@ -19,7 +19,6 @@ public class GameManager : MonoBehaviour, IStateRunner
     [SerializeField] private GameObject WinContainer;
     [SerializeField] private GameObject LoseContainer;
     
-    private InputHandler inputHandler;
     private StateMachine fsm;
     private UpdateManager updateManager;
     private UIManager uiManager;
@@ -42,9 +41,7 @@ public class GameManager : MonoBehaviour, IStateRunner
         ObjectData.Write("enemyData", EnemyDataAsset);
         ObjectData.Write("PlayerData", PlayerDataAsset);
         ObjectData.Write("playTime", PlayTime);
-
-        inputHandler = new InputHandler();
-
+        
         fsm = new StateMachine();
         fsm.AddState(new BeginState(ObjectData, fsm));
         fsm.AddState(new PlayState(ObjectData, fsm));
