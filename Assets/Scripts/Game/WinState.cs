@@ -18,7 +18,7 @@ public class WinState : AbstractState
     {
         if (Input.anyKey)
         {
-            //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            OwnerStateMachine.SwitchState(typeof(PlayState));
         }       
     }
 }

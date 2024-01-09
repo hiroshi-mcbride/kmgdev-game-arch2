@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -35,25 +36,38 @@ public class EnemyManager
         EventManager.Subscribe(typeof(EnemyKillEvent), onEnemyKillEventHandler);
     }
 
-
-    public void AggregateAll()
-    {
-        GameObject[] objects = GameObject.FindGameObjectsWithTag("Enemy");
-        foreach (GameObject gameObject in objects)
-        {
-            livingEnemies.Add(new Enemy(gameObject));
-        }
-
-        EnemyCount = livingEnemies.Count;
-        EventManager.Invoke(new EnemyCountChangedEvent(EnemyCount));
-    }
-
     public void InitializeAll(EnemyData _enemyData)
     {
+        AggregateAll();
         foreach (Enemy enemy in livingEnemies)
         {
             enemy.Initialize(_enemyData);
         }
+    }
+
+    private void AggregateAll()
+    {
+        GameObject[] objects = GameObject.FindGameObjectsWithTag("Enemy");
+        
+        foreach (GameObject gameObject in objects)
+        {
+            bool exists = ActorDirectory.TryLocate(gameObject, out IActor actor);
+            if (exists)
+            {
+                if (actor is Enemy enemy && killedEnemies.Contains(enemy))
+                {
+                    livingEnemies.Add(enemy);
+                    killedEnemies.Remove(enemy);
+                }
+            }
+            else
+            {
+                livingEnemies.Add(new Enemy(gameObject));
+            }
+        }
+
+        EnemyCount = livingEnemies.Count;
+        EventManager.Invoke(new EnemyCountChangedEvent(EnemyCount));
     }
 
     private void OnEnemyKilled(EnemyKillEvent _event)

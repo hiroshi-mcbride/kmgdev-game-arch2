@@ -25,7 +25,6 @@ public class PlayState : AbstractState
         base.OnEnter();
         
         OwnerData.Write("scoreCounter", new ScoreCounter());
-        enemyManager.AggregateAll();
         enemyManager.InitializeAll(OwnerData.Read<EnemyData>("enemyData"));
         EventManager.Subscribe(typeof(AllEnemiesKilledEvent), onAllEnemiesKilledEventHandler);
         
