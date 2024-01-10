@@ -19,8 +19,6 @@ public class Player : BasePhysicsActor, IStateRunner
 
     // Camera
     private GameObject cameraHolderPrefab;
-    private PlayerCam playerCameraScript;
-    private MoveCamera moveCameraScript;
     private Transform CameraTransform;
 
     // new Camera variables
@@ -42,6 +40,8 @@ public class Player : BasePhysicsActor, IStateRunner
 
 
     private Vector3 moveDirection;
+    private Vector3 startPosition;
+    private Quaternion startRotation;
 
     private bool isActive = true;
     public override bool IsActive
@@ -84,6 +84,17 @@ public class Player : BasePhysicsActor, IStateRunner
         base.FixedUpdate();
     }
 
+    public void Reset()
+    {
+        SceneObject.transform.position = startPosition;
+        SceneObject.transform.rotation = startRotation;
+        playerOrientation.transform.rotation = startRotation;
+        PhysicsBody.velocity = Vector3.zero;
+        horizontalInput = 0;
+        verticalInput = 0;
+        playerMovementFSM.SwitchState(typeof(StateStanding));
+    }
+    
     private void MakeFSM()
     {
         playerMovementFSM = new StateMachine();
@@ -126,6 +137,8 @@ public class Player : BasePhysicsActor, IStateRunner
     {
         SceneObject = GameObject.Instantiate(playerData.PlayerPrefab);
         playerDataPrefab = SceneObject;
+        startPosition = SceneObject.transform.position;
+        startRotation = SceneObject.transform.rotation;
 
         PhysicsBody = playerDataPrefab.GetComponent<Rigidbody>();
         ObjectData.Write("playerDataPrefab", playerDataPrefab);

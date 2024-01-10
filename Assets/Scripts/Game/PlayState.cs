@@ -10,7 +10,6 @@ public class PlayState : AbstractState
     private WeaponHandler weaponHandler;
     private Player player;
     private EnemyManager enemyManager = new();
-    private ScoreCounter scoreCounter = new();
     private Action<AllEnemiesKilledEvent> onAllEnemiesKilledEventHandler;
     
     
@@ -20,7 +19,6 @@ public class PlayState : AbstractState
         : base(_ownerData, _ownerStateMachine)
     {
         onAllEnemiesKilledEventHandler = OnAllEnemiesKilled;
-        OwnerData.Write("scoreCounter", scoreCounter);
         Action onTimeExpiredEventHandler = OnTimerExpired;
         gameTimer = new Timer(OwnerData.Read<float>("playTime"), onTimeExpiredEventHandler, false);
     }
@@ -32,6 +30,9 @@ public class PlayState : AbstractState
         enemyManager.InitializeAll(OwnerData.Read<EnemyData>("enemyData"));
         EventManager.Subscribe(typeof(AllEnemiesKilledEvent), onAllEnemiesKilledEventHandler);
 
+        // Today I learned about null-coalescing operators and I love them
+        // https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/operators/null-coalescing-operator
+        
         weaponHandler ??= new WeaponHandler(OwnerData.Read<WeaponData[]>("weaponDataAssets"));
         weaponHandler.IsActive = true;
         
@@ -53,8 +54,10 @@ public class PlayState : AbstractState
 
     public override void OnExit()
     {
+        player.Reset();
         player.IsActive = false;
         weaponHandler.IsActive = false;
+        EventManager.Invoke(new ObjectPoolResetEvent());
         EventManager.Unsubscribe(typeof(AllEnemiesKilledEvent), onAllEnemiesKilledEventHandler);
     }
 

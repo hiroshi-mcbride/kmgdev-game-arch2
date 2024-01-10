@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class NewPlayerCam
 {
-    public float sensX = 800.0f;
-    public float sensY = 800.0f;
+    public float sensX = 240.0f;
+    public float sensY = 240.0f;
 
     public Transform orientation;
     private Transform CameraTrans;
@@ -26,8 +26,8 @@ public class NewPlayerCam
     public void UpdatingCamera()
     {
         //Debug.Log("playerorientatation = " + orientation);
-        float mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * sensX;
-        float mouseY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * sensY;
+        float mouseX = Input.GetAxis("Mouse X") * Time.deltaTime * sensX;
+        float mouseY = Input.GetAxis("Mouse Y") * Time.deltaTime * sensY;
 
         yRotation += mouseX;
         xRotation -= mouseY;

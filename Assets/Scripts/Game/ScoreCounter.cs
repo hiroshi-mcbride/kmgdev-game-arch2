@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
+// CUT FROM THE GAME: added no gameplay value in its current state
 public class ScoreCounter
 {
     private Action<ScoreIncreaseEvent> onScoreIncreaseEventHandler;
@@ -11,6 +12,8 @@ public class ScoreCounter
         onScoreIncreaseEventHandler = OnScoreIncrease;
         EventManager.Subscribe(typeof(ScoreIncreaseEvent), onScoreIncreaseEventHandler);
     }
+
+    public void ClearScore() => TotalScore = 0;
 
     private void OnScoreIncrease(ScoreIncreaseEvent _event)
     {

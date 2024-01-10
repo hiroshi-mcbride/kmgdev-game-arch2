@@ -9,17 +9,11 @@ public class LoseState : AbstractState
     public LoseState(Scratchpad _ownerData, StateMachine _ownerStateMachine) 
         : base(_ownerData, _ownerStateMachine) { }
 
-    public override void OnEnter()
-    {
-        base.OnEnter();
-        Debug.Log($"You lost! Score: {OwnerData.Read<ScoreCounter>("scoreCounter").TotalScore}");
-    }
-    
     public override void OnUpdate()
     {
-        if (Input.anyKey)
+        if (Input.GetKeyDown(KeyCode.Return))
         {
-            //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            OwnerStateMachine.SwitchState(typeof(PlayState));
         }       
     }
 }

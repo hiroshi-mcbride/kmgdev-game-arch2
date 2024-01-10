@@ -16,9 +16,9 @@ public class WinState : AbstractState
     
     public override void OnUpdate()
     {
-        if (Input.anyKey)
+        if (Input.GetKeyDown(KeyCode.Return))
         {
-            //OwnerStateMachine.SwitchState(typeof(PlayState));
+            OwnerStateMachine.SwitchState(typeof(PlayState));
         }       
     }
 }

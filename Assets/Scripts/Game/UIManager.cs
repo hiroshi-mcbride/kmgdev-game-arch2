@@ -14,6 +14,7 @@ public class UIManager : IUpdateable
     private GameObject loseContainer;
 
     private TMP_Text playText;
+    private string timeString;
     private string enemiesString;
     private int enemyCount;
 
@@ -66,7 +67,7 @@ public class UIManager : IUpdateable
          * https://learn.microsoft.com/en-us/dotnet/api/system.timespan.fromseconds
          */
         TimeSpan interval = TimeSpan.FromSeconds(gameTimer.TimeRemaining);
-        string timeString = TIME_PREFIX + interval.ToString(@"mm\:ss\:fff");
+        timeString = TIME_PREFIX + interval.ToString(@"mm\:ss\:fff");
         playText.text = enemiesString + "\n" + timeString;
     }
 
@@ -79,6 +80,7 @@ public class UIManager : IUpdateable
         beginContainer.SetActive(false);
         winContainer.SetActive(false);
         loseContainer.SetActive(false);
+        timeString = TIME_PREFIX;
         playContainer.SetActive(true);
         gameTimer = _event.GameTimer;
     }
@@ -88,7 +90,7 @@ public class UIManager : IUpdateable
         winContainer.SetActive(true);
         loseContainer.SetActive(false);
         playContainer.SetActive(false);
-        winText.text = $"You Win! \n Score: ";
+        winText.text = $"You Win! \n {timeString} \n Press Enter to start again.";
     }
     
     private void OnGameLose(GameLoseEvent _event)
@@ -96,6 +98,7 @@ public class UIManager : IUpdateable
         winContainer.SetActive(false);
         loseContainer.SetActive(true);
         playContainer.SetActive(false);
+        loseText.text = $"Time's up! \n {enemiesString} \n Press Enter to start again.";
     }
     
     private void OnEnemyCountChanged(EnemyCountChangedEvent _event)

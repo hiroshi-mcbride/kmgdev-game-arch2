@@ -2522,7 +2522,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6e3a42908ecaba046a72aeb8ce791ccf, type: 2}
   PlayerDataAsset: {fileID: 11400000, guid: 250076c550bb4ee4c803c01c00d007ff, type: 2}
   EnemyDataAsset: {fileID: 11400000, guid: 15b53a678e4ec6344ba3b08e12694786, type: 2}
-  PlayTime: 60
+  PlayTime: 25
   BeginContainer: {fileID: 1957773488}
   PlayContainer: {fileID: 415182501}
   WinContainer: {fileID: 22055989}

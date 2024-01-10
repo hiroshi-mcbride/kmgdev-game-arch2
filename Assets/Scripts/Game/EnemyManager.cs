@@ -42,21 +42,27 @@ public class EnemyManager
         foreach (Enemy enemy in livingEnemies)
         {
             enemy.Initialize(_enemyData);
+            enemy.IsActive = true;
         }
     }
 
     private void AggregateAll()
     {
-        GameObject[] objects = GameObject.FindGameObjectsWithTag("Enemy");
+        GameObject[] foundGameObjects = GameObject.FindGameObjectsWithTag("Enemy");
         
-        foreach (GameObject gameObject in objects)
+        foreach (GameObject gameObject in foundGameObjects)
         {
             bool exists = ActorDirectory.TryLocate(gameObject, out IActor actor);
-            if (exists)
+            
+            if (exists && actor is Enemy enemy)
             {
-                if (actor is Enemy enemy && killedEnemies.Contains(enemy))
+                if (!livingEnemies.Contains(enemy))
                 {
                     livingEnemies.Add(enemy);
+                }
+
+                if (killedEnemies.Contains(enemy))
+                {
                     killedEnemies.Remove(enemy);
                 }
             }
@@ -66,14 +72,20 @@ public class EnemyManager
             }
         }
 
+        foreach (Enemy e in killedEnemies)
+        {
+            livingEnemies.Add(e);
+        }
+        killedEnemies.Clear();
+        
         EnemyCount = livingEnemies.Count;
         EventManager.Invoke(new EnemyCountChangedEvent(EnemyCount));
     }
 
     private void OnEnemyKilled(EnemyKillEvent _event)
     {
-        livingEnemies.Remove(_event.KilledEnemy);
         killedEnemies.Add(_event.KilledEnemy);
+        livingEnemies.Remove(_event.KilledEnemy);
         EnemyCount--;
         EventManager.Invoke(new EnemyCountChangedEvent(EnemyCount));
     }

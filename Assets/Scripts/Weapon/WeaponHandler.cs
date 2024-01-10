@@ -9,8 +9,18 @@ using UnityEngine;
 
 public class WeaponHandler : IUpdateable, IDestroyable
 {
-    public bool IsActive { get; set; } = true;
+    private bool isActive = true;
+    public bool IsActive
+    {
+        get => isActive;
+        set
+        {
+            equippedWeapon.IsActive = value;
+            isActive = value;
+        }
+    }
 
+    
     private List<PlayerWeapon> weapons = new();
     private PlayerWeapon equippedWeapon;
     private ObjectPool<Projectile> projectilePool = new();
