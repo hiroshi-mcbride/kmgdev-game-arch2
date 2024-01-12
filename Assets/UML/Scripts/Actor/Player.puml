@@ -1,0 +1,26 @@
+@startuml
+class Player<(_playerDataAssets:PlayerData)> {
+    + <<override>> IsActive : bool <<get>> <<set>>
+    + <<override>> Update() : void
+    + <<override>> FixedUpdate() : void
+    + Reset() : void
+}
+enum MoveStates {
+    Standing,
+    Walking,
+    Running,
+    Jumping,
+    WallRunning,
+}
+BasePhysicsActor <|-- Player
+IStateRunner <|.. Player
+Player -up-> "PlayerDataAssets" PlayerData
+Player *-- StateMachine
+
+/' Player *-- StateJumping
+Player *-- StateRunning
+Player *-- StateSliding
+Player *-- StateStanding
+Player *-- StateWalking
+Player *-- StateWallRunning '/
+@enduml

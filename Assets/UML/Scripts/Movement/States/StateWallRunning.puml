@@ -1,0 +1,14 @@
+@startuml
+class StateWallRunning {
+    + <<override>> OnEnter() : void
+    + <<override>> OnUpdate() : void
+    + <<override>> OnFixedUpdate() : void
+    + <<override>> OnExit() : void
+}
+enum WallRunStates {
+    WallRunning,
+    InAir,
+}
+AbstractState <|-- StateWallRunning
+StateWallRunning +-- WallRunStates
+@enduml

@@ -1,0 +1,9 @@
+@startuml
+class Enemy<(_instance:GameObject)> {
+    + Health : float <<get>>
+    + Initialize(_enemyData:EnemyData) : void
+    + TakeDamage(_damage:float) : void
+}
+BaseActor <|-- Enemy
+IDamageable <|.. Enemy
+@enduml

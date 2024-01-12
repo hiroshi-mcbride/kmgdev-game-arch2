@@ -1,0 +1,11 @@
+@startuml
+class StateMachine<(_states:IState[])> {
+    + IsActive : bool <<get>> <<set>> = true
+    + Update() : void
+    + FixedUpdate() : void
+    + AddState(_state:IState) : void
+    + SwitchState(_newState:Type) : void
+}
+IUpdateable <|.. StateMachine
+StateMachine o-left- IState
+@enduml

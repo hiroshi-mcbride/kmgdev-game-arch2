@@ -1,0 +1,7 @@
+@startuml
+class Scratchpad {
+    + Write(\n  _name:string,\n  _data:object, \n  _overwrite:bool\n) : void
+    + Read(_name:string) : T
+    + Delete(_name:string) : void
+}
+@enduml

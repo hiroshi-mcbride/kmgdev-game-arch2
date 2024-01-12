@@ -1,0 +1,9 @@
+@startuml
+class UpdateManager {
+    + UpdateAll() : void
+    + FixedUpdateAll() : void
+    + ProcessBuffer() : void
+}
+
+IUpdateable --o UpdateManager
+@enduml

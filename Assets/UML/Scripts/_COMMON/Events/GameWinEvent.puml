@@ -1,0 +1,6 @@
+@startuml
+class GameWinEvent <<struct>> {
+    + TimeRemaining : float <<get>>
+    + GameWinEvent(_timeRemaining:float)
+}
+@enduml

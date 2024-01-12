@@ -1,0 +1,9 @@
+@startuml
+abstract class AbstractState<(_ownerData:Scratchpad,\n_ownerStateMachine:StateMachine)> {
+    + <<virtual>> OnEnter() : void
+    + <<virtual>> OnUpdate() : void
+    + <<virtual>> OnFixedUpdate() : void
+    + <<virtual>> OnExit() : void
+}
+IState <|.. AbstractState
+@enduml

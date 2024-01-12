@@ -1,0 +1,6 @@
+@startuml
+class EnemyCountChangedEvent <<struct>> {
+    + NewCount : int <<get>>
+    + EnemyCountChangedEvent(_newCount:int)
+}
+@enduml

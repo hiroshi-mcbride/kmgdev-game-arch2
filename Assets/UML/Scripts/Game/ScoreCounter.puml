@@ -1,0 +1,7 @@
+@startuml
+class ScoreCounter {
+    + TotalScore : float <<get>>
+    + ScoreCounter()
+    + ClearScore() : void
+}
+@enduml

@@ -1,0 +1,8 @@
+@startuml
+class EnemyManager {
+    + EnemyManager()
+    + InitializeAll(_enemyData:EnemyData) : void
+}
+
+Enemy o-- EnemyManager
+@enduml

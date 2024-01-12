@@ -1,0 +1,10 @@
+@startuml
+class PlayerData <<ScriptableObject>> {
+    + JumpForce : float
+    + WalkForce : float
+    + RunningForce : float
+    + PlayerPrefab : GameObject
+    + CameraHolder : GameObject
+    + PlayerRigidbody : Rigidbody
+}
+@enduml

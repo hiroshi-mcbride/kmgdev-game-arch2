@@ -1,0 +1,6 @@
+@startuml
+class EnemyKillEvent <<struct>> {
+    + EnemyKillEvent(_killedEnemy:Enemy)
+}
+EnemyKillEvent --> "KilledEnemy" Enemy
+@enduml

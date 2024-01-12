@@ -1,0 +1,11 @@
+@startuml
+class WeaponHandler {
+    + IsActive : bool <<get>> <<set>>
+    + WeaponHandler(_weaponDataAssets:WeaponData[])
+    + Update() : void
+    + FixedUpdate() : void
+    + Destroy() : void
+}
+IUpdateable <|.. WeaponHandler
+IDestroyable <|.. WeaponHandler
+@enduml

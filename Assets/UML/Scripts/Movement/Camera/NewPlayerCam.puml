@@ -1,0 +1,9 @@
+@startuml
+class NewPlayerCam<(_camTransform:Transform, \n_playerOrientation:Transform)> {
+    + sensX : float = 240.0f
+    + sensY : float = 240.0f
+    + orientation : Transform
+    + UpdatingCamera() : void
+}
+Player *-- NewPlayerCam
+@enduml

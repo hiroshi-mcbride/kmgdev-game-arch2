@@ -1,0 +1,6 @@
+@startuml
+class EnemyData <<ScriptableObject>> {
+    + Health : float
+    + PointValue : float
+}
+@enduml

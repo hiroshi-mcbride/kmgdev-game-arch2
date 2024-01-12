@@ -1,0 +1,9 @@
+@startuml
+class StateJumping {
+    + <<override>> OnEnter() : void
+    + <<override>> OnUpdate() : void
+    + <<override>> OnFixedUpdate() : void
+    + <<override>> OnExit() : void
+}
+AbstractState <|-- StateJumping
+@enduml

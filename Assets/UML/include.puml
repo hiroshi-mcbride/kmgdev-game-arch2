@@ -1,0 +1,60 @@
+@startuml
+/'!include .\\.\Scripts\Actor\BaseActor.puml
+!include .\\.\Scripts\Actor\BasePhysicsActor.puml
+!include .\\.\Scripts\Actor\Enemy.puml
+!include .\\.\Scripts\Actor\EnemyData.puml
+!include .\\.\Scripts\Actor\Player.puml'/
+!include .\\.\Scripts\Game\BeginState.puml
+' !include .\\.\Scripts\Game\EnemyManager.puml
+!include .\\.\Scripts\Game\GameManager.puml
+!include .\\.\Scripts\Game\LoseState.puml
+!include .\\.\Scripts\Game\PlayState.puml
+' !include .\\.\Scripts\Game\ScoreCounter.puml
+!include .\\.\Scripts\Game\UIManager.puml
+!include .\\.\Scripts\Game\WinState.puml
+/'!include .\\.\Scripts\Movement\PlayerData.puml
+!include .\\.\Scripts\Weapon\PlayerWeapon.puml
+!include .\\.\Scripts\Weapon\WeaponData.puml
+!include .\\.\Scripts\Weapon\WeaponHandler.puml
+!include .\\.\Scripts\_COMMON\ActorDirectory.puml'/
+!include .\\.\Scripts\_COMMON\EventManager.puml
+' !include .\\.\Scripts\_COMMON\ObjectPool.puml
+!include .\\.\Scripts\_COMMON\Scratchpad.puml
+!include .\\.\Scripts\_COMMON\Timer.puml
+!include .\\.\Scripts\_COMMON\UpdateManager.puml
+/'!include .\\.\Scripts\Movement\Camera\NewMoveCamera.puml
+!include .\\.\Scripts\Movement\Camera\NewPlayerCam.puml
+!include .\\.\Scripts\Movement\States\StateJumping.puml
+!include .\\.\Scripts\Movement\States\StateRunning.puml
+!include .\\.\Scripts\Movement\States\StateSliding.puml
+!include .\\.\Scripts\Movement\States\StateStanding.puml
+!include .\\.\Scripts\Movement\States\StateWalking.puml
+!include .\\.\Scripts\Movement\States\StateWallRunning.puml
+!include .\\.\Scripts\Weapon\Projectile\Projectile.puml
+!include .\\.\Scripts\Weapon\Projectile\ProjectileData.puml'/
+/'!include .\\.\Scripts\_COMMON\Events\AllEnemiesKilledEvent.puml
+!include .\\.\Scripts\_COMMON\Events\EnemyCountChangedEvent.puml
+!include .\\.\Scripts\_COMMON\Events\EnemyKillEvent.puml
+!include .\\.\Scripts\_COMMON\Events\GameLoseEvent.puml
+!include .\\.\Scripts\_COMMON\Events\GameStartEvent.puml
+!include .\\.\Scripts\_COMMON\Events\GameWinEvent.puml
+!include .\\.\Scripts\_COMMON\Events\ObjectPoolResetEvent.puml
+!include .\\.\Scripts\_COMMON\Events\ScoreIncreaseEvent.puml
+!include .\\.\Scripts\_COMMON\Events\UpdateableCreatedEvent.puml
+!include .\\.\Scripts\_COMMON\Events\UpdateableDestroyedEvent.puml'/
+!include .\\.\Scripts\_COMMON\FSM\AbstractState.puml
+!include .\\.\Scripts\_COMMON\FSM\StateMachine.puml
+'!include .\\.\Scripts\_COMMON\Interfaces\IActor.puml
+'!include .\\.\Scripts\_COMMON\Interfaces\IDamageable.puml
+!include .\\.\Scripts\_COMMON\Interfaces\IDestroyable.puml
+' !include .\\.\Scripts\_COMMON\Interfaces\IPoolable.puml
+!include .\\.\Scripts\_COMMON\Interfaces\IState.puml
+!include .\\.\Scripts\_COMMON\Interfaces\IStateRunner.puml
+!include .\\.\Scripts\_COMMON\Interfaces\IUpdateable.puml
+/'!include .\\.\Scripts\_COMMON\Events\KeyEvents\KeyAEvent.puml
+!include .\\.\Scripts\_COMMON\Events\KeyEvents\KeyDEvent.puml
+!include .\\.\Scripts\_COMMON\Events\KeyEvents\KeyLeftShiftEvent.puml
+!include .\\.\Scripts\_COMMON\Events\KeyEvents\KeySEvent.puml
+!include .\\.\Scripts\_COMMON\Events\KeyEvents\KeySpaceEvent.puml
+!include .\\.\Scripts\_COMMON\Events\KeyEvents\KeyWEvent.puml'/
+@enduml

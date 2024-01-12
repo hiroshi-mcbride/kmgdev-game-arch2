@@ -1,0 +1,6 @@
+@startuml
+interface IDamageable {
+    + Health : float <<get>>
+    TakeDamage(_damage:float) : void
+}
+@enduml

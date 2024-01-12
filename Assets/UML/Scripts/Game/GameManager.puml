@@ -1,0 +1,7 @@
+@startuml
+class GameManager <<MonoBehaviour>> {
+}
+IStateRunner <|.. GameManager
+GameManager *-- StateMachine
+GameManager *-- CanvasItems
+@enduml

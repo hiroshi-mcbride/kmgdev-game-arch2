@@ -1,0 +1,7 @@
+@startuml
+class StateRunning {
+    + <<override>> OnUpdate() : void
+    + <<override>> OnExit() : void
+}
+AbstractState <|-- StateRunning
+@enduml

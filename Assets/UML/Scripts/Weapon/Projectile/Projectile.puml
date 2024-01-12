@@ -1,0 +1,12 @@
+@startuml
+class Projectile {
+    + Projectile()
+    + Initialize(_projectileData:ProjectileData) : void
+    + <<override>> FixedUpdate() : void
+    + OnEnableObject() : void
+    + OnDisableObject() : void
+}
+BasePhysicsActor <|-- Projectile
+IPoolable <|-- Projectile
+Projectile --> "ReturnToPool" Delegate
+@enduml

@@ -1,0 +1,16 @@
+@startuml
+abstract class BaseActor {
+    + Components : Dictionary<Type,object>
+    + SceneObject : GameObject
+    + <<virtual>> IsActive : bool <<get>> <<set>>
+    + AddComponent(_component:object) : void
+    + GetComponent<T>() : T
+    + <<virtual>> Update() : void
+    + <<virtual>> FixedUpdate() : void
+    + <<virtual>> Destroy() : void
+    # <<virtual>> InitializeActor() : void
+}
+IActor <|.. BaseActor
+IUpdateable <|.. BaseActor
+IDestroyable <|.. BaseActor
+@enduml

@@ -1,0 +1,7 @@
+@startuml
+interface IUpdateable {
+    + IsActive : bool <<get>>
+    Update() : void
+    FixedUpdate() : void
+}
+@enduml

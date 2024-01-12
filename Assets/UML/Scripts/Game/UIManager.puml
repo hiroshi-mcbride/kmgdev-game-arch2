@@ -1,0 +1,15 @@
+@startuml
+class UIManager<(_canvasItems:CanvasItems)> {
+    + IsActive : bool <<get>> <<set>> = true
+    + Update() : void
+    + FixedUpdate() : void
+}
+class CanvasItems <<struct>> {
+    + Begin : GameObject
+    + Play : GameObject
+    + Win : GameObject
+    + Lose : GameObject
+}
+CanvasItems <-- UIManager
+IUpdateable <|.. UIManager
+@enduml

@@ -1,0 +1,6 @@
+@startuml
+class GameStartEvent <<struct>> {
+    + GameStartEvent(_gameTimer:Timer)
+}
+GameStartEvent --> "GameTimer" Timer
+@enduml

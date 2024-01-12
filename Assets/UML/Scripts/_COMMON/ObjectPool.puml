@@ -1,0 +1,7 @@
+@startuml
+class "ObjectPool<T>"<T:IPoolable> {
+    + RequestObject() : T
+    + ReturnObjectToPool(_item:T) : void
+    + ReturnAllObjectsToPool(\n  _event:ObjectPoolResetEvent) : void
+}
+@enduml

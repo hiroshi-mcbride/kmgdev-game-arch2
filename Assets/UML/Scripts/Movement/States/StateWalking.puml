@@ -1,0 +1,16 @@
+@startuml
+class StateWalking {
+    walkForce : float = 10.0f
+    + <<override>> OnEnter() : void
+    + <<override>> OnUpdate() : void
+    + <<override>> OnFixedUpdate() : void
+    + <<override>> OnExit() : void
+}
+enum Walkstates {
+    beginWalkState,
+    walkState,
+    endWalkState,
+}
+AbstractState <|-- StateWalking
+StateWalking +-- Walkstates
+@enduml

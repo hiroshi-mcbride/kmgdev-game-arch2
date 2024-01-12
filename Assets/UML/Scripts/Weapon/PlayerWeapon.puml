@@ -1,0 +1,9 @@
+@startuml
+class PlayerWeapon<(_weaponData:WeaponData, \n_projectilePool:ObjectPool<Projectile>)> {
+    + IsAutomatic : bool <<get>>
+    + Fire() : void
+}
+"ObjectPool<T>" <--- PlayerWeapon
+WeaponData <--- PlayerWeapon
+BaseActor <|-- PlayerWeapon
+@enduml

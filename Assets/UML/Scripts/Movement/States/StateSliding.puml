@@ -1,0 +1,6 @@
+@startuml
+class StateSliding {
+    + StateSliding(_ownerData:Scratchpad, _ownerStateMachine:StateMachine)
+}
+AbstractState <|-- StateSliding
+@enduml

@@ -1,0 +1,14 @@
+@startuml
+class Timer<(_length:float, \n_onExpired:Delegate, \n_startImmediately:bool, \n_isLooping:bool)> {
+    + IsActive : bool <<get>> <<set>> = true
+    + TimeRemaining : float <<get>>
+    + Update() : void
+    + FixedUpdate() : void
+    + Destroy() : void
+    + Start() : void
+    + Pause() : void
+    + Stop() : float
+}
+IUpdateable <|.. Timer
+IDestroyable <|.. Timer
+@enduml

@@ -1,0 +1,7 @@
+@startuml
+interface IPoolable {
+    + ReturnToPool : Delegate
+    OnEnableObject() : void
+    OnDisableObject() : void
+}
+@enduml

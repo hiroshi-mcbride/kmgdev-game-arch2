@@ -1,0 +1,9 @@
+@startuml
+class NewMoveCamera {
+    + PlayerCameraPosition : Transform
+    + CameraHolderPositionl : Transform
+    + UpdatingCameraHolderPos(\n_cameraHolderTrans:Transform, \n_playerCamTrans:Transform\n) : void
+}
+
+Player *-- NewMoveCamera
+@enduml
