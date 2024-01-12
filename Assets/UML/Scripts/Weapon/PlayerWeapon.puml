@@ -3,7 +3,8 @@ class PlayerWeapon<(_weaponData:WeaponData, \n_projectilePool:ObjectPool<Project
     + IsAutomatic : bool <<get>>
     + Fire() : void
 }
-"ObjectPool<T>" <--- PlayerWeapon
-WeaponData <--- PlayerWeapon
+"ObjectPool<T>" <-- PlayerWeapon
+WeaponData <-- PlayerWeapon
 BaseActor <|-- PlayerWeapon
+PlayerWeapon *-- Timer
 @enduml

@@ -5,22 +5,14 @@ class Player<(_playerDataAssets:PlayerData)> {
     + <<override>> FixedUpdate() : void
     + Reset() : void
 }
-enum MoveStates {
-    Standing,
-    Walking,
-    Running,
-    Jumping,
-    WallRunning,
-}
-BasePhysicsActor <|-- Player
+BasePhysicsActor <|-left-- Player
 IStateRunner <|.. Player
-Player -up-> "PlayerDataAssets" PlayerData
-Player *-- StateMachine
+Player --> "PlayerDataAssets" PlayerData
+'Player *--- StateMachine
 
-/' Player *-- StateJumping
+Player *-- StateJumping
 Player *-- StateRunning
-Player *-- StateSliding
 Player *-- StateStanding
 Player *-- StateWalking
-Player *-- StateWallRunning '/
+Player *-- StateWallRunning
 @enduml

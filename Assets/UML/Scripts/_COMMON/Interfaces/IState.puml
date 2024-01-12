@@ -5,5 +5,5 @@ interface IState {
     OnFixedUpdate() : void
     OnExit() : void
 }
-IState --> "OwnerData" Scratchpad
+IState -up-> "OwnerData" Scratchpad
 @enduml

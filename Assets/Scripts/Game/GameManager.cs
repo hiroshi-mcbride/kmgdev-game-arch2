@@ -8,6 +8,7 @@ using UnityEngine;
 /// </summary>
 public class GameManager : MonoBehaviour, IStateRunner
 {
+    public StateMachine FSM { get; private set; }
     public Scratchpad ObjectData { get; private set; }
 
     [SerializeField] private WeaponData[] WeaponDataAssets;
@@ -19,7 +20,6 @@ public class GameManager : MonoBehaviour, IStateRunner
     [SerializeField] private GameObject WinContainer;
     [SerializeField] private GameObject LoseContainer;
     
-    private StateMachine fsm;
     private UpdateManager updateManager;
     private UIManager uiManager;
 
@@ -42,12 +42,12 @@ public class GameManager : MonoBehaviour, IStateRunner
         ObjectData.Write("PlayerData", PlayerDataAsset);
         ObjectData.Write("playTime", PlayTime);
         
-        fsm = new StateMachine();
-        fsm.AddState(new BeginState(ObjectData, fsm));
-        fsm.AddState(new PlayState(ObjectData, fsm));
-        fsm.AddState(new WinState(ObjectData, fsm));
-        fsm.AddState(new LoseState(ObjectData, fsm));
-        fsm.SwitchState(typeof(BeginState));
+        FSM = new StateMachine();
+        FSM.AddState(new BeginState(ObjectData, FSM));
+        FSM.AddState(new PlayState(ObjectData, FSM));
+        FSM.AddState(new WinState(ObjectData, FSM));
+        FSM.AddState(new LoseState(ObjectData, FSM));
+        FSM.SwitchState(typeof(BeginState));
     }
 
     private void Update()

@@ -6,4 +6,8 @@ class PlayState {
     + <<override>> OnExit() : void
 }
 AbstractState <|-- PlayState
+PlayState *-up- EnemyManager
+PlayState *---> Player
+PlayState *---> WeaponHandler
+PlayState *--> Timer
 @enduml

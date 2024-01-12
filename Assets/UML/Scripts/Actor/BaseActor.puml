@@ -7,10 +7,8 @@ abstract class BaseActor {
     + GetComponent<T>() : T
     + <<virtual>> Update() : void
     + <<virtual>> FixedUpdate() : void
-    + <<virtual>> Destroy() : void
     # <<virtual>> InitializeActor() : void
 }
 IActor <|.. BaseActor
 IUpdateable <|.. BaseActor
-IDestroyable <|.. BaseActor
 @enduml

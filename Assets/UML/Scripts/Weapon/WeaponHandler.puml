@@ -4,8 +4,7 @@ class WeaponHandler {
     + WeaponHandler(_weaponDataAssets:WeaponData[])
     + Update() : void
     + FixedUpdate() : void
-    + Destroy() : void
 }
 IUpdateable <|.. WeaponHandler
-IDestroyable <|.. WeaponHandler
+WeaponHandler *-- "ObjectPool<T>"
 @enduml

@@ -9,10 +9,10 @@ using UnityEngine.PlayerLoop;
 
 public class Player : BasePhysicsActor, IStateRunner
 {
+    public StateMachine FSM { get; private set; }
     public Scratchpad ObjectData { get; private set; }
     public enum MoveStates { Standing, Walking, Running, Jumping, WallRunning }
     private MoveStates previousState;
-    private StateMachine playerMovementFSM;
 
     private PlayerData playerData;
     private GameObject playerDataPrefab;
@@ -52,7 +52,7 @@ public class Player : BasePhysicsActor, IStateRunner
             if (isActive != value)
             {
                 SceneObject.SetActive(value);
-                playerMovementFSM.IsActive = value;
+                FSM.IsActive = value;
                 isActive = value;
             }
         }
@@ -92,20 +92,20 @@ public class Player : BasePhysicsActor, IStateRunner
         PhysicsBody.velocity = Vector3.zero;
         horizontalInput = 0;
         verticalInput = 0;
-        playerMovementFSM.SwitchState(typeof(StateStanding));
+        FSM.SwitchState(typeof(StateStanding));
     }
     
     private void MakeFSM()
     {
-        playerMovementFSM = new StateMachine();
-        playerMovementFSM.AddState(new StateStanding(ObjectData, playerMovementFSM));
-        playerMovementFSM.AddState(new StateJumping(ObjectData, playerMovementFSM));
-        playerMovementFSM.AddState(new StateWalking(ObjectData, playerMovementFSM));
-        playerMovementFSM.AddState(new StateRunning(ObjectData, playerMovementFSM));
-        playerMovementFSM.AddState(new StateWallRunning(ObjectData, playerMovementFSM));
+        FSM = new StateMachine();
+        FSM.AddState(new StateStanding(ObjectData, FSM));
+        FSM.AddState(new StateJumping(ObjectData, FSM));
+        FSM.AddState(new StateWalking(ObjectData, FSM));
+        FSM.AddState(new StateRunning(ObjectData, FSM));
+        FSM.AddState(new StateWallRunning(ObjectData, FSM));
 
 
-        playerMovementFSM.SwitchState(typeof(StateStanding));
+        FSM.SwitchState(typeof(StateStanding));
 
     }
 

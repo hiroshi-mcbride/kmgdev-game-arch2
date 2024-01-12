@@ -5,10 +5,5 @@ class StateWallRunning {
     + <<override>> OnFixedUpdate() : void
     + <<override>> OnExit() : void
 }
-enum WallRunStates {
-    WallRunning,
-    InAir,
-}
 AbstractState <|-- StateWallRunning
-StateWallRunning +-- WallRunStates
 @enduml

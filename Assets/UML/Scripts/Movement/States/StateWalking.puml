@@ -6,11 +6,5 @@ class StateWalking {
     + <<override>> OnFixedUpdate() : void
     + <<override>> OnExit() : void
 }
-enum Walkstates {
-    beginWalkState,
-    walkState,
-    endWalkState,
-}
 AbstractState <|-- StateWalking
-StateWalking +-- Walkstates
 @enduml

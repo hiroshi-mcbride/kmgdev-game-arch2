@@ -2,5 +2,5 @@
 class LoseState {
     + <<override>> OnUpdate() : void
 }
-AbstractState <|-- LoseState
+AbstractState <|-up- LoseState
 @enduml

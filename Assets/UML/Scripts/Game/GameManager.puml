@@ -1,7 +1,26 @@
 @startuml
 class GameManager <<MonoBehaviour>> {
+    - WeaponDataAssets : WeaponData[]
+    - PlayerDataAsset : PlayerData
+    - PlayTime : float
+    - BeginContainer : GameObject
+    - PlayContainer : GameObject
+    - WinContainer : GameObject
+    - LoseContainer : GameObject
 }
+/'[SerializeField] private WeaponData[] WeaponDataAssets;
+      [SerializeField] private PlayerData PlayerDataAsset;
+      [SerializeField] private EnemyData EnemyDataAsset;
+      [SerializeField] private float PlayTime;
+      [SerializeField] private GameObject BeginContainer;
+      [SerializeField] private GameObject PlayContainer;
+      [SerializeField] private GameObject WinContainer;
+      [SerializeField] private GameObject LoseContainer;'/
 IStateRunner <|.. GameManager
-GameManager *-- StateMachine
+'GameManager *-- StateMachine
 GameManager *-- CanvasItems
+GameManager *-- BeginState
+GameManager *-- PlayState
+GameManager *-- WinState
+GameManager *-- LoseState
 @enduml

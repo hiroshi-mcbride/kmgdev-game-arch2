@@ -2,5 +2,5 @@
 class BeginState {
     + <<override>> OnUpdate() : void
 }
-AbstractState <|-- BeginState
+AbstractState <|-up- BeginState
 @enduml

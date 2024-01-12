@@ -3,5 +3,5 @@ class WinState {
     + <<override>> OnEnter() : void
     + <<override>> OnUpdate() : void
 }
-AbstractState <|-- WinState
+AbstractState <|-up- WinState
 @enduml

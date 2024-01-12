@@ -4,6 +4,7 @@ class Enemy<(_instance:GameObject)> {
     + Initialize(_enemyData:EnemyData) : void
     + TakeDamage(_damage:float) : void
 }
-BaseActor <|-- Enemy
+BaseActor <|--- Enemy
 IDamageable <|.. Enemy
+EnemyData <-- Enemy
 @enduml

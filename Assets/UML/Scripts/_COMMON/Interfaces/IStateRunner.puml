@@ -1,5 +1,6 @@
 @startuml
 interface IStateRunner {
 }
+IStateRunner -up-> "FSM" StateMachine
 IStateRunner -up-> "ObjectData" Scratchpad
 @enduml

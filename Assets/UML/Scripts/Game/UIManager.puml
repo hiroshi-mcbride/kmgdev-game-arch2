@@ -10,6 +10,7 @@ class CanvasItems <<struct>> {
     + Win : GameObject
     + Lose : GameObject
 }
+GameManager *-- UIManager
 CanvasItems <-- UIManager
 IUpdateable <|.. UIManager
 @enduml

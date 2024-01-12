@@ -1,0 +1,14 @@
+﻿@startuml
+class Events {
+    - AllEnemiesKilledEvent()
+    - EnemyCountChangedEvent(_newCount:int)
+    - EnemyKillEvent(_killedEnemy:Enemy)
+    - GameLoseEvent()
+    - GameStartEvent(_gameTimer:Timer)
+    - GameWinEvent(_timeRemaining:float)
+    - ObjectPoolResetEvent()
+    - UpdateableCreatedEvent(_createdObject:IUpdateable)
+}
+
+EventManager -right-o Events
+@enduml
