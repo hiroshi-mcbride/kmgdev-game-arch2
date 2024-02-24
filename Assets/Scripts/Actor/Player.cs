@@ -109,13 +109,6 @@ public class Player : BasePhysicsActor, IStateRunner
 
     }
 
-    private void LockCursur()
-    {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-
-    }
-
     private void CameraAssignMent()
     {
         // getting Camera Data

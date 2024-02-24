@@ -39,6 +39,8 @@ public class PlayState : AbstractState
         player ??= new Player(OwnerData.Read<PlayerData>("PlayerData"));
         player.IsActive = true;
         
+        Cursor.lockState = CursorLockMode.Locked;
+        
         gameTimer.Start();
         EventManager.Invoke(new GameStartEvent(gameTimer));
     }
@@ -54,6 +56,8 @@ public class PlayState : AbstractState
 
     public override void OnExit()
     {
+        Cursor.lockState = CursorLockMode.None;
+        
         player.Reset();
         player.IsActive = false;
         weaponHandler.IsActive = false;
